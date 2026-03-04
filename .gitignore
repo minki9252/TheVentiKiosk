@@ -1,2 +1,12 @@
+# Qt 빌드 결과물
 build/
+Desktop_Qt_*/
+
+# Qt Creator 설정 및 캐시
+.qtc_clangd/
+*.qmake.stash
+*.user
+
+# 기타 시스템 파일
+.DS_Storebuild/
 *.pro.user
