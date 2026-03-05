@@ -1,86 +1,88 @@
 #include "mainwindow.h"
-#include "ui_mainwindow.h"
+// #include "ui_mainwindow.h"
+#include <QDebug>
+#include <QSqlError>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
-    , ui(new Ui::MainWindow)
+    , ui(new Ui::MainWindow)   // 추후 개발 예정 
 {
-    ui->setupUi(this);
+    // ui->setupUi(this);
+    setup_db();
 
-    this->cart_each = 0;
-    this->cart_price = 0;
-    this->select_lang = 0;      // 언어 초기설정
-    this->setup_db();      // DB 데이터 설정
-
-    // 시작 페이지 추가
-    this->page_start = new PageStart(this);
-    ui->ui_page_start->layout()->addWidget(page_start);
-
-    ui->stackedWidget->setCurrentIndex(PAGE_START);
+    // [참고] 나중에 Qt Creator에서 만든 버튼을 클릭했을 때 handle 함수를 호출하는 예시 (C++11 람다 사용)
+    // connect(ui->btnCoffee, &QPushButton::clicked, this, [this](){ handle(CATEGORY_COFFEE); });
 }
 
-void MainWindow::setup_db(){
-    this->db.setHostName("10.10.20.106");
-    this->db.setPort(3306);
-    this->db.setUserName("kiosk");
-    this->db.setPassword("1234");
-    this->db.setDatabaseName("The_Chaos");
-}
-
-/////////////////////// 핸들 함수 시작 //////////////////////////////////////
-void MainWindow::recv_data(){
-
-
-    switch(){
-
-        /////////////////// 카테고리 설정//////////////////////////////
-    case :
-
-        break;
-
-    case :
-
-        break;
-
-    case :
-
-        break;
-
-        /////////////////// 카테고리 설정 끝 //////////////////////////////
-
-        /////////////////// 메뉴 선택 설정//////////////////////////////
-    case :
-
-        break;
-
-    case :
-
-        break;
-
-    case :
-
-        break;
-
-        /////////////////// 메뉴 선택 끝 //////////////////////////////
-        /////////////////// 장바구니 설정//////////////////////////////
-    case :
-
-        break;
-
-    case :
-
-        break;
-
-    case :
-
-        break;
-
-        /////////////////// 장바구니 설정 끝 //////////////////////////////
-
-    }
-}
-////////////////////////////// 핸들 함수 끝 //////////////////////////////////////
 MainWindow::~MainWindow()
 {
     delete ui;
 }
+
+void MainWindow::setup_db(){
+    // SQLite는 파일 기반이므로 IP나 포트 설정이 필요 없습니다.
+    db = QSqlDatabase::addDatabase("QSQLITE");
+    db.setDatabaseName("theventi.db"); // 실행 파일과 동일한 경로에 생성/읽기
+
+    if (!db.open()) {
+        qDebug() << "DB 연결 실패:" << db.lastError().text();
+    } else {
+        qDebug() << "DB 연결 성공!";
+    }
+}
+
+/////////////////////// 핸들 함수 시작 //////////////////////////////////////
+void MainWindow::handle(KioskAction action){
+
+    switch(action){
+
+        /////////////////// 카테고리 설정 //////////////////////////////
+    case CATEGORY_COFFEE:
+        qDebug() << "커피 카테고리 선택됨";
+        // TODO: 커피 메뉴 리스트를 UI에 출력하는 로직
+        break;
+
+    case CATEGORY_BEVERAGE:
+        qDebug() << "음료 카테고리 선택됨";
+        break;
+
+    case CATEGORY_DESSERT:
+        qDebug() << "디저트 카테고리 선택됨";
+        break;
+        /////////////////// 카테고리 설정 끝 //////////////////////////////
+
+
+        /////////////////// 메뉴 선택 설정 //////////////////////////////
+    case MENU_SELECT_ITEM:
+        qDebug() << "메뉴가 선택됨";
+        // TODO: 선택된 메뉴의 상세 정보 팝업 띄우기 또는 임시 변수에 저장
+        break;
+
+    case MENU_CANCEL_ITEM:
+        qDebug() << "메뉴 선택 취소됨";
+        break;
+        /////////////////// 메뉴 선택 끝 //////////////////////////////
+
+
+        /////////////////// 장바구니 설정 //////////////////////////////
+    case CART_ADD:
+        qDebug() << "장바구니에 담기";
+        // TODO: 장바구니 UI 리스트 위젯에 항목 추가 및 총액 계산
+        break;
+
+    case CART_REMOVE:
+        qDebug() << "장바구니 항목 취소";
+        break;
+
+    case CART_CHECKOUT:
+        qDebug() << "결제 진행";
+        // TODO: 영수증 출력 로직 및 DB에 주문 내역 INSERT
+        break;
+        /////////////////// 장바구니 설정 끝 //////////////////////////////
+
+    default:
+        qDebug() << "정의되지 않은 액션입니다.";
+        break;
+    }
+}
+////////////////////////////// 핸들 함수 끝 //////////////////////////////////////

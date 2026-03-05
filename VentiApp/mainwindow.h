@@ -2,12 +2,28 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QSqlDatabase>
 
 QT_BEGIN_NAMESPACE
-namespace Ui {
-class MainWindow;
-}
+namespace Ui { class MainWindow; }
 QT_END_NAMESPACE
+
+// 키오스크에서 발생할 수 있는 액션들을 열거형으로 정의합니다.
+enum KioskAction {
+    // 카테고리 설정
+    CATEGORY_COFFEE,
+    CATEGORY_BEVERAGE,
+    CATEGORY_DESSERT,
+
+    // 메뉴 선택
+    MENU_SELECT_ITEM,
+    MENU_CANCEL_ITEM,
+
+    // 장바구니 설정
+    CART_ADD,
+    CART_REMOVE,
+    CART_CHECKOUT
+};
 
 class MainWindow : public QMainWindow
 {
@@ -19,5 +35,10 @@ public:
 
 private:
     Ui::MainWindow *ui;
+    QSqlDatabase db;
+
+    void setup_db();
+    void handle(KioskAction action); // 이벤트를 처리할 핸들 함수
 };
+
 #endif // MAINWINDOW_H
