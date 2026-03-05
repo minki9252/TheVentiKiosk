@@ -8,5 +8,6 @@ int main(int argc, char *argv[])
     MainWindow w;
     w.show();
     return a.exec();
-    //커밋되는지 확인용
+    // 커밋되는지 확인용
+    // 커밋되는지 확인2(김희석)
 }
