@@ -10,10 +10,111 @@
     <height>600</height>
    </rect>
   </property>
+  <property name="acceptDrops">
+   <bool>true</bool>
+  </property>
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
-  <widget class="QWidget" name="centralwidget"/>
+  <widget class="QWidget" name="centralwidget">
+   <layout class="QVBoxLayout" name="verticalLayout">
+    <item>
+     <widget class="QStackedWidget" name="stackedWidget">
+      <widget class="QWidget" name="page">
+       <layout class="QHBoxLayout" name="horizontalLayout_2">
+        <item>
+         <widget class="QPushButton" name="introButton">
+          <property name="maximumSize">
+           <size>
+            <width>750</width>
+            <height>750</height>
+           </size>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">border-image: url(:/g-dragon/벤티홍보.jpg);</string>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="page_2">
+       <layout class="QHBoxLayout" name="horizontalLayout_3">
+        <item>
+         <widget class="QPushButton" name="takeoutButton">
+          <property name="maximumSize">
+           <size>
+            <width>275</width>
+            <height>275</height>
+           </size>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">QPushButton {
+    background-color: #2D140D; /* 더벤티 스타일 진한 갈색 배경 */
+    color: white;              /* 글자 색상 흰색 */
+    font-size: 40px;           /* 글자 크기 */
+    font-weight: bold;         /* 글자 두껍게 */
+    border-radius: 10px;       /* 버튼 모서리 둥글게 */
+    padding: 10px;             /* 안쪽 여백 */
+}
+
+/* 버튼 위에 마우스를 올렸을 때 (Hover) */
+QPushButton:hover {
+    background-color: #5D2E1F; /* 약간 더 밝은 갈색으로 변경 */
+}</string>
+          </property>
+          <property name="text">
+           <string>포장</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="storeButton">
+          <property name="maximumSize">
+           <size>
+            <width>275</width>
+            <height>275</height>
+           </size>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">QPushButton {
+    background-color: #2D140D; /* 더벤티 스타일 진한 갈색 배경 */
+    color: white;              /* 글자 색상 흰색 */
+    font-size: 40px;           /* 글자 크기 */
+    font-weight: bold;         /* 글자 두껍게 */
+    border-radius: 10px;       /* 버튼 모서리 둥글게 */
+    padding: 10px;             /* 안쪽 여백 */
+}
+
+/* 버튼 위에 마우스를 올렸을 때 (Hover) */
+QPushButton:hover {
+    background-color: #5D2E1F; /* 약간 더 밝은 갈색으로 변경 */
+}</string>
+          </property>
+          <property name="text">
+           <string>매장</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="page_3">
+       <layout class="QHBoxLayout" name="horizontalLayout">
+        <item>
+         <widget class="QLabel" name="label">
+          <property name="text">
+           <string>메뉴 선택 화면 (구현 예정)</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+     </widget>
+    </item>
+   </layout>
+  </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
     <rect>
