@@ -1,3 +1,5 @@
+QT += core gui sql
+
 TEMPLATE = subdirs
 
 CONFIG += ordered
