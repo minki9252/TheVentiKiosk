@@ -2,4 +2,7 @@ TEMPLATE = subdirs
 
 SUBDIRS += \
     VentiApp \
-    VentiCore
+    VentiCore \
+
+RESOURCES += \
+    resources.qrc

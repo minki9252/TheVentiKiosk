@@ -1,7 +1,10 @@
-QT += sql
+QT += sql   # sq lite를 사용하기 위함
+
 TARGET = VentiCore
-TEMPLATE = lib
-DEFINES += VENTICORE_LIBRARY
+
+TEMPLATE = lib  #.so 파일로 라이브러리화 하기 위함
+
+DEFINES += VENTICORE_LIBRARY    # 라이브러리 지정
 
 CONFIG += c++17
 
