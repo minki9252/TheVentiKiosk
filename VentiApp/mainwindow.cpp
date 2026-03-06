@@ -12,7 +12,7 @@ MainWindow::MainWindow(QWidget *parent)
     ui->setupUi(this);
 
     // mainwindow.ui에서 파일 선택후 경로 설정
-    QString imagePath = ":/g-dragon/벤티홍보.jpg";
+    QString imagePath = ":/G-dragon/벤티홍보.jpg";
 
     // 버튼의 배경으로 이미지 넣기 (CSS 이용)
     ui->introButton->setStyleSheet(QString("border-image: url(%1); border: none;").arg(imagePath));
