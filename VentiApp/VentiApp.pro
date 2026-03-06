@@ -16,17 +16,29 @@ LIBS += -L$$OUT_PWD/../VentiCore/ -lVentiCore
 # 🚨 주의: 새로 만든 폴더 안의 파일도 반드시 적어줘야 합니다!
 SOURCES += \
     main.cpp \
+    beverage.cpp \
+    cartwidget.cpp \
+    categorywidget.cpp \
+    main_page.cpp \
     mainwindow.cpp \
     common/src/connect.cpp
 
 # 5. 헤더 파일 목록 (h)
 HEADERS += \
     mainwindow.h \
+    beverage.h \
+    cartwidget.h \
+    categorywidget.h \
+    main_page.h \
     common/src/header/connect.h
 
 # 6. UI 및 리소스 파일
 FORMS += \
-    mainwindow.ui
+    mainwindow.ui \
+    beverage.ui \
+    cartwidget.ui \
+    categorywidget.ui \
+    main_page.ui
 
 RESOURCES += \
     venti_image.qrc
