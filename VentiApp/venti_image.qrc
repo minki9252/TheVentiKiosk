@@ -1,51 +1,51 @@
 <RCC>
     <qresource prefix="/G-dragon">
-        <file>벤티홍보.jpg</file>
+        <file alias="venti_promo.jpg">벤티홍보.jpg</file>
     </qresource>
-    <qresource prefix="/Coffe">
-        <file>카라멜마끼아또.jpg</file>
-        <file>토피넛라떼.jpg</file>
-        <file>카페모카.jpg</file>
-        <file>아인슈페너.jpg</file>
-        <file>믹스커피.jpg</file>
-        <file>카페라떼.jpg</file>
-        <file>아이스아메리카노.jpg</file>
+    <qresource prefix="/Coffee">
+        <file alias="caramel_macho.jpg">카라멜마끼아또.jpg</file>
+        <file alias="topinut_latte.jpg">토피넛라떼.jpg</file>
+        <file alias="cafe_mocha.jpg">카페모카.jpg</file>
+        <file alias="einspanner.jpg">아인슈페너.jpg</file>
+        <file alias="mix_coffee.jpg">믹스커피.jpg</file>
+        <file alias="cafe_latte.jpg">카페라떼.jpg</file>
+        <file alias="ice_americano.jpg">아이스아메리카노.jpg</file>
     </qresource>
     <qresource prefix="/Beverage">
-        <file>말차아인슈페너.jpg</file>
-        <file>말차라떼.jpg</file>
-        <file>딸기라떼.jpg</file>
-        <file>로얄밀크티.jpg</file>
-        <file>미숫가루.jpg</file>
-        <file>군고구마라떼.jpg</file>
+        <file alias="matcha_einspanner.jpg">말차아인슈페너.jpg</file>
+        <file alias="matcha_latte.jpg">말차라떼.jpg</file>
+        <file alias="strawberry_latte.jpg">딸기라떼.jpg</file>
+        <file alias="royal_milktea.jpg">로얄밀크티.jpg</file>
+        <file alias="grain_latte.jpg">미숫가루.jpg</file>
+        <file alias="sweet_potato_latte.jpg">군고구마라떼.jpg</file>
     </qresource>
     <qresource prefix="/New_menu">
-        <file>꿀배생강티.jpg</file>
-        <file>오미자석류티.jpg</file>
-        <file>더쌍화차.jpg</file>
+        <file alias="honey_pear_tea.jpg">꿀배생강티.jpg</file>
+        <file alias="omija_tea.jpg">오미자석류티.jpg</file>
+        <file alias="ssanghwa_tea.jpg">더쌍화차.jpg</file>
     </qresource>
     <qresource prefix="/Blended">
-        <file>쿠키앤크림프라페.jpg</file>
-        <file>자바칩프라페.jpg</file>
-        <file>밀크쉐이크.jpg</file>
-        <file>초코쉐이크.jpg</file>
-        <file>망고요거트스무디.jpg</file>
-        <file>블루베리요거트스무디.jpg</file>
-        <file>딸기요거트스무디.jpg</file>
-        <file>플레인요거트스무디.jpg</file>
-        <file>드래곤스무디요거트.jpg</file>
-        <file>드래곤스무디소다.jpg</file>
+        <file alias="cookie_cream_frappe.jpg">쿠키앤크림프라페.jpg</file>
+        <file alias="javachip_frappe.jpg">자바칩프라페.jpg</file>
+        <file alias="milkshake.jpg">밀크쉐이크.jpg</file>
+        <file alias="choco_shake.jpg">초코쉐이크.jpg</file>
+        <file alias="mango_yogurt.jpg">망고요거트스무디.jpg</file>
+        <file alias="blueberry_yogurt.jpg">블루베리요거트스무디.jpg</file>
+        <file alias="strawberry_yogurt.jpg">딸기요거트스무디.jpg</file>
+        <file alias="plain_yogurt.jpg">플레인요거트스무디.jpg</file>
+        <file alias="dragon_yogurt.jpg">드래곤스무디요거트.jpg</file>
+        <file alias="dragon_soda.jpg">드래곤스무디소다.jpg</file>
     </qresource>
     <qresource prefix="/Ade">
-        <file>레몬에이드.jpg</file>
-        <file>애플망고에이드.jpg</file>
-        <file>자몽에이드.jpg</file>
+        <file alias="lemon_ade.jpg">레몬에이드.jpg</file>
+        <file alias="mango_ade.jpg">애플망고에이드.jpg</file>
+        <file alias="grapefruit_ade.jpg">자몽에이드.jpg</file>
     </qresource>
     <qresource prefix="/Bubble_tea">
-        <file>타로버블티.jpg</file>
-        <file>흑설탕버블티.jpg</file>
-        <file>리치캐모마일.jpg</file>
-        <file>자몽허니블랙티.jpg</file>
-        <file>복숭아아이스티.jpg</file>
+        <file alias="taro_bubble.jpg">타로버블티.jpg</file>
+        <file alias="brown_sugar_bubble.jpg">흑설탕버블티.jpg</file>
+        <file alias="lychee_chamomile.jpg">리치캐모마일.jpg</file>
+        <file alias="grapefruit_honey_black_tea.jpg">자몽허니블랙티.jpg</file>
+        <file alias="peach_iced_tea.jpg">복숭아아이스티.jpg</file>
     </qresource>
 </RCC>

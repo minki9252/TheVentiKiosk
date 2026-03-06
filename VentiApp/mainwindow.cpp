@@ -1,6 +1,7 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "databasemanager.h"
+#include "cartwidget.h"
 #include <QSqlDatabase>
 #include <QSqlError>
 #include <QSqlQuery>
@@ -99,32 +100,16 @@ void MainWindow::handle(const KioskEvent &event) {
 
        /////////////////// 장바구니 설정 //////////////////////////////
     case CART_ADD:
-        m_cartManager.addItem(event); // 로직은 관리자에게 위임
-        refreshCartUI();              // 나는 UI만 다시 그림
-        break;
-
     case CART_INCREASE_QTY:
-        m_cartManager.updateQty(event.extraData.toInt(), 1);
-        refreshCartUI();
-        break;
-
     case CART_DECREASE_QTY:
-        m_cartManager.updateQty(event.extraData.toInt(), -1);
-        refreshCartUI();
-        break;
-
     case CART_REMOVE:
-        m_cartManager.removeItem(event.extraData.toInt());
-        refreshCartUI();
-        break;
-
     case CART_CLEAR_ALL:
-        m_cartManager.clear();
-        refreshCartUI();
+        // 장바구니 관련 이벤트는 ui에 포함된 cartWidget에게 전달
+        ui->cartWidget->handleCartEvent(event); 
         break;
 
     case CART_CHECKOUT:
-        // 결제 로직 등...
+        // 결제는 전역적인 로직이므로 MainWindow에서 처리하거나 결제 모듈 호출
         break;
         /////////////////// 장바구니 설정 끝 //////////////////////////////
 

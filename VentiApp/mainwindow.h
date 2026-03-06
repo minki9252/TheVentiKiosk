@@ -37,8 +37,6 @@ private:
     void handle(const KioskEvent &event);
     void refreshCartUI(); // UI만 담당하는 함수
 
-    QSqlDatabase db;
-
 };
 
 #endif // MAINWINDOW_H

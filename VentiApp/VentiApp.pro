@@ -36,17 +36,12 @@ HEADERS += \
     header/cartmanager.h \
     header/kioskevent.h
 
-# 6. UI 및 리소스 파일
-FORMS += \
-    mainwindow.ui \
-    beverage.ui \
-    cartwidget.ui \
-    categorywidget.ui \
-    main_page.ui
+# 6. UI 파일 목록 (ui)
+FORMS += mainwindow.ui
+FORMS += beverage.ui
+FORMS += cartwidget.ui
+FORMS += categorywidget.ui
+FORMS += main_page.ui
 
-RESOURCES += \
-    venti_image.qrc
-
-# 7. 기타 파일 목록 (프로젝트 트리 표시용)
-DISTFILES += \
-    $$PWD/*.jpg
+# 7. 리소스 파일 (qrc)
+RESOURCES += venti_image.qrc
