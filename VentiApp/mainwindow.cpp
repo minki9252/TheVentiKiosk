@@ -62,9 +62,9 @@ void MainWindow::on_takeoutButton_clicked()
 }
 
 /////////////////////// 핸들 함수 시작 //////////////////////////////////////
-void MainWindow::handle(KioskAction action){
+void MainWindow::handle(const KioskEvent &event) {
 
-    switch(action){
+    switch(event.action){
 
         /////////////////// 카테고리 설정 //////////////////////////////
     case CATEGORY_COFFEE:
