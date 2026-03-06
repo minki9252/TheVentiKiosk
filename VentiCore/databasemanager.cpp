@@ -57,41 +57,81 @@ bool DatabaseManager::setupDatabase() {
 void DatabaseManager::insertInitialData() {
     QSqlQuery query;
 
-    QStringList categories = {"New_menu", "Coffe", "Bubble_tea", "Blended", "Beverage", "Ade"};
-    
+    QStringList categories = {"신메뉴", "커피", "버블티&티", "블렌디드", "베버리지", "에이드"};
     for (const QString &catName : categories) {
         query.prepare("INSERT INTO CATEGORIES (category_name) "
                       "SELECT :name WHERE NOT EXISTS (SELECT 1 FROM CATEGORIES WHERE category_name = :name)");
         query.bindValue(":name", catName);
-        if (!query.exec()) qDebug() << "카테고리 삽입 실패:" << query.lastError().text();
-    }
-
-    // 2. 초기 메뉴 데이터 삽입
-    struct MenuData {
-        int catId;
-        QString name;
-        int price;
-        QString img;
-    };
-
-    // 예시 데이터 (팀원들이 바로 사용할 수 있게 넉넉히 넣어주세요)
-    QList<MenuData> items = {
-        {3, "아이스 아메리카노", 1800, ":/Coffe/ice_americano.png"},
-        {3, "아이스 카페라떼", 2700, ":/Coffe/ice_latte.png"},
-        {4, "핫 아메리카노", 1500, ":/Coffe/hot_americano.png"},
-        {1, "GD 추천 신메뉴", 4500, ":/G-dragon/gd_drink.png"} // G-dragon 폴더 참고
-    };
-
-    for (const auto &item : items) {
-        query.prepare("INSERT INTO MENU_INFO (category_id, kr_name, price, image_path, is_soldout) "
-                      "SELECT :cat, :name, :price, :img, 0 "
-                      "WHERE NOT EXISTS (SELECT 1 FROM MENU_INFO WHERE kr_name = :name)");
-        query.bindValue(":cat", item.catId);
-        query.bindValue(":name", item.name);
-        query.bindValue(":price", item.price);
-        query.bindValue(":img", item.img);
         query.exec();
     }
 
-    qDebug() << "더벤티 초기 데이터(메뉴/카테고리) 로드 완료!";
+
+    struct MenuData {
+        QString category;
+        QString name;
+        int price;
+        QString imgPath;
+        MenuData(QString c, QString n, int p, QString i) : category(c), name(n), price(p), imgPath(i) {}
+    };
+
+    QList<MenuData> menus;
+
+    // 신메뉴
+    menus.append(MenuData("신메뉴", "꿀배생강티", 3500, ":/New_menu/honey_pear.png"));
+    menus.append(MenuData("신메뉴", "더 쌍화차", 3500, ":/New_menu/ssanghwa.png"));
+    menus.append(MenuData("신메뉴", "오미자석류티", 3500, ":/New_menu/omija.png"));
+
+    // 커피
+    menus.append(MenuData("커피", "아메리카노", 2000, ":/Coffee/americano.png"));
+    menus.append(MenuData("커피", "믹스커피", 2500, ":/Coffee/mix.png"));
+    menus.append(MenuData("커피", "아인슈페너", 3500, ":/Coffee/einspanner.png"));
+    menus.append(MenuData("커피", "카라멜마끼아또", 3500, ":/Coffee/caramel.png"));
+    menus.append(MenuData("커피", "카페라떼", 3000, ":/Coffee/latte.png"));
+    menus.append(MenuData("커피", "카페모카", 3500, ":/Coffee/mocha.png"));
+    menus.append(MenuData("커피", "토피넛라떼", 3700, ":/Coffee/toffeenut.png"));
+
+    // 버블티&티
+    menus.append(MenuData("버블티&티", "리치캐모마일티", 2500, ":/Bubble_tea/rich_camomile.png"));
+    menus.append(MenuData("버블티&티", "복숭아아이스티", 3000, ":/Bubble_tea/peach_ice_tea.png"));
+    menus.append(MenuData("버블티&티", "자몽허니블랙티", 3500, ":/Bubble_tea/grapefruit_honey.png"));
+    menus.append(MenuData("버블티&티", "타로버블티", 3900, ":/Bubble_tea/taro_bubble.png"));
+    menus.append(MenuData("버블티&티", "흑설탕버블티", 3900, ":/Bubble_tea/black_sugar_bubble.png"));
+
+    // 블렌디드
+    menus.append(MenuData("블렌디드", "드래곤스무디소다", 4500, ":/Blended/dragon_soda.png"));
+    menus.append(MenuData("블렌디드", "드래곤스무디요거트", 4300, ":/Blended/dragon_yogurt.png"));
+    menus.append(MenuData("블렌디드", "딸기요거트스무디", 3900, ":/Blended/strawberry_yogurt.png"));
+    menus.append(MenuData("블렌디드", "망고요거트스무디", 3900, ":/Blended/mango_yogurt.png"));
+    menus.append(MenuData("블렌디드", "밀크쉐이크", 3900, ":/Blended/milk_shake.png"));
+    menus.append(MenuData("블렌디드", "블루베리요거트스무디", 3900, ":/Blended/blueberry_yogurt.png"));
+    menus.append(MenuData("블렌디드", "자바칩프라페", 3900, ":/Blended/javachip.png"));
+    menus.append(MenuData("블렌디드", "초코쉐이크", 3900, ":/Blended/choco_shake.png"));
+    menus.append(MenuData("블렌디드", "쿠키앤크림프라페", 3900, ":/Blended/cookie_cream.png"));
+    menus.append(MenuData("블렌디드", "플레인요거트스무디", 3900, ":/Blended/plain_yogurt.png"));
+
+    // 베버리지
+    menus.append(MenuData("베버리지", "군고구마라떼", 3500, ":/Beverage/sweet_potato.png"));
+    menus.append(MenuData("베버리지", "딸기라떼", 3500, ":/Beverage/strawberry_latte.png"));
+    menus.append(MenuData("베버리지", "로얄밀크티", 3500, ":/Beverage/royal_milk_tea.png"));
+    menus.append(MenuData("베버리지", "말차라떼", 3500, ":/Beverage/matcha_latte.png"));
+    menus.append(MenuData("베버리지", "말차아인슈페너", 3500, ":/Beverage/matcha_einspanner.png"));
+    menus.append(MenuData("베버리지", "미숫가루", 3000, ":/Beverage/misugaru.png"));
+
+    // 에이드
+    menus.append(MenuData("에이드", "레몬에이드", 3900, ":/Ade/lemon_ade.png"));
+    menus.append(MenuData("에이드", "애플망고에이드", 3900, ":/Ade/apple_mango.png"));
+    menus.append(MenuData("에이드", "자몽에이드", 3900, ":/Ade/grapefruit_ade.png"));
+
+    // 데이터 삽입 실행
+    for (const auto &m : menus) {
+        query.prepare("INSERT INTO MENU_INFO (category_id, kr_name, price, image_path, is_soldout) "
+                      "SELECT (SELECT category_id FROM CATEGORIES WHERE category_name = :cat), :name, :price, :img, 0 "
+                      "WHERE NOT EXISTS (SELECT 1 FROM MENU_INFO WHERE kr_name = :name)");
+        query.bindValue(":cat", m.category);
+        query.bindValue(":name", m.name);
+        query.bindValue(":price", m.price);
+        query.bindValue(":img", m.imgPath);
+        query.exec();
+    }
+    qDebug() << "더벤티 메뉴 DB 구축 완료!";
 }
