@@ -1,8 +1,10 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-#include <QDebug> // 디버깅용 로그 출력
-#include <QDebug>
+#include "databasemanager.h"
+#include <QSqlDatabase>
 #include <QSqlError>
+#include <QSqlQuery>
+#include <QDebug>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -10,6 +12,12 @@ MainWindow::MainWindow(QWidget *parent)
 {
 
     ui->setupUi(this);
+
+    // [위치: 생성자 내부]
+    // UI가 뜨기 전 혹은 직후에 DB 매니저를 통해 세팅을 끝냅니다.
+    if(!DatabaseManager::instance().initDatabase("venti.db")) {
+        qDebug() << "DB 연결 실패!";
+    }
 
     // mainwindow.ui에서 파일 선택후 경로 설정
     QString imagePath = ":/G-dragon/벤티홍보.jpg";
@@ -19,9 +27,6 @@ MainWindow::MainWindow(QWidget *parent)
 
     // 프로그램 시작 시 무조건 0번 페이지(홍보 모델)부터 보여줌
     ui->stackedWidget->setCurrentIndex(0);
-
-    // ui->setupUi(this);
-    setup_db();
 
     // 나중에 Qt Creator에서 만든 버튼을 클릭했을 때 handle 함수를 호출하는 예시 (C++11 람다 사용)
     // connect(ui->btnCoffee, &QPushButton::clicked, this, [this](){ handle(CATEGORY_COFFEE); });
@@ -54,18 +59,6 @@ void MainWindow::on_takeoutButton_clicked()
     // 2번 페이지(메뉴화면)로 이동
     ui->stackedWidget->setCurrentIndex(2);
     qDebug() << "포장 선택 -> 메뉴판 이동 완료";
-}
-
-void MainWindow::setup_db(){
-    // SQLite는 파일 기반이므로 IP나 포트 설정이 필요 없습니다.
-    db = QSqlDatabase::addDatabase("QSQLITE");
-    db.setDatabaseName("venti.db"); // 실행 파일과 동일한 경로에 생성/읽기
-
-    if (!db.open()) {
-        qDebug() << "DB 연결 실패:" << db.lastError().text();
-    } else {
-        qDebug() << "DB 연결 성공!";
-    }
 }
 
 /////////////////////// 핸들 함수 시작 //////////////////////////////////////
