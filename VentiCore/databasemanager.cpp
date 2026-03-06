@@ -25,18 +25,24 @@ bool DatabaseManager::initDatabase(const QString& dbName) {
     db = QSqlDatabase::addDatabase("QSQLITE");
     db.setDatabaseName(dbName);
 
-    if (!db.open()) {
-        qDebug() << "DB 연결 실패:" << db.lastError().text();
-        return false;
+    if (db.open()) {
+        setupDatabase();      // 1. 테이블 생성 (없으면 만들고)
+        insertInitialData();  // 2. 데이터 삽입 (없으면 넣는다)
+        return true;
     }
-    
+    return false;
+
     qDebug() << "DB 연결 성공!";
     
     // 외래 키 활성화 및 테이블 생성 로직
     QSqlQuery query;
     query.exec("PRAGMA foreign_keys = ON;");
+
+    // 테이블 생성 (setupDatabase 로직을 여기에 합치거나 호출)
+    if(setupDatabase()) { 
+        insertInitialData(); 
+    }
     
-    // 필요한 경우 여기서 createTables() 같은 함수를 추가로 호출
     return true;
 }
 
@@ -53,7 +59,7 @@ bool DatabaseManager::setupDatabase() {
     }
 
     QSqlQuery query;
-    query.exec("PRAGMA foreign_keys = ON;"); // 외래키 활성화
+    query.exec("PRAGMA foreign_keys = ON;");    // FK 활성화
 
     // 테이블 생성 쿼리
     query.exec("CREATE TABLE CATEGORIES (category_id INTEGER PRIMARY KEY, category_name VARCHAR(50));");
@@ -184,6 +190,11 @@ bool DatabaseManager::insertInitialData() {
         qDebug() << "ORDER_ITEMS 생성 실패:" << query.lastError().text();
     } else {
         qDebug() << "모든 테이블(5개) 생성 및 외래키 설정 완료!";
+    }
+
+    QSqlQuery testQuery("SELECT COUNT(*) FROM MENU_INFO");
+    if (testQuery.next()) {
+    qDebug() << "현재 DB에 저장된 총 메뉴 개수:" << testQuery.value(0).toInt();
     }
 
     qDebug() << "더벤티 메뉴 DB 구축 완료!";

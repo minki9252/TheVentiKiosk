@@ -39,16 +39,20 @@ public:
     ~MainWindow();
 
 private slots:
-    void on_introButton_clicked();   
-    void on_storeButton_clicked();   
-    void on_takeoutButton_clicked(); 
+    void on_introButton_clicked();
+    void on_storeButton_clicked();
+    void on_takeoutButton_clicked();
+    void toggleTouchText(); // 텍스트 깜빡임용 슬롯
 
 private:
     Ui::MainWindow *ui;
-
     QSqlDatabase db;
-
+    QTimer *touchTimer;     // 타이머 객체
+    bool isVisible = true;  // 가시성 상태 변수
+    int currentOrderType = 0; // 0: 매장, 1: 포장
     void handle(const KioskEvent &event); // 이벤트를 처리할 핸들 함수
+    void loadMenus(const QString &categoryName);    // 메뉴판을 채우는 함수
+    void clearMenuGrid();   // 기존에 생성된 메뉴위젯을 삭제해주는 함수 (카테고리 변경시 필요)
 };
 
 #endif // MAINWINDOW_H

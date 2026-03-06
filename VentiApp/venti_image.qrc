@@ -48,4 +48,7 @@
         <file>자몽허니블랙티.jpg</file>
         <file>복숭아아이스티.jpg</file>
     </qresource>
+    <qresource prefix="/">
+        <file>../../Downloads/the_venty_menu/the_venty/logo.jpg</file>
+    </qresource>
 </RCC>

@@ -35,11 +35,11 @@
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <layout class="QVBoxLayout" name="verticalLayout_2">
+   <layout class="QHBoxLayout" name="horizontalLayout">
     <item>
      <widget class="QStackedWidget" name="stackedWidget">
       <property name="currentIndex">
-       <number>0</number>
+       <number>2</number>
       </property>
       <widget class="QWidget" name="page">
        <property name="minimumSize">
@@ -54,7 +54,7 @@
          <height>960</height>
         </size>
        </property>
-       <layout class="QHBoxLayout" name="horizontalLayout_2">
+       <layout class="QVBoxLayout" name="verticalLayout_2">
         <item>
          <widget class="QPushButton" name="introButton">
           <property name="minimumSize">
@@ -77,65 +77,128 @@
           </property>
          </widget>
         </item>
-       </layout>
-      </widget>
-      <widget class="QWidget" name="page_2">
-       <layout class="QHBoxLayout" name="horizontalLayout_3">
         <item>
-         <widget class="QPushButton" name="takeoutButton">
-          <property name="maximumSize">
-           <size>
-            <width>275</width>
-            <height>275</height>
-           </size>
-          </property>
+         <widget class="QLabel" name="lblTouchNotice">
           <property name="styleSheet">
-           <string notr="true">QPushButton {
-    background-color: #2D140D; /* 더벤티 스타일 진한 갈색 배경 */
-    color: white;              /* 글자 색상 흰색 */
-    font-size: 40px;           /* 글자 크기 */
-    font-weight: bold;         /* 글자 두껍게 */
-    border-radius: 10px;       /* 버튼 모서리 둥글게 */
-    padding: 10px;             /* 안쪽 여백 */
+           <string notr="true">/* [위치: introButton의 StyleSheet] */
+QPushButton#introButton {
+    border: none;
+    background-color: transparent; /* 배경 투명하게 해서 모델 이미지만 강조 */
 }
 
-/* 버튼 위에 마우스를 올렸을 때 (Hover) */
-QPushButton:hover {
-    background-color: #5D2E1F; /* 약간 더 밝은 갈색으로 변경 */
+QPushButton#introButton:pressed {
+    background-color: rgba(0, 0, 0, 50); /* 터치 시 살짝 어둡게 피드백 */
+}
+
+/* 안내 문구 라벨 스타일 */
+QLabel#lblTouchNotice {
+    font-size: 24pt;
+    font-family: &quot;NanumSquare&quot;, &quot;Malgun Gothic&quot;; /* 설치된 폰트 기준 */
+    background-color: rgba(255, 255, 255, 180); /* 반투명 흰색 배경으로 가독성 확보 */
+    border-radius: 15px;
+    padding: 10px;
 }</string>
           </property>
           <property name="text">
-           <string>포장</string>
+           <string>마우스를 클릭해주세요</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignmentFlag::AlignCenter</set>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="page_2">
+       <layout class="QVBoxLayout" name="verticalLayout_3">
+        <item>
+         <widget class="QLabel" name="lblLogo">
+          <property name="maximumSize">
+           <size>
+            <width>250</width>
+            <height>50</height>
+           </size>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">border-image: url(:/Downloads/the_venty_menu/the_venty/logo.jpg);
+
+QLabel#lblLogo {
+	border-image: url(:/Downloads/the_venty_menu/the_venty/logo.jpg);
+    border-repeat: no-repeat;
+    border-position: center;
+    min-height: 150px; /* 로고 영역 높이 확보 */
+    border: none;
+}</string>
+          </property>
+          <property name="text">
+           <string/>
           </property>
          </widget>
         </item>
         <item>
-         <widget class="QPushButton" name="storeButton">
-          <property name="maximumSize">
-           <size>
-            <width>275</width>
-            <height>275</height>
-           </size>
+         <layout class="QHBoxLayout" name="horizontalLayout_2">
+          <property name="topMargin">
+           <number>0</number>
           </property>
-          <property name="styleSheet">
-           <string notr="true">QPushButton {
-    background-color: #2D140D; /* 더벤티 스타일 진한 갈색 배경 */
-    color: white;              /* 글자 색상 흰색 */
-    font-size: 40px;           /* 글자 크기 */
-    font-weight: bold;         /* 글자 두껍게 */
-    border-radius: 10px;       /* 버튼 모서리 둥글게 */
-    padding: 10px;             /* 안쪽 여백 */
+          <property name="bottomMargin">
+           <number>200</number>
+          </property>
+          <item>
+           <widget class="QPushButton" name="takeoutButton">
+            <property name="maximumSize">
+             <size>
+              <width>275</width>
+              <height>275</height>
+             </size>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">QPushButton#takeoutButton {
+    background-color: #5d2d91; /* 보라색 배경 */
+    border: 5px solid #5d2d91;
+    border-radius: 30px;
+    font-size: 30pt;
+    font-weight: bold;
+    color: white;
+}
+QPushButton:pressed {
+    background-color: #4a2475;
+    color: #cccccc;
+}</string>
+            </property>
+            <property name="text">
+             <string>포장</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="storeButton">
+            <property name="maximumSize">
+             <size>
+              <width>275</width>
+              <height>275</height>
+             </size>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">QPushButton#storeButton {
+    background-color: white;
+    border: 5px solid #5d2d91; /* 더벤티 보라색 테마 */
+    border-radius: 30px;
+    font-size: 30pt;
+    font-weight: bold;
+    color: #5d2d91;
 }
 
-/* 버튼 위에 마우스를 올렸을 때 (Hover) */
-QPushButton:hover {
-    background-color: #5D2E1F; /* 약간 더 밝은 갈색으로 변경 */
+QPushButton:pressed {
+    background-color: #4a2475;
+    color: #cccccc;
 }</string>
-          </property>
-          <property name="text">
-           <string>매장</string>
-          </property>
-         </widget>
+            </property>
+            <property name="text">
+             <string>매장</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
         </item>
        </layout>
       </widget>
