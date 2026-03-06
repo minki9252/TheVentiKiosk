@@ -10,7 +10,7 @@ void initDatabase() {
         qDebug() << "DB 연결 실패:" << db.lastError().text();
     } else {
         qDebug() << "DB 연결 성공!";
-        // 여기서 필요한 테이블(메뉴, 주문 등) 생성 쿼리를 실행할 수 있습니다.
+        // 여기서 필요한 테이블(메뉴, 주문 등) 생성 쿼리를 실행할 수 있음
     }
 }
 
@@ -26,8 +26,8 @@ bool DatabaseManager::initDatabase(const QString& dbName) {
     db.setDatabaseName(dbName);
 
     if (db.open()) {
-        setupDatabase();      // 1. 테이블 생성 (없으면 만들고)
-        insertInitialData();  // 2. 데이터 삽입 (없으면 넣는다)
+        setupDatabase();      // 테이블 생성
+        insertInitialData();  // 데이터 삽입
         return true;
     }
     return false;
@@ -38,7 +38,7 @@ bool DatabaseManager::initDatabase(const QString& dbName) {
     QSqlQuery query;
     query.exec("PRAGMA foreign_keys = ON;");
 
-    // 테이블 생성 (setupDatabase 로직을 여기에 합치거나 호출)
+    // 테이블 생성
     if(setupDatabase()) { 
         insertInitialData(); 
     }
@@ -155,16 +155,14 @@ bool DatabaseManager::insertInitialData() {
         query.exec();
     }
 
-    // 3. MEMBERS 테이블 (멤버십 적립용)
-    // 휴대폰 번호를 PK로 사용하며, 스탬프와 누적 금액을 관리합니다.
+    // MEMBERS 테이블 (멤버십 적립용)
     QString createMembers = "CREATE TABLE IF NOT EXISTS MEMBERS ("
                             "phone_num TEXT PRIMARY KEY, "
                             "stamp_count INTEGER DEFAULT 0, "
                             "total_pay_amount INTEGER DEFAULT 0);";
     if(!query.exec(createMembers)) qDebug() << "MEMBERS 생성 실패:" << query.lastError().text();
 
-    // 4. ORDERS 테이블 (주문 마스터)
-    // 누가, 언제, 어떻게, 매장/포장 여부를 저장합니다.
+    // ORDERS 테이블 (주문 마스터)
     QString createOrders = "CREATE TABLE IF NOT EXISTS ORDERS ("
                            "order_id INTEGER PRIMARY KEY AUTOINCREMENT, "
                            "member_phone TEXT, "
@@ -175,8 +173,7 @@ bool DatabaseManager::insertInitialData() {
                            "FOREIGN KEY(member_phone) REFERENCES MEMBERS(phone_num));";
     if(!query.exec(createOrders)) qDebug() << "ORDERS 생성 실패:" << query.lastError().text();
 
-    // 5. ORDER_ITEMS 테이블 (주문 상세)
-    // 한 주문에 어떤 메뉴들이 포함되었는지 상세 내역을 저장합니다.
+    // ORDER_ITEMS 테이블 (주문 상세)
     QString createOrderItems = "CREATE TABLE IF NOT EXISTS ORDER_ITEMS ("
                                "item_id INTEGER PRIMARY KEY AUTOINCREMENT, "
                                "order_id INTEGER, "
@@ -207,13 +204,13 @@ QStringList DatabaseManager::getCategoryNames() {
     QSqlQuery query("SELECT category_name FROM CATEGORIES ORDER BY category_id");
 
     while (query.next()) {
-        // DB에서 꺼낸 카테고리 이름을 리스트에 담음
+        // DB에서 꺼낸 카테고리 이름을 리스트에 담기
         list.append(query.value(0).toString());
     }
     return list;
 }
 
-// 특정 카테고리의 메뉴 호출 함수
+// 특정 카테고리의 메뉴 호출
 QList<QVariantMap> DatabaseManager::getMenusByCategory(const QString &categoryName) {
     QList<QVariantMap> menuList;
     QSqlQuery query;
