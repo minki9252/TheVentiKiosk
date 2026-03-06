@@ -2,6 +2,20 @@
 #include <QDebug>
 #include <QSqlError>
 
+
+void initDatabase() {
+    // SQLite DB 연결 설정
+    QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
+    db.setDatabaseName("theventi.db");
+
+    if (!db.open()) {
+        qDebug() << "DB 연결 실패:" << db.lastError().text();
+    } else {
+        qDebug() << "DB 연결 성공!";
+        // 여기서 필요한 테이블(메뉴, 주문 등) 생성 쿼리를 실행할 수 있습니다.
+    }
+}
+
 // static으로 선언된 instance 함수 구현
 DatabaseManager& DatabaseManager::instance() {
     // 프로그램 실행 시 단 한 번만 생성되는 정적 객체
@@ -13,6 +27,7 @@ DatabaseManager::DatabaseManager() {
     // SQLite 드라이버를 사용하도록 설정
     m_db = QSqlDatabase::addDatabase("QSQLITE");
 }
+
 
 bool DatabaseManager::initDatabase(const QString& dbPath) {
     m_db.setDatabaseName(dbPath);

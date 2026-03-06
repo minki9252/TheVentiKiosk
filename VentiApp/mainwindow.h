@@ -2,27 +2,32 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
-#include <QSqlDatabase>
+#include <QVariant>
+#include <QtSql/QSqlDatabase>
+#include <QSqlDatabase> // (아래 팁 참고)
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
 QT_END_NAMESPACE
 
-// 키오스크에서 발생할 수 있는 액션들을 열거형으로 정의합니다.
 enum KioskAction {
-    // 카테고리 설정
     CATEGORY_COFFEE,
     CATEGORY_BEVERAGE,
     CATEGORY_DESSERT,
-
-    // 메뉴 선택
     MENU_SELECT_ITEM,
     MENU_CANCEL_ITEM,
-
-    // 장바구니 설정
     CART_ADD,
     CART_REMOVE,
     CART_CHECKOUT
+};
+
+// 🌟 이벤트를 담을 구조체 정의
+struct KioskEvent {
+    KioskAction action;
+    int menuId = -1;           // 선택한 메뉴의 DB ID
+    int quantity = 1;          // 수량 (기본값 1)
+    QString option = "";       // ICE/HOT 등 옵션 정보
+    QVariant extraData;        // 기타 범용 데이터가 필요할 때를 대비
 };
 
 class MainWindow : public QMainWindow
@@ -34,17 +39,16 @@ public:
     ~MainWindow();
 
 private slots:
-    void on_introButton_clicked();    // 페이지 0 -> 1 이동
-    void on_storeButton_clicked();    // 페이지 1 -> 2 이동 (매장 선택)
-    void on_takeoutButton_clicked();  // 페이지 1 -> 2 이동 (포장 선택)
+    void on_introButton_clicked();   
+    void on_storeButton_clicked();   
+    void on_takeoutButton_clicked(); 
 
 private:
     Ui::MainWindow *ui;
-
-    QSqlDatabase db; // [위치: private 멤버 변수 구역] 여기에 db를 선언해야 합니다!
-
     void setup_db();
-    void handle(KioskAction action); // 이벤트를 처리할 핸들 함수
+    QSqlDatabase db;
+    // 🌟 파라미터를 구조체 하나로 변경
+    void handle(const KioskEvent &event); 
 };
 
 #endif // MAINWINDOW_H
