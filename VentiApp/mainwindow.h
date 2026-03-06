@@ -20,6 +20,34 @@ enum KioskAction {
     CART_REMOVE,
     CART_CHECKOUT
 };
+// 🌟 사용자가 최종적으로 담게 될 주문 아이템 구조체
+struct OrderItem {
+    int menuId;              // 메뉴 고유 번호
+    QString menuName;        // 메뉴 이름 (예: 아메리카노)
+    int basePrice;           // 메뉴 기본 가격
+
+    // 🔍 추가되어야 할 상세 옵션들
+    QString beanType;        // 원두 선택 (마일드, 다크, 디카페인)
+    QString size;            // 사이즈 (기본, 라지 등)
+    int extraShots = 0;      // 샷 추가 개수
+    QStringList toppings;    // 선택된 토핑 리스트 (펄, 자바칩 등)
+    QString whipAmount;      // 휘핑크림 양 (제외, 적게, 보통, 많이)
+
+    // 💰 계산 로직
+    int optionPrice = 0;     // 옵션으로 인해 추가된 금액
+    int totalPrice = 0;      // (basePrice + optionPrice) * quantity
+    int quantity = 1;        // 수량
+};
+
+// 🌟 신호 전달용 KioskEvent (수정안)
+struct KioskEvent {
+    KioskAction action;
+    int menuId;
+    // 단순한 신호 전달을 넘어 모달에 필요한 "카테고리 정보"를 함께 넘기면 좋습니다.
+    QString categoryName;    // "Coffee", "Beverage" 등 (모달 UI 결정용)
+    QVariant extraData;
+};
+
 
 // 🌟 이벤트를 담을 구조체 정의
 struct KioskEvent {
