@@ -77,6 +77,9 @@ void MainWindow::handle(const KioskEvent &event) {
     case CATEGORY_COFFEE:
         qDebug() << "커피 카테고리 선택됨";
         // TODO: 커피 메뉴 리스트를 UI에 출력하는 로직
+
+
+
         break;
 
     case CATEGORY_BEVERAGE:
