@@ -1,21 +1,19 @@
 #include "mainwindow.h"
 #include <QApplication>
 #include "databasemanager.h" // 라이브러리 헤더 포함
-#include <QSqlDatabase>
-#include <QSqlError>
 #include <QDebug>
 
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
 
-    // 1. DB 초기화
-    if (DatabaseManager::instance().initDatabase("venti.db")) {
-        // 테이블 생성 로직 호출 (필요시 내부에서 호출하도록 설계 가능)
-        // DatabaseManager::instance().createTables();
+    // DatabaseManager 라이브러리의 함수를 호출
+    if (!DatabaseManager::instance().initDatabase("venti.db")) {
+        qDebug() << "시스템을 종료합니다. DB 설정을 확인하세요.";
     }
 
     MainWindow w;
     w.show();
+    
     return a.exec();
 }
