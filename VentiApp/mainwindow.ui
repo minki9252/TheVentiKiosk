@@ -31,7 +31,7 @@
            </size>
           </property>
           <property name="styleSheet">
-           <string notr="true">border-image: url(:/g-dragon/벤티홍보.jpg);</string>
+           <string notr="true">border-image: url(:/G-dragon/벤티홍보.jpg);</string>
           </property>
           <property name="text">
            <string/>
