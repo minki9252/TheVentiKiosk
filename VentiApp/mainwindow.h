@@ -79,6 +79,7 @@ private slots:
 
 private:
     Ui::MainWindow *ui;
+    void setup_connections();
     void setup_db();
     QSqlDatabase db;
     // 🌟 파라미터를 구조체 하나로 변경
