@@ -59,7 +59,7 @@ void MainWindow::on_takeoutButton_clicked()
 void MainWindow::setup_db(){
     // SQLite는 파일 기반이므로 IP나 포트 설정이 필요 없습니다.
     db = QSqlDatabase::addDatabase("QSQLITE");
-    db.setDatabaseName("theventi.db"); // 실행 파일과 동일한 경로에 생성/읽기
+    db.setDatabaseName("venti.db"); // 실행 파일과 동일한 경로에 생성/읽기
 
     if (!db.open()) {
         qDebug() << "DB 연결 실패:" << db.lastError().text();

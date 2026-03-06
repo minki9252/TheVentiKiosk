@@ -2,6 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QSqlDatabase>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -39,6 +40,8 @@ private slots:
 
 private:
     Ui::MainWindow *ui;
+
+    QSqlDatabase db; // [위치: private 멤버 변수 구역] 여기에 db를 선언해야 합니다!
 
     void setup_db();
     void handle(KioskAction action); // 이벤트를 처리할 핸들 함수

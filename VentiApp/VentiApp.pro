@@ -1,5 +1,8 @@
 # VentiApp.pro
 QT += widgets sql
+QT += core gui sql
+
+greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 # 라이브러리 헤더 위치 참조 (VentiCore 폴더 안의 헤더 사용)
 INCLUDEPATH += $$PWD/../VentiCore
