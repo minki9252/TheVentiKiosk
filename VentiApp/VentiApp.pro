@@ -1,19 +1,17 @@
 # 1. Qt 모듈 설정
 QT += core gui sql widgets
 
-# 2. 헤더 검색 경로 (INCLUDEPATH)
-# VentiApp 최상위 폴더 (mainwindow.h 검색용)
-INCLUDEPATH += $$PWD
-# connect.h 가 있는 폴더 검색용
-INCLUDEPATH += $$PWD/common/src/header
-# VentiCore 라이브러리 헤더 검색용
-INCLUDEPATH += $$PWD/../VentiCore
+# 2. 헤더 검색 경로 (INCLUDEPATH) 수정
+INCLUDEPATH += $$PWD \
+               $$PWD/common/src/header \
+               $$PWD/../VentiCore \
+               $$PWD/header # 이 경로가 정확히 포함되어 있어야 합니다.
 
 # 3. 라이브러리 링크 (VentiCore)
 LIBS += -L$$OUT_PWD/../VentiCore/ -lVentiCore
 
 # 4. 소스 파일 목록 (cpp)
-# 🚨 주의: 새로 만든 폴더 안의 파일도 반드시 적어줘야 합니다!
+# ⚠️ 빌드 생성 파일(moc_*, qrc_*)은 절대 여기에 적지 마세요!
 SOURCES += \
     main.cpp \
     beverage.cpp \
@@ -21,16 +19,22 @@ SOURCES += \
     categorywidget.cpp \
     main_page.cpp \
     mainwindow.cpp \
-    common/src/connect.cpp
+    common/src/connect.cpp \
+    src/cart.cpp \
+    src/cartmanager.cpp
 
 # 5. 헤더 파일 목록 (h)
+# ⚠️ 빌드 생성 파일(ui_*, moc_*)은 절대 여기에 적지 마세요!
 HEADERS += \
     mainwindow.h \
     beverage.h \
     cartwidget.h \
     categorywidget.h \
     main_page.h \
-    common/src/header/connect.h
+    common/src/header/connect.h \
+    header/cart.h \
+    header/cartmanager.h \
+    header/kioskevent.h
 
 # 6. UI 및 리소스 파일
 FORMS += \
@@ -42,3 +46,7 @@ FORMS += \
 
 RESOURCES += \
     venti_image.qrc
+
+# 7. 기타 파일 목록 (프로젝트 트리 표시용)
+DISTFILES += \
+    $$PWD/*.jpg

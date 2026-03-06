@@ -104,19 +104,34 @@ void MainWindow::handle(const KioskEvent &event) {
         /////////////////// 메뉴 선택 끝 //////////////////////////////
 
 
-        /////////////////// 장바구니 설정 //////////////////////////////
+       /////////////////// 장바구니 설정 //////////////////////////////
     case CART_ADD:
-        qDebug() << "장바구니에 담기";
-        // TODO: 장바구니 UI 리스트 위젯에 항목 추가 및 총액 계산
+        m_cartManager.addItem(event); // 로직은 관리자에게 위임
+        refreshCartUI();              // 나는 UI만 다시 그림
+        break;
+
+    case CART_INCREASE_QTY:
+        m_cartManager.updateQty(event.extraData.toInt(), 1);
+        refreshCartUI();
+        break;
+
+    case CART_DECREASE_QTY:
+        m_cartManager.updateQty(event.extraData.toInt(), -1);
+        refreshCartUI();
         break;
 
     case CART_REMOVE:
-        qDebug() << "장바구니 항목 취소";
+        m_cartManager.removeItem(event.extraData.toInt());
+        refreshCartUI();
+        break;
+
+    case CART_CLEAR_ALL:
+        m_cartManager.clear();
+        refreshCartUI();
         break;
 
     case CART_CHECKOUT:
-        qDebug() << "결제 진행";
-        // TODO: 영수증 출력 로직 및 DB에 주문 내역 INSERT
+        // 결제 로직 등...
         break;
         /////////////////// 장바구니 설정 끝 //////////////////////////////
 
@@ -127,3 +142,21 @@ void MainWindow::handle(const KioskEvent &event) {
 }
 ////////////////////////////// 핸들 함수 끝 //////////////////////////////////////
 
+// 🌟 UI 갱신은 MainWindow가 담당합니다.
+void MainWindow::refreshCartUI() {
+    // 1. m_cart 객체에서 최신 리스트와 총액을 가져옵니다.
+    const QList<KioskEvent>& currentList = m_cart.getList();
+    int totalAmount = m_cart.getTotalPrice();
+
+    // 2. TODO: ui->cartListWidget->clear() 등 기존 UI 위젯 초기화
+
+    // 3. TODO: currentList를 반복문으로 돌면서 UI 위젯에 아이템 그리기
+    for(const auto& item : currentList) {
+        // 예: QString text = QString("%1 %2원").arg(item.menuName).arg(item.totalPrice);
+    }
+
+    // 4. 하단 총 결제금액 라벨 업데이트 
+    // ui->lblTotalAmount->setText(QString::number(totalAmount) + "원");
+    
+    qDebug() << "현재 장바구니 갱신 완료 - 총 금액:" << totalAmount << "원";
+}
