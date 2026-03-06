@@ -12,11 +12,23 @@ INCLUDEPATH += $$PWD/../VentiCore
 LIBS += -L$$OUT_PWD/../VentiCore/ -lVentiCore
 
 SOURCES += main.cpp \
+    beverage.cpp \
+    cartwidget.cpp \
+    categorywidget.cpp \
+    main_page.cpp \
     mainwindow.cpp
 
-HEADERS += mainwindow.h
+HEADERS += mainwindow.h \
+    beverage.h \
+    cartwidget.h \
+    categorywidget.h \
+    main_page.h
 
-FORMS += mainwindow.ui
+FORMS += mainwindow.ui \
+    beverage.ui \
+    cartwidget.ui \
+    categorywidget.ui \
+    main_page.ui
 
 RESOURCES += \
     venti_image.qrc
