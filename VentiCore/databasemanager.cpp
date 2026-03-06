@@ -69,7 +69,7 @@ bool DatabaseManager::setupDatabase() {
     return true;
 }
 
-void DatabaseManager::insertInitialData() {
+bool DatabaseManager::insertInitialData() {
     QSqlQuery query;
 
     QStringList categories = {"신메뉴", "커피", "버블티&티", "블렌디드", "베버리지", "에이드"};
@@ -148,5 +148,92 @@ void DatabaseManager::insertInitialData() {
         query.bindValue(":img", m.imgPath);
         query.exec();
     }
+
+    // 3. MEMBERS 테이블 (멤버십 적립용)
+    // 휴대폰 번호를 PK로 사용하며, 스탬프와 누적 금액을 관리합니다.
+    QString createMembers = "CREATE TABLE IF NOT EXISTS MEMBERS ("
+                            "phone_num TEXT PRIMARY KEY, "
+                            "stamp_count INTEGER DEFAULT 0, "
+                            "total_pay_amount INTEGER DEFAULT 0);";
+    if(!query.exec(createMembers)) qDebug() << "MEMBERS 생성 실패:" << query.lastError().text();
+
+    // 4. ORDERS 테이블 (주문 마스터)
+    // 누가, 언제, 어떻게, 매장/포장 여부를 저장합니다.
+    QString createOrders = "CREATE TABLE IF NOT EXISTS ORDERS ("
+                           "order_id INTEGER PRIMARY KEY AUTOINCREMENT, "
+                           "member_phone TEXT, "
+                           "order_date DATETIME DEFAULT CURRENT_TIMESTAMP, "
+                           "total_amount INTEGER, "
+                           "pay_method TEXT, "
+                           "is_takeout INTEGER, " // 0: 매장, 1: 포장
+                           "FOREIGN KEY(member_phone) REFERENCES MEMBERS(phone_num));";
+    if(!query.exec(createOrders)) qDebug() << "ORDERS 생성 실패:" << query.lastError().text();
+
+    // 5. ORDER_ITEMS 테이블 (주문 상세)
+    // 한 주문에 어떤 메뉴들이 포함되었는지 상세 내역을 저장합니다.
+    QString createOrderItems = "CREATE TABLE IF NOT EXISTS ORDER_ITEMS ("
+                               "item_id INTEGER PRIMARY KEY AUTOINCREMENT, "
+                               "order_id INTEGER, "
+                               "menu_id INTEGER, "
+                               "quantity INTEGER, "
+                               "subtotal INTEGER, "
+                               "selected_options TEXT, " // 예: "샷추가, 덜달게"
+                               "FOREIGN KEY(order_id) REFERENCES ORDERS(order_id), "
+                               "FOREIGN KEY(menu_id) REFERENCES MENU_INFO(menu_id));";
+    if(!query.exec(createOrderItems)) {
+        qDebug() << "ORDER_ITEMS 생성 실패:" << query.lastError().text();
+    } else {
+        qDebug() << "모든 테이블(5개) 생성 및 외래키 설정 완료!";
+    }
+
     qDebug() << "더벤티 메뉴 DB 구축 완료!";
+    return true;
 }
+
+// 카테고리 목록 호출 함수
+QStringList DatabaseManager::getCategoryNames() {
+    QStringList list;
+    QSqlQuery query("SELECT category_name FROM CATEGORIES ORDER BY category_id");
+
+    while (query.next()) {
+        // DB에서 꺼낸 카테고리 이름을 리스트에 담음
+        list.append(query.value(0).toString());
+    }
+    return list;
+}
+
+// 특정 카테고리의 메뉴 호출 함수
+QList<QVariantMap> DatabaseManager::getMenusByCategory(const QString &categoryName) {
+    QList<QVariantMap> menuList;
+    QSqlQuery query;
+
+    // 조인(JOIN)을 사용해 카테고리 이름으로 해당 메뉴들을 한 번에 찾기
+    query.prepare("SELECT kr_name, price, image_path FROM MENU_INFO "
+                  "WHERE category_id = (SELECT category_id FROM CATEGORIES WHERE category_name = :catName)");
+    query.bindValue(":catName", categoryName);
+
+    if (query.exec()) {
+        while (query.next()) {
+            QVariantMap menu;
+            menu["name"] = query.value(0).toString();
+            menu["price"] = query.value(1).toInt();
+            menu["image"] = query.value(2).toString();
+            menuList.append(menu);
+        }
+    }
+    return menuList;
+}
+
+// 사용예시
+// // 1. 카테고리 버튼 생성 시
+// QStringList categories = DatabaseManager::instance().getCategoryNames();
+// // categories = ["신메뉴", "커피", "버블티&티", ...] 순서대로 버튼을 만들면 됨
+
+// // 2. "커피" 버튼을 눌렀을 때 메뉴판 갱신
+// QList<QVariantMap> coffeeMenus = DatabaseManager::instance().getMenusByCategory("커피");
+
+// for(const auto &item : coffeeMenus) {
+//     QString name = item["name"].toString();    // "아메리카노"
+//     int price = item["price"].toInt();         // 2000
+//     QString img = item["image"].toString();    // ":/Coffe/americano.png"
+// }

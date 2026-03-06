@@ -48,7 +48,7 @@ private:
 
     QSqlDatabase db;
 
-    void handle(KioskAction action); // 이벤트를 처리할 핸들 함수
+    void handle(const KioskEvent &event); // 이벤트를 처리할 핸들 함수
 };
 
 #endif // MAINWINDOW_H
