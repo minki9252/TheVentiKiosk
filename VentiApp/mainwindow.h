@@ -40,12 +40,18 @@ struct OrderItem {
 };
 
 // 🌟 신호 전달용 KioskEvent (수정안)
-struct KioskEvent {
-    KioskAction action;
-    int menuId;
+struct KioskSignal{
+    KioskAction Add_to_Cart; //담기 버튼*신호)를 구조체 데이터 정보와 함꼐 보냄
+    int menuId;              // 메뉴 고유 번호
+    QString menuName;        // 메뉴 이름 (예: 아메리카노)
+    int basePrice;           // 메뉴 기본 가격
+    int optionPrice = 0;     // 옵션으로 인해 추가된 금액
+    int totalPrice = 0;      // (basePrice + optionPrice) * quantity
+    int quantity = 1;        // 수량
+
     // 단순한 신호 전달을 넘어 모달에 필요한 "카테고리 정보"를 함께 넘기면 좋습니다.
     QString categoryName;    // "Coffee", "Beverage" 등 (모달 UI 결정용)
-    QVariant extraData;
+    QVariant extraData; //메뉴마다 넘겨줘야 할 정보가 다를떄
 };
 
 
