@@ -6,7 +6,7 @@
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
-    , ui(new Ui::MainWindow)   // 추후 개발 예정 
+    , ui(new Ui::MainWindow)  
 {
 
     ui->setupUi(this);
