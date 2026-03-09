@@ -1,6 +1,7 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "databasemanager.h"
+#include "categorywidget.h"
 #include <QSqlDatabase>
 #include <QSqlError>
 #include <QSqlQuery>
@@ -18,6 +19,10 @@ MainWindow::MainWindow(QWidget *parent)
     if(!DatabaseManager::instance().initDatabase("venti.db")) {
         qDebug() << "DB 연결 실패!";
     }
+    else {
+        // 추가: DB가 열리면 테이블을 만들고 메뉴를 집어넣으라는 명령입니다.
+        DatabaseManager::instance().setupDatabase();
+    }
 
     // mainwindow.ui에서 파일 선택후 경로 설정
     QString imagePath = ":/G-dragon/벤티홍보.jpg";
@@ -30,6 +35,14 @@ MainWindow::MainWindow(QWidget *parent)
 
     // 나중에 Qt Creator에서 만든 버튼을 클릭했을 때 handle 함수를 호출하는 예시 (C++11 람다 사용)
     // connect(ui->btnCoffee, &QPushButton::clicked, this, [this](){ handle(CATEGORY_COFFEE); });
+
+    // KioskEvent를 던지는 이 딱 한 줄의 connect문이 모든 카테고리 버튼을 처리함
+    connect(ui->categoryWidget, &categorywidget::categorySelected, this, [this](int actionCode) {
+        KioskEvent event;
+        event.action = static_cast<KioskAction>(actionCode);
+        handle(event);
+    });
+
 }
 
 MainWindow::~MainWindow()
@@ -67,9 +80,12 @@ void MainWindow::handle(const KioskEvent &event) {
     switch(event.action){
 
         /////////////////// 카테고리 설정 //////////////////////////////
-    case CATEGORY_COFFEE:
-        qDebug() << "커피 카테고리 선택됨";
-        // TODO: 커피 메뉴 리스트를 UI에 출력하는 로직
+    case CATEGORY_NEW_MENU:
+        qDebug() << "신메뉴 카테고리 선택됨";
+        break;
+    case CATEGORY_ICED_COFFEE:
+        qDebug() << "아이스커피 카테고리 선택됨";
+        ui->widget_2->loadMenus("커피");
         break;
 
     case CATEGORY_BEVERAGE:

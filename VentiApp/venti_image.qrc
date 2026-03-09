@@ -2,50 +2,18 @@
     <qresource prefix="/G-dragon">
         <file>벤티홍보.jpg</file>
     </qresource>
-    <qresource prefix="/Coffe">
-        <file>카라멜마끼아또.jpg</file>
-        <file>토피넛라떼.jpg</file>
-        <file>카페모카.jpg</file>
-        <file>아인슈페너.jpg</file>
-        <file>믹스커피.jpg</file>
-        <file>카페라떼.jpg</file>
-        <file>아이스아메리카노.jpg</file>
+    <qresource prefix="/Coffee">
+        <file>americano.png</file>
+        <file>latte.png</file>
+        <file>caramel.png</file>
+        <file>mocha.png</file>
+        <file>mix.png</file>
+        <file>einspanner.png</file>
+        <file>toffeenut.png</file>
     </qresource>
-    <qresource prefix="/Beverage">
-        <file>말차아인슈페너.jpg</file>
-        <file>말차라떼.jpg</file>
-        <file>딸기라떼.jpg</file>
-        <file>로얄밀크티.jpg</file>
-        <file>미숫가루.jpg</file>
-        <file>군고구마라떼.jpg</file>
-    </qresource>
-    <qresource prefix="/New_menu">
-        <file>꿀배생강티.jpg</file>
-        <file>오미자석류티.jpg</file>
-        <file>더쌍화차.jpg</file>
-    </qresource>
-    <qresource prefix="/Blended">
-        <file>쿠키앤크림프라페.jpg</file>
-        <file>자바칩프라페.jpg</file>
-        <file>밀크쉐이크.jpg</file>
-        <file>초코쉐이크.jpg</file>
-        <file>망고요거트스무디.jpg</file>
-        <file>블루베리요거트스무디.jpg</file>
-        <file>딸기요거트스무디.jpg</file>
-        <file>플레인요거트스무디.jpg</file>
-        <file>드래곤스무디요거트.jpg</file>
-        <file>드래곤스무디소다.jpg</file>
-    </qresource>
-    <qresource prefix="/Ade">
-        <file>레몬에이드.jpg</file>
-        <file>애플망고에이드.jpg</file>
-        <file>자몽에이드.jpg</file>
-    </qresource>
-    <qresource prefix="/Bubble_tea">
-        <file>타로버블티.jpg</file>
-        <file>흑설탕버블티.jpg</file>
-        <file>리치캐모마일.jpg</file>
-        <file>자몽허니블랙티.jpg</file>
-        <file>복숭아아이스티.jpg</file>
-    </qresource>
+    <qresource prefix="/Beverage"/>
+    <qresource prefix="/New_menu"/>
+    <qresource prefix="/Blended"/>
+    <qresource prefix="/Ade"/>
+    <qresource prefix="/Bubble_tea"/>
 </RCC>

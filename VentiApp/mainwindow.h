@@ -11,7 +11,8 @@ namespace Ui { class MainWindow; }
 QT_END_NAMESPACE
 
 enum KioskAction {
-    CATEGORY_COFFEE,
+    CATEGORY_NEW_MENU,
+    CATEGORY_ICED_COFFEE,
     CATEGORY_BEVERAGE,
     CATEGORY_DESSERT,
     MENU_SELECT_ITEM,

@@ -16,19 +16,22 @@ SOURCES += main.cpp \
     cartwidget.cpp \
     categorywidget.cpp \
     main_page.cpp \
-    mainwindow.cpp
+    mainwindow.cpp \
+    option_modal.cpp
 
 HEADERS += mainwindow.h \
     beverage.h \
     cartwidget.h \
     categorywidget.h \
-    main_page.h
+    main_page.h \
+    option_modal.h
 
 FORMS += mainwindow.ui \
     beverage.ui \
     cartwidget.ui \
     categorywidget.ui \
-    main_page.ui
+    main_page.ui \
+    option_modal.ui
 
 RESOURCES += \
     venti_image.qrc
