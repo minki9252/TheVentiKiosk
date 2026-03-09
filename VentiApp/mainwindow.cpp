@@ -6,16 +6,18 @@
 #include <QSqlError>
 #include <QSqlQuery>
 #include <QDebug>
+#include <QTimer>
+#include <QListWidgetItem>
+#include <QIcon>
+#include <utility>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
-    , ui(new Ui::MainWindow)   // 추후 개발 예정 
+    , ui(new Ui::MainWindow)
 {
-
     ui->setupUi(this);
 
-    // [위치: 생성자 내부]
-    // UI가 뜨기 전 혹은 직후에 DB 매니저를 통해 세팅을 끝냅니다.
+    // DB 초기화
     if(!DatabaseManager::instance().initDatabase("venti.db")) {
         qDebug() << "DB 연결 실패!";
     }
@@ -24,17 +26,14 @@ MainWindow::MainWindow(QWidget *parent)
         DatabaseManager::instance().setupDatabase();
     }
 
-    // mainwindow.ui에서 파일 선택후 경로 설정
-    QString imagePath = ":/G-dragon/벤티홍보.jpg";
+    // 초기화면 설정
+    ui->introButton->setStyleSheet("border-image: url(:/G-dragon/벤티홍보.jpg); border: none;");
 
-    // 버튼의 배경으로 이미지 넣기 (CSS 이용)
-    ui->introButton->setStyleSheet(QString("border-image: url(%1); border: none;").arg(imagePath));
+    // 안내 문구 깜빡임 타이머
+    touchTimer = new QTimer(this);
+    connect(touchTimer, &QTimer::timeout, this, &MainWindow::toggleTouchText);
+    touchTimer->start(700);
 
-    // 프로그램 시작 시 무조건 0번 페이지(홍보 모델)부터 보여줌
-    ui->stackedWidget->setCurrentIndex(0);
-
-    // 나중에 Qt Creator에서 만든 버튼을 클릭했을 때 handle 함수를 호출하는 예시 (C++11 람다 사용)
-    // connect(ui->btnCoffee, &QPushButton::clicked, this, [this](){ handle(CATEGORY_COFFEE); });
 
     // KioskEvent를 던지는 이 딱 한 줄의 connect문이 모든 카테고리 버튼을 처리함
     connect(ui->categoryWidget, &categorywidget::categorySelected, this, [this](int actionCode) {
@@ -43,36 +42,78 @@ MainWindow::MainWindow(QWidget *parent)
         handle(event);
     });
 
+    ui->stackedWidget->setCurrentIndex(0); // 시작은 홍보화면
 }
 
-MainWindow::~MainWindow()
+MainWindow::~MainWindow() { delete ui; }
+
+
+
+// 안내 문구 깜빡임 로직
+void MainWindow::toggleTouchText()
 {
-    delete ui;
+    if (ui->lblTouchNotice) {
+        if (isVisible) {
+            ui->lblTouchNotice->setStyleSheet("color: rgba(93, 45, 145, 0); font-size: 20pt; font-weight: bold;");
+        } else {
+            ui->lblTouchNotice->setStyleSheet("color: rgba(93, 45, 145, 255); font-size: 20pt; font-weight: bold;");
+        }
+        isVisible = !isVisible;
+    }
 }
 
-// 홍보 모델 이미지 버튼 클릭 시
-void MainWindow::on_introButton_clicked()
-{
-    // 0번 페이지(초기화면)에서 1번 페이지(선택화면)로 전환
-    ui->stackedWidget->setCurrentIndex(1);
-    qDebug() << "초기화면 -> 선택화면 이동 완료";
+// 버튼 클릭 이벤트 함수
+void MainWindow::on_introButton_clicked() {
+    ui->stackedWidget->setCurrentIndex(1); // 매장/포장 선택 페이지로
 }
 
-// 매장 버튼 클릭 시
-void MainWindow::on_storeButton_clicked()
-{
-    // 1번 페이지(선택화면)에서 2번 페이지(메뉴화면)로 전환
+void MainWindow::on_storeButton_clicked() {
+    currentOrderType = 0; // 매장
+    ui->stackedWidget->setCurrentIndex(2); // 메뉴판 페이지로
+    // loadMenus("신메뉴"); // 첫 화면 로딩
+}
+
+void MainWindow::on_takeoutButton_clicked() {
+    currentOrderType = 1; // 포장
     ui->stackedWidget->setCurrentIndex(2);
-    qDebug() << "매장 선택 -> 메뉴판 이동 완료";
+    // loadMenus("신메뉴");
 }
 
-// 포장 버튼 클릭 시
-void MainWindow::on_takeoutButton_clicked()
-{
-    // 2번 페이지(메뉴화면)로 이동
-    ui->stackedWidget->setCurrentIndex(2);
-    qDebug() << "포장 선택 -> 메뉴판 이동 완료";
-}
+// void MainWindow::updateCartTable() {
+//     // 기존 테이블 내용 싹 비우기
+//     ui->tableCart->setRowCount(0);
+
+//     int row = 0;
+//     int totalAmount = 0;
+
+//     // 장바구니 맵을 순회하며 테이블에 한 줄씩 추가
+//     for (auto it = cartData.begin(); it != cartData.end(); ++it) {
+//         QString name = it.key();
+//         int count = it.value();
+
+//         int pricePerItem = 2000; // 일단 예시로 2000원 고정
+//         int subTotal = pricePerItem * count;
+
+//         ui->tableCart->insertRow(row);
+//         ui->tableCart->setItem(row, 0, new QTableWidgetItem(name));
+//         ui->tableCart->setItem(row, 1, new QTableWidgetItem(QString::number(count)));
+//         ui->tableCart->setItem(row, 2, new QTableWidgetItem(QString::number(subTotal) + "원"));
+
+//         totalAmount += subTotal;void processCheckout();      // 결제 처리 로직
+//         row++;
+//     }
+//     ui->lblTotal->setText(QString("총 결제 금액: %1원").arg(totalAmount));
+// }
+
+// void MainWindow::processCheckout() {
+//     qDebug() << "결제 진행 중... 총 항목 수:" << cartData.size();
+//     qDebug() << "결제가 완료되었습니다! 초기 화면으로 돌아갑니다.";
+
+//     // 결제 완료 후 장바구니 비우기 및 초기 화면으로 이동
+//     cartData.clear();
+//     updateCartTable();
+//     ui->stackedWidget->setCurrentIndex(0);
+// }
 
 /////////////////////// 핸들 함수 시작 //////////////////////////////////////
 void MainWindow::handle(const KioskEvent &event) {
@@ -89,6 +130,7 @@ void MainWindow::handle(const KioskEvent &event) {
         break;
 
     case CATEGORY_BEVERAGE:
+
         qDebug() << "음료 카테고리 선택됨";
         break;
 
@@ -101,7 +143,6 @@ void MainWindow::handle(const KioskEvent &event) {
         /////////////////// 메뉴 선택 설정 //////////////////////////////
     case MENU_SELECT_ITEM:
         qDebug() << "메뉴가 선택됨";
-        // TODO: 선택된 메뉴의 상세 정보 팝업 띄우기 또는 임시 변수에 저장
         break;
 
     case MENU_CANCEL_ITEM:
@@ -113,7 +154,6 @@ void MainWindow::handle(const KioskEvent &event) {
         /////////////////// 장바구니 설정 //////////////////////////////
     case CART_ADD:
         qDebug() << "장바구니에 담기";
-        // TODO: 장바구니 UI 리스트 위젯에 항목 추가 및 총액 계산
         break;
 
     case CART_REMOVE:
@@ -122,7 +162,6 @@ void MainWindow::handle(const KioskEvent &event) {
 
     case CART_CHECKOUT:
         qDebug() << "결제 진행";
-        // TODO: 영수증 출력 로직 및 DB에 주문 내역 INSERT
         break;
         /////////////////// 장바구니 설정 끝 //////////////////////////////
 
@@ -132,4 +171,3 @@ void MainWindow::handle(const KioskEvent &event) {
     }
 }
 ////////////////////////////// 핸들 함수 끝 //////////////////////////////////////
-

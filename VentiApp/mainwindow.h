@@ -3,8 +3,9 @@
 
 #include <QMainWindow>
 #include <QVariant>
-#include <QtSql/QSqlDatabase>
-#include <QSqlDatabase> // (아래 팁 참고)
+#include <QSqlDatabase>
+#include <QTimer>
+#include <QMap>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -40,16 +41,24 @@ public:
     ~MainWindow();
 
 private slots:
-    void on_introButton_clicked();   
-    void on_storeButton_clicked();   
-    void on_takeoutButton_clicked(); 
+    void on_introButton_clicked();
+    void on_storeButton_clicked();
+    void on_takeoutButton_clicked();
+    void toggleTouchText(); // 텍스트 깜빡임용 슬롯
 
 private:
     Ui::MainWindow *ui;
-
     QSqlDatabase db;
+    QTimer *touchTimer;     // 타이머 객체
+    QMap<QString, int> cartData;
 
+    bool isVisible = true;  // 가시성 상태 변수
+    int currentOrderType = 0; // 0: 매장, 1: 포장
     void handle(const KioskEvent &event); // 이벤트를 처리할 핸들 함수
+    void loadMenus(const QString &categoryName);    // 메뉴판을 채우는 함수
+    void updateCartTable();
+    void processCheckout();
+
 };
 
 #endif // MAINWINDOW_H

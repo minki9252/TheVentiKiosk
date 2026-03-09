@@ -11,9 +11,47 @@
         <file>einspanner.png</file>
         <file>toffeenut.png</file>
     </qresource>
-    <qresource prefix="/Beverage"/>
-    <qresource prefix="/New_menu"/>
-    <qresource prefix="/Blended"/>
-    <qresource prefix="/Ade"/>
-    <qresource prefix="/Bubble_tea"/>
+    <qresource prefix="/Beverage">
+        <file>matcha_einspanner.png</file>
+        <file>matcha_latte.png</file>
+        <file>strawberry_latte.png</file>
+        <file>royal_milk_tea.png</file>
+        <file>misugaru.png</file>
+        <file>sweet_potato.png</file>
+    </qresource>
+    <qresource prefix="/New_menu">
+        <file>honey_pear.png</file>
+        <file>omija.png</file>
+        <file>ssanghwa.png</file>
+    </qresource>
+    <qresource prefix="/Blended">
+        <file>cookie_cream.png</file>
+        <file>javachip.png</file>
+        <file>milk_shake.png</file>
+        <file>choco_shake.png</file>
+        <file>mango_yogurt.png</file>
+        <file>blueberry_yogurt.png</file>
+        <file>strawberry_yogurt.png</file>
+        <file>plain_yogurt.png</file>
+        <file>dragon_yogurt.png</file>
+        <file>dragon_soda.png</file>
+    </qresource>
+    <qresource prefix="/Ade">
+        <file>lemon_ade.png</file>
+        <file>apple_mango.png</file>
+        <file>grapefruit_ade.png</file>
+    </qresource>
+    <qresource prefix="/Bubble_tea">
+        <file>taro_bubble.png</file>
+        <file>black_sugar_bubble.png</file>
+        <file>rich_camomile.png</file>
+        <file>grapefruit_honey.png</file>
+        <file>peach_ice_tea.png</file>
+    </qresource>
+    <qresource prefix="/">
+        <file>logo.jpg</file>
+    </qresource>
+    <qresource prefix="/data">
+        <file>menus.json</file>
+    </qresource>
 </RCC>

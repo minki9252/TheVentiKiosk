@@ -1,11 +1,24 @@
 #ifndef DATABASEMANAGER_H
 #define DATABASEMANAGER_H
 
+#include <QString>
 #include <QSqlDatabase>
 #include <QSqlQuery>
 #include <QSqlError>
 #include <QDebug>
 #include <QStringList>
+
+// 데이터를 담는 순수 객체 (Entity)
+struct MenuData {
+    QString category;
+    QString name;
+    int price;
+    QString imgPath;
+
+    MenuData() : price(0) {}
+    MenuData(QString c, QString n, int p, QString i)
+        : category(c), name(n), price(p), imgPath(i) {}
+};
 
 class DatabaseManager {
 public:

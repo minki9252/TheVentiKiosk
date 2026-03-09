@@ -1,6 +1,6 @@
 #include "mainwindow.h"
 #include <QApplication>
-#include "databasemanager.h" // 라이브러리 헤더 포함
+#include "databasemanager.h"
 #include <QDebug>
 
 int main(int argc, char *argv[])

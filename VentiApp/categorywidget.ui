@@ -29,46 +29,29 @@
    <item>
     <layout class="QGridLayout" name="bar_layout">
      <item row="0" column="0">
-      <spacer name="horizontalSpacer">
-       <property name="orientation">
-        <enum>Qt::Orientation::Horizontal</enum>
-       </property>
-       <property name="sizeHint" stdset="0">
-        <size>
-         <width>40</width>
-         <height>20</height>
-        </size>
-       </property>
-      </spacer>
-     </item>
-     <item row="0" column="1">
       <widget class="QPushButton" name="home_button">
        <property name="text">
         <string>home</string>
        </property>
       </widget>
      </item>
-     <item row="0" column="2">
+     <item row="0" column="1">
       <spacer name="horizontalSpacer_2">
        <property name="orientation">
         <enum>Qt::Orientation::Horizontal</enum>
        </property>
+       <property name="sizeType">
+        <enum>QSizePolicy::Policy::Fixed</enum>
+       </property>
        <property name="sizeHint" stdset="0">
         <size>
-         <width>40</width>
+         <width>130</width>
          <height>20</height>
         </size>
        </property>
       </spacer>
      </item>
      <item row="0" column="3">
-      <widget class="QLabel" name="label">
-       <property name="text">
-        <string>더 벤티 </string>
-       </property>
-      </widget>
-     </item>
-     <item row="0" column="4">
       <spacer name="horizontalSpacer_3">
        <property name="orientation">
         <enum>Qt::Orientation::Horizontal</enum>
@@ -80,6 +63,13 @@
         </size>
        </property>
       </spacer>
+     </item>
+     <item row="0" column="2">
+      <widget class="QLabel" name="label">
+       <property name="text">
+        <string>더 벤티 </string>
+       </property>
+      </widget>
      </item>
     </layout>
    </item>
