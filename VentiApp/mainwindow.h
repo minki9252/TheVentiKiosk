@@ -3,8 +3,7 @@
 
 #include <QMainWindow>
 #include <QVariant>
-#include <QtSql/QSqlDatabase>
-#include <QSqlDatabase> // (아래 팁 참고)
+#include <QSqlDatabase> 
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -48,11 +47,15 @@ private:
     Ui::MainWindow *ui;
     QSqlDatabase db;
     QTimer *touchTimer;     // 타이머 객체
+    QMap<QString, int> cartData;
+
     bool isVisible = true;  // 가시성 상태 변수
     int currentOrderType = 0; // 0: 매장, 1: 포장
     void handle(const KioskEvent &event); // 이벤트를 처리할 핸들 함수
     void loadMenus(const QString &categoryName);    // 메뉴판을 채우는 함수
-    void clearMenuGrid();   // 기존에 생성된 메뉴위젯을 삭제해주는 함수 (카테고리 변경시 필요)
+    void updateCartTable();
+    void processCheckout();
+
 };
 
 #endif // MAINWINDOW_H
