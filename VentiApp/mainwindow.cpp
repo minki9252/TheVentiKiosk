@@ -206,6 +206,7 @@ void MainWindow::handle(const KioskEvent &event) {
         break;
 
     case CATEGORY_BEVERAGE:
+
         qDebug() << "음료 카테고리 선택됨";
         break;
 

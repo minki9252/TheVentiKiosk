@@ -49,6 +49,9 @@
         <file>peach_ice_tea.png</file>
     </qresource>
     <qresource prefix="/">
-        <file>../../Downloads/the_venty_menu/the_venty/logo.jpg</file>
+        <file>logo.jpg</file>
+    </qresource>
+    <qresource prefix="/data">
+        <file>menus.json</file>
     </qresource>
 </RCC>

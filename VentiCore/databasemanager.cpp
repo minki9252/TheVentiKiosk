@@ -1,10 +1,44 @@
 #include "databasemanager.h"
+#include <QFile>
+#include <QJsonDocument>
+#include <QJsonObject>
+#include <QJsonArray>
+#include <QCoreApplication>
 
+// 데이터를 읽어오는 객체 (하드코딩 방지용)
+class MenuDataLoader {
+public:
+    static bool loadFromJson(const QString& filePath, QStringList& categories, QList<MenuData>& menus) {
+        QFile file(filePath);
+        // 주석: 리소스 경로에서 파일을 읽기 전용으로 엽니다.
+        if (!file.open(QIODevice::ReadOnly)) return false;
+
+        QJsonDocument doc = QJsonDocument::fromJson(file.readAll());
+        QJsonObject root = doc.object();
+
+        // 주석: 카테고리 목록을 동적으로 추출합니다.
+        QJsonArray catArray = root["categories"].toArray();
+        for (const QJsonValue &v : catArray) categories << v.toString();
+
+        // 주석: 메뉴 상세 정보를 객체 리스트에 담습니다.
+        QJsonArray menuArray = root["menus"].toArray();
+        for (const QJsonValue &v : menuArray) {
+            QJsonObject obj = v.toObject();
+            menus.append(MenuData(
+                obj["category"].toString(),
+                obj["name"].toString(),
+                obj["price"].toInt(),
+                obj["image"].toString()
+                ));
+        }
+        return true;
+    }
+};
 
 void initDatabase() {
     // SQLite DB 연결 설정
     QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
-    db.setDatabaseName("theventi.db");
+    db.setDatabaseName("venti.db");
 
     if (!db.open()) {
         qDebug() << "DB 연결 실패:" << db.lastError().text();
@@ -47,9 +81,12 @@ bool DatabaseManager::initDatabase(const QString& dbName) {
 }
 
 DatabaseManager::DatabaseManager() {
-    // 생성자에서 DB 객체 초기화
     db = QSqlDatabase::addDatabase("QSQLITE");
-    db.setDatabaseName("venti.db");
+
+    QString dbPath = QCoreApplication::applicationDirPath() + "/venti.db";
+    db.setDatabaseName(dbPath);
+
+    qDebug() << "현재 사용 중인 DB 절대 경로:" << dbPath;
 }
 
 bool DatabaseManager::setupDatabase() {
@@ -76,125 +113,55 @@ bool DatabaseManager::setupDatabase() {
 }
 
 bool DatabaseManager::insertInitialData() {
+    // 1. 외부 파일에서 데이터 로드 (객체화 및 하드코딩 분리)
+    QStringList categories;
+    QList<MenuData> menus;
+
+    // JSON 로더를 통해 데이터를 객체 리스트로 가져옴
+    if (!MenuDataLoader::loadFromJson(":/data/menus.json", categories, menus)) {
+        qDebug() << "데이터 파일을 읽을 수 없습니다.";
+        return false;
+    }
+
     QSqlQuery query;
 
-    QStringList categories = {"신메뉴", "커피", "버블티&티", "블렌디드", "베버리지", "에이드"};
+    // 2. 카테고리 자동 삽입 (중복 방지 로직 포함)
     for (const QString &catName : categories) {
+        // 주석: 카테고리 이름이 없을 때만 삽입하여 데이터 무결성 유지
         query.prepare("INSERT INTO CATEGORIES (category_name) "
                       "SELECT :name WHERE NOT EXISTS (SELECT 1 FROM CATEGORIES WHERE category_name = :name)");
         query.bindValue(":name", catName);
-        query.exec();
+
+        if (!query.exec()) {
+            qDebug() << "카테고리 삽입 실패:" << query.lastError().text();
+        }
     }
 
-
-    struct MenuData {
-        QString category;
-        QString name;
-        int price;
-        QString imgPath;
-        MenuData(QString c, QString n, int p, QString i) : category(c), name(n), price(p), imgPath(i) {}
-    };
-
-    QList<MenuData> menus;
-
-    // 신메뉴
-    menus.append(MenuData("신메뉴", "꿀배생강티", 3500, ":/New_menu/honey_pear.png"));
-    menus.append(MenuData("신메뉴", "더 쌍화차", 3500, ":/New_menu/ssanghwa.png"));
-    menus.append(MenuData("신메뉴", "오미자석류티", 3500, ":/New_menu/omija.png"));
-
-    // 커피
-    menus.append(MenuData("커피", "아메리카노", 2000, ":/Coffee/americano.png"));
-    menus.append(MenuData("커피", "믹스커피", 2500, ":/Coffee/mix.png"));
-    menus.append(MenuData("커피", "아인슈페너", 3500, ":/Coffee/einspanner.png"));
-    menus.append(MenuData("커피", "카라멜마끼아또", 3500, ":/Coffee/caramel.png"));
-    menus.append(MenuData("커피", "카페라떼", 3000, ":/Coffee/latte.png"));
-    menus.append(MenuData("커피", "카페모카", 3500, ":/Coffee/mocha.png"));
-    menus.append(MenuData("커피", "토피넛라떼", 3700, ":/Coffee/toffeenut.png"));
-
-    // 버블티&티
-    menus.append(MenuData("버블티&티", "리치캐모마일티", 2500, ":/Bubble_tea/rich_camomile.png"));
-    menus.append(MenuData("버블티&티", "복숭아아이스티", 3000, ":/Bubble_tea/peach_ice_tea.png"));
-    menus.append(MenuData("버블티&티", "자몽허니블랙티", 3500, ":/Bubble_tea/grapefruit_honey.png"));
-    menus.append(MenuData("버블티&티", "타로버블티", 3900, ":/Bubble_tea/taro_bubble.png"));
-    menus.append(MenuData("버블티&티", "흑설탕버블티", 3900, ":/Bubble_tea/black_sugar_bubble.png"));
-
-    // 블렌디드
-    menus.append(MenuData("블렌디드", "드래곤스무디소다", 4500, ":/Blended/dragon_soda.png"));
-    menus.append(MenuData("블렌디드", "드래곤스무디요거트", 4300, ":/Blended/dragon_yogurt.png"));
-    menus.append(MenuData("블렌디드", "딸기요거트스무디", 3900, ":/Blended/strawberry_yogurt.png"));
-    menus.append(MenuData("블렌디드", "망고요거트스무디", 3900, ":/Blended/mango_yogurt.png"));
-    menus.append(MenuData("블렌디드", "밀크쉐이크", 3900, ":/Blended/milk_shake.png"));
-    menus.append(MenuData("블렌디드", "블루베리요거트스무디", 3900, ":/Blended/blueberry_yogurt.png"));
-    menus.append(MenuData("블렌디드", "자바칩프라페", 3900, ":/Blended/javachip.png"));
-    menus.append(MenuData("블렌디드", "초코쉐이크", 3900, ":/Blended/choco_shake.png"));
-    menus.append(MenuData("블렌디드", "쿠키앤크림프라페", 3900, ":/Blended/cookie_cream.png"));
-    menus.append(MenuData("블렌디드", "플레인요거트스무디", 3900, ":/Blended/plain_yogurt.png"));
-
-    // 베버리지
-    menus.append(MenuData("베버리지", "군고구마라떼", 3500, ":/Beverage/sweet_potato.png"));
-    menus.append(MenuData("베버리지", "딸기라떼", 3500, ":/Beverage/strawberry_latte.png"));
-    menus.append(MenuData("베버리지", "로얄밀크티", 3500, ":/Beverage/royal_milk_tea.png"));
-    menus.append(MenuData("베버리지", "말차라떼", 3500, ":/Beverage/matcha_latte.png"));
-    menus.append(MenuData("베버리지", "말차아인슈페너", 3500, ":/Beverage/matcha_einspanner.png"));
-    menus.append(MenuData("베버리지", "미숫가루", 3000, ":/Beverage/misugaru.png"));
-
-    // 에이드
-    menus.append(MenuData("에이드", "레몬에이드", 3900, ":/Ade/lemon_ade.png"));
-    menus.append(MenuData("에이드", "애플망고에이드", 3900, ":/Ade/apple_mango.png"));
-    menus.append(MenuData("에이드", "자몽에이드", 3900, ":/Ade/grapefruit_ade.png"));
-
-    // 데이터 삽입 실행
+    // 3. 메뉴 정보 자동 삽입 (JOIN 서브쿼리 활용)
+    // 주석: MenuData 객체의 멤버 변수들을 쿼리에 바인딩
     for (const auto &m : menus) {
         query.prepare("INSERT INTO MENU_INFO (category_id, kr_name, price, image_path, is_soldout) "
-                      "SELECT (SELECT category_id FROM CATEGORIES WHERE category_name = :cat), :name, :price, :img, 0 "
+                      "SELECT (SELECT category_id FROM CATEGORIES WHERE category_name = :cat), "
+                      ":name, :price, :img, 0 "
                       "WHERE NOT EXISTS (SELECT 1 FROM MENU_INFO WHERE kr_name = :name)");
-        query.bindValue(":cat", m.category);
-        query.bindValue(":name", m.name);
-        query.bindValue(":price", m.price);
-        query.bindValue(":img", m.imgPath);
-        query.exec();
-    }
 
-    // MEMBERS 테이블 (멤버십 적립용)
-    QString createMembers = "CREATE TABLE IF NOT EXISTS MEMBERS ("
-                            "phone_num TEXT PRIMARY KEY, "
-                            "stamp_count INTEGER DEFAULT 0, "
-                            "total_pay_amount INTEGER DEFAULT 0);";
-    if(!query.exec(createMembers)) qDebug() << "MEMBERS 생성 실패:" << query.lastError().text();
+        // 데이터 바인딩 위치 지정
+        query.bindValue(":cat", m.category);    // 카테고리 이름으로 ID 조회 후 삽입
+        query.bindValue(":name", m.name);       // 메뉴 한글명
+        query.bindValue(":price", m.price);     // 가격 (정수형)
+        query.bindValue(":img", m.imgPath);     // 이미지 경로 (qrc 경로)
 
-    // ORDERS 테이블 (주문 마스터)
-    QString createOrders = "CREATE TABLE IF NOT EXISTS ORDERS ("
-                           "order_id INTEGER PRIMARY KEY AUTOINCREMENT, "
-                           "member_phone TEXT, "
-                           "order_date DATETIME DEFAULT CURRENT_TIMESTAMP, "
-                           "total_amount INTEGER, "
-                           "pay_method TEXT, "
-                           "is_takeout INTEGER, " // 0: 매장, 1: 포장
-                           "FOREIGN KEY(member_phone) REFERENCES MEMBERS(phone_num));";
-    if(!query.exec(createOrders)) qDebug() << "ORDERS 생성 실패:" << query.lastError().text();
-
-    // ORDER_ITEMS 테이블 (주문 상세)
-    QString createOrderItems = "CREATE TABLE IF NOT EXISTS ORDER_ITEMS ("
-                               "item_id INTEGER PRIMARY KEY AUTOINCREMENT, "
-                               "order_id INTEGER, "
-                               "menu_id INTEGER, "
-                               "quantity INTEGER, "
-                               "subtotal INTEGER, "
-                               "selected_options TEXT, " // 예: "샷추가, 덜달게"
-                               "FOREIGN KEY(order_id) REFERENCES ORDERS(order_id), "
-                               "FOREIGN KEY(menu_id) REFERENCES MENU_INFO(menu_id));";
-    if(!query.exec(createOrderItems)) {
-        qDebug() << "ORDER_ITEMS 생성 실패:" << query.lastError().text();
-    } else {
-        qDebug() << "모든 테이블(5개) 생성 및 외래키 설정 완료!";
+        if (!query.exec()) {
+            qDebug() << "메뉴 삽입 실패 (" << m.name << "): " << query.lastError().text();
+        }
     }
 
     QSqlQuery testQuery("SELECT COUNT(*) FROM MENU_INFO");
     if (testQuery.next()) {
-    qDebug() << "현재 DB에 저장된 총 메뉴 개수:" << testQuery.value(0).toInt();
+        qDebug() << "검증 - MENU_INFO 테이블 레코드 수:" << testQuery.value(0).toInt();
     }
 
-    qDebug() << "더벤티 메뉴 DB 구축 완료!";
+    qDebug() << "JSON 데이터를 기반으로 DB 구축이 완료되었습니다.";
     return true;
 }
 
