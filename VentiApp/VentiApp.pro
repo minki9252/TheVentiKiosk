@@ -21,6 +21,7 @@ SOURCES += main.cpp \
     option_modal.cpp
 
 HEADERS += mainwindow.h \
+    KioskData.h \
     beverage.h \
     cartwidget.h \
     categorywidget.h \

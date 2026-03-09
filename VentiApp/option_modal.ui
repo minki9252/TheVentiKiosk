@@ -44,7 +44,7 @@
      <item>
       <layout class="QVBoxLayout" name="verticalLayout">
        <item>
-        <widget class="QLabel" name="option_bev_price">
+        <widget class="QLabel" name="lblMenuName">
          <property name="text">
           <string>TextLabel</string>
          </property>
@@ -60,7 +60,7 @@
       </layout>
      </item>
      <item>
-      <widget class="QLabel" name="label_10">
+      <widget class="QLabel" name="lblPrice">
        <property name="minimumSize">
         <size>
          <width>80</width>
@@ -141,22 +141,28 @@
         <rect>
          <x>30</x>
          <y>30</y>
-         <width>306</width>
-         <height>416</height>
+         <width>326</width>
+         <height>440</height>
         </rect>
        </property>
        <layout class="QGridLayout" name="gridLayout">
         <item row="13" column="0">
          <widget class="QPushButton" name="pushButton_10">
           <property name="text">
-           <string>PushButton</string>
+           <string>오트팝핑펄(+900)</string>
           </property>
          </widget>
         </item>
         <item row="5" column="0">
-         <widget class="QPushButton" name="pushButton_4">
+         <widget class="QPushButton" name="cbShotAdd">
           <property name="text">
-           <string>PushButton</string>
+           <string>기본(2샷)</string>
+          </property>
+          <property name="checkable">
+           <bool>true</bool>
+          </property>
+          <property name="checked">
+           <bool>false</bool>
           </property>
          </widget>
         </item>
@@ -170,28 +176,37 @@
         <item row="11" column="0">
          <widget class="QPushButton" name="pushButton_9">
           <property name="text">
-           <string>PushButton</string>
+           <string>아이스크림</string>
           </property>
          </widget>
         </item>
         <item row="1" column="0">
-         <widget class="QPushButton" name="pushButton">
+         <widget class="QPushButton" name="btnSizeLarge">
           <property name="text">
-           <string>PushButton</string>
+           <string>large</string>
+          </property>
+          <property name="checkable">
+           <bool>true</bool>
           </property>
          </widget>
         </item>
         <item row="3" column="2">
          <widget class="QPushButton" name="pushButton_6">
           <property name="text">
-           <string>PushButton</string>
+           <string>디카페인</string>
           </property>
          </widget>
         </item>
         <item row="1" column="1">
-         <widget class="QPushButton" name="pushButton_3">
+         <widget class="QPushButton" name="btnSizeJumbo">
           <property name="text">
-           <string>PushButton</string>
+           <string>Jumbo</string>
+          </property>
+          <property name="checkable">
+           <bool>true</bool>
+          </property>
+          <property name="checked">
+           <bool>false</bool>
           </property>
          </widget>
         </item>
@@ -205,28 +220,28 @@
         <item row="9" column="0">
          <widget class="QPushButton" name="pushButton_8">
           <property name="text">
-           <string>PushButton</string>
+           <string>탄산수(+500)</string>
           </property>
          </widget>
         </item>
         <item row="3" column="1">
          <widget class="QPushButton" name="pushButton_5">
           <property name="text">
-           <string>PushButton</string>
+           <string>다크</string>
           </property>
          </widget>
         </item>
         <item row="7" column="0">
          <widget class="QPushButton" name="pushButton_7">
           <property name="text">
-           <string>PushButton</string>
+           <string>달게</string>
           </property>
          </widget>
         </item>
         <item row="3" column="0">
          <widget class="QPushButton" name="pushButton_2">
           <property name="text">
-           <string>PushButton</string>
+           <string>시그니처</string>
           </property>
          </widget>
         </item>
@@ -268,42 +283,42 @@
         <item row="7" column="1">
          <widget class="QPushButton" name="pushButton_11">
           <property name="text">
-           <string>PushButton</string>
+           <string>바닐라 시럽</string>
           </property>
          </widget>
         </item>
         <item row="7" column="2">
          <widget class="QPushButton" name="pushButton_12">
           <property name="text">
-           <string>PushButton</string>
+           <string>헤이즐넛</string>
           </property>
          </widget>
         </item>
         <item row="5" column="1">
          <widget class="QPushButton" name="pushButton_13">
           <property name="text">
-           <string>PushButton</string>
+           <string>연하게(1샷)</string>
           </property>
          </widget>
         </item>
         <item row="5" column="2">
          <widget class="QPushButton" name="pushButton_14">
           <property name="text">
-           <string>PushButton</string>
+           <string>시그니처샷</string>
           </property>
          </widget>
         </item>
         <item row="11" column="1">
          <widget class="QPushButton" name="pushButton_15">
           <property name="text">
-           <string>PushButton</string>
+           <string>버블</string>
           </property>
          </widget>
         </item>
         <item row="11" column="2">
          <widget class="QPushButton" name="pushButton_16">
           <property name="text">
-           <string>PushButton</string>
+           <string>화이트펄</string>
           </property>
          </widget>
         </item>

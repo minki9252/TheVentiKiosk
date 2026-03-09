@@ -2,6 +2,8 @@
 #include "ui_mainwindow.h"
 #include "databasemanager.h"
 #include "categorywidget.h"
+#include "beverage.h"      // 🌟 beverage 위젯 기능을 쓰기 위해 필수
+#include "KioskData.h"    // 🌟 메뉴 상세 정보 구조체 사용
 #include <QSqlDatabase>
 #include <QSqlError>
 #include <QSqlQuery>
@@ -34,6 +36,9 @@ MainWindow::MainWindow(QWidget *parent)
     connect(touchTimer, &QTimer::timeout, this, &MainWindow::toggleTouchText);
     touchTimer->start(700);
 
+    // 4. 🌟 [핵심 연결] 메뉴판(beverage) 위젯 데이터 수신 연결
+    // ui->widget_2가 beverage 클래스로 프로모션 되어 있어야 신호를 잡을 수 있습니다.
+    connect(ui->widget_2, &beverage::sendToCart, this, &MainWindow::onReceiveCartData);
 
     // KioskEvent를 던지는 이 딱 한 줄의 connect문이 모든 카테고리 버튼을 처리함
     connect(ui->categoryWidget, &categorywidget::categorySelected, this, [this](int actionCode) {
@@ -47,7 +52,19 @@ MainWindow::MainWindow(QWidget *parent)
 
 MainWindow::~MainWindow() { delete ui; }
 
-
+// 🌟 데이터 수신 확인용 슬롯: 관리나 출력 없이 전달받은 정보만 확인
+void MainWindow::onReceiveCartData(QList<KioskData> list)
+{
+    for (const KioskData &data : list) {
+        // 이 시점에서 data 구조체 안에는 menuName, totalPrice, summaryText가 다 들어있습니다.
+        qDebug() << "================================";
+        qDebug() << "데이터 수신 성공 (전달 준비 완료)";
+        qDebug() << "메뉴명:" << data.menuName;
+        qDebug() << "옵션요약:" << data.summaryText;
+        qDebug() << "최종가격:" << data.totalPrice;
+        qDebug() << "================================";
+    }
+}
 
 // 안내 문구 깜빡임 로직
 void MainWindow::toggleTouchText()

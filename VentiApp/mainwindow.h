@@ -6,6 +6,7 @@
 #include <QSqlDatabase>
 #include <QTimer>
 #include <QMap>
+#include "KioskData.h" // 🌟 [추가] 공통 구조체(KioskEvent) 파일 사용
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -45,12 +46,16 @@ private slots:
     void on_storeButton_clicked();
     void on_takeoutButton_clicked();
     void toggleTouchText(); // 텍스트 깜빡임용 슬롯
+    // 🌟 [수정] 인자 타입을 KioskData로 변경 (beverage에서 보낼 타입)
+    void onReceiveCartData(QList<KioskData> list);
 
 private:
     Ui::MainWindow *ui;
     QSqlDatabase db;
     QTimer *touchTimer;     // 타이머 객체
     QMap<QString, int> cartData;
+    // 🌟 [추가] 장바구니에 담길 '진짜 데이터' 보관함
+    QList<KioskData> m_cartList;
 
     bool isVisible = true;  // 가시성 상태 변수
     int currentOrderType = 0; // 0: 매장, 1: 포장
