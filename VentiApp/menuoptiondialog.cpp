@@ -12,16 +12,16 @@ MenuOptionDialog::MenuOptionDialog(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    // 1. 아이콘 크기를 크게 키웁니다 (예: 200x200)
+    // 아이콘 크기
     ui->listSelectedMenu->setIconSize(QSize(200, 200));
 
-    // 3. 아이템이 창 크기에 맞춰 정렬되도록 설정
+    // 아이템이 창 크기에 맞춰 정렬되도록 설정
     ui->listSelectedMenu->setResizeMode(QListView::Adjust);
 
-    // 4. 사용자가 클릭해서 위치를 옮기지 못하도록 고정
+    // 사용자가 클릭해서 위치를 옮기지 못하도록 고정
     ui->listSelectedMenu->setMovement(QListView::Static);
 
-    // 확인/취소 버튼 시그널 연결
+    // 담기/취소 버튼 시그널 연결
     connect(ui->onConfirmClicked, &QPushButton::clicked, this, &MenuOptionDialog::accept);
     connect(ui->onCancelClicked, &QPushButton::clicked, this, &MenuOptionDialog::reject);
 }
@@ -31,30 +31,29 @@ MenuOptionDialog::~MenuOptionDialog()
     delete ui;
 }
 
-// '확인' 버튼 클릭 시 실행되는 슬롯 함수
+// 담기 버튼 클릭 시 실행되는 슬롯 함수
 void MenuOptionDialog::onConfirmClicked()
 {
-    // 선택된 옵션 데이터를 처리하는 로직
     qDebug() << "옵션 선택 완료";
-    accept(); // 다이얼로그를 닫고 QDialog::Accepted를 반환합니다.
+    accept();
 }
 
-// '취소' 버튼 클릭 시 실행되는 슬롯 함수
+// 취소 버튼 클릭 시 실행되는 슬롯 함수
 void MenuOptionDialog::onCancelClicked()
 {
-    reject(); // 다이얼로그를 닫고 QDialog::Rejected를 반환합니다.
+    reject();
 }
 
 void MenuOptionDialog::setMenuInfo(const QString &menuName)
 {
-    // 1. 기존 리스트 항목 초기화
+    // 기존 리스트 항목 초기화
     ui->listSelectedMenu->clear();
 
     QString pureMenuName = menuName.split("\n").at(0);
     qDebug() << "DB 조회를 위한 순수 메뉴명:" << pureMenuName;
 
     QSqlQuery query;
-    // kr_name 컬럼과 일치시키기 위해 추출한 순수 이름을 바인딩합니다.
+
     query.prepare("SELECT kr_name, price, image_path FROM MENU_INFO WHERE kr_name = :name");
     query.bindValue(":name", pureMenuName);
 
@@ -94,11 +93,11 @@ OrderInfo MenuOptionDialog::getSelectedOrderInfo() const
     int addedPrice = 0; // 추가 금액 합계
     QStringList selectedOpts;
 
-    // 1. 사이즈 선택 (예: Jumbo 선택 시 금액 추가가 있다면 처리)
+    // 사이즈 선택
     if (ui->radioButton_5->isChecked()) selectedOpts << "Jumbo";
     else selectedOpts << "Large";
 
-    // 2. 원두 선택
+    // 원두 선택
     if (ui->radioButton_3->isChecked()) {
         selectedOpts << "디카페인";
         addedPrice += 800;}
@@ -107,13 +106,13 @@ OrderInfo MenuOptionDialog::getSelectedOrderInfo() const
     if (ui->radioButton->isChecked()) {
         selectedOpts << "시그니처";}
 
-    // 3. 샷 선택
+    // 샷 선택
     if (ui->radioButton_8->isChecked()) {
         selectedOpts << "시그니처 샷추가";
         addedPrice += 500;
     }
 
-    // 4. 당도 선택 (예: 바닐라시럽 추가 등)
+    // 당도 선택
     if (ui->checkBox->isChecked()) {
         selectedOpts << "달게";
     }
@@ -130,7 +129,7 @@ OrderInfo MenuOptionDialog::getSelectedOrderInfo() const
         addedPrice += 500;
     }
 
-    // 5. 토핑 선택
+    // 토핑 선택
     if (ui->checkBox_5->isChecked()) {
         selectedOpts << "아이스크림 추가";
         addedPrice += 500;

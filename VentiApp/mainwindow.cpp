@@ -151,34 +151,33 @@ void MainWindow::updateMenuDisplay(const QString &categoryName) {
 
 void MainWindow::on_listMenu_itemClicked(QListWidgetItem *item)
 {
-    // 1. 다이얼로그 포인터 생성 (new 사용)
+    // 다이얼로그 포인터 생성
     MenuOptionDialog *optionDialog = new MenuOptionDialog(this);
 
-    // 2. 포인터이므로 -> 기호를 사용하여 함수 호출
+    // 포인터이므로 -> 기호를 사용하여 함수 호출
     optionDialog->setMenuInfo(item->text());
 
-    // 3. 다이얼로그 실행
+    // 다이얼로그 실행
     if (optionDialog->exec() == QDialog::Accepted) {
         OrderInfo order = optionDialog->getSelectedOrderInfo();
 
-        // 1. 현재 테이블의 마지막 행 번호를 가져옵니다.
+        // 현재 테이블의 마지막 행 번호
         int row = ui->tableCart->rowCount();
 
-        // 2. 새 행을 하나 추가합니다.
+        // 새 행을 하나 추가
         ui->tableCart->insertRow(row);
 
-        // 3. 각 열(Column)에 데이터를 넣습니다. (0: 메뉴명, 1: 옵션, 2: 수량, 3: 금액)
-        // QTableWidgetItem 객체를 생성해서 넣어줘야 합니다.
+        // 각 열에 데이터를 넣기
         ui->tableCart->setItem(row, 0, new QTableWidgetItem(order.menuName));
         ui->tableCart->setItem(row, 1, new QTableWidgetItem(order.options));
         ui->tableCart->setItem(row, 2, new QTableWidgetItem(QString::number(order.quantity)));
         ui->tableCart->setItem(row, 3, new QTableWidgetItem(QString("%1원").arg(order.totalPrice)));
 
-        // 4. 전체 금액 합산 업데이트
+        // 전체 금액 합산 업데이트
         updateTotalAmount(order.totalPrice);
     }
 
-    // 6. 사용 후 메모리 해제
+    // 사용 후 메모리 해제
     delete optionDialog;
 }
 
@@ -329,56 +328,56 @@ void MainWindow::processCheckout() {
 }
 
 /////////////////////// 핸들 함수 시작 //////////////////////////////////////
-void MainWindow::handle(const KioskEvent &event) {
+// void MainWindow::handle(const KioskEvent &event) {
 
-    switch(event.action){
+//     switch(event.action){
 
-        /////////////////// 카테고리 설정 //////////////////////////////
-    case CATEGORY_COFFEE:
-        qDebug() << "커피 카테고리 선택됨";
-        // TODO: DatabaseManager::instance().getMenusByCategory("커피") 호출하여 UI 출력
-        break;
+//         /////////////////// 카테고리 설정 //////////////////////////////
+//     case CATEGORY_COFFEE:
+//         qDebug() << "커피 카테고리 선택됨";
+//         // TODO: DatabaseManager::instance().getMenusByCategory("커피") 호출하여 UI 출력
+//         break;
 
-    case CATEGORY_BEVERAGE:
+//     case CATEGORY_BEVERAGE:
 
-        qDebug() << "음료 카테고리 선택됨";
-        break;
+//         qDebug() << "음료 카테고리 선택됨";
+//         break;
 
-    case CATEGORY_DESSERT:
-        qDebug() << "디저트 카테고리 선택됨";
-        break;
-        /////////////////// 카테고리 설정 끝 //////////////////////////////
-
-
-        /////////////////// 메뉴 선택 설정 //////////////////////////////
-    case MENU_SELECT_ITEM:
-        qDebug() << "메뉴가 선택됨";
-        break;
-
-    case MENU_CANCEL_ITEM:
-        qDebug() << "메뉴 선택 취소됨";
-        break;
-        /////////////////// 메뉴 선택 끝 //////////////////////////////
+//     case CATEGORY_DESSERT:
+//         qDebug() << "디저트 카테고리 선택됨";
+//         break;
+//         /////////////////// 카테고리 설정 끝 //////////////////////////////
 
 
-        /////////////////// 장바구니 설정 //////////////////////////////
-    case CART_ADD:
-        qDebug() << "장바구니에 담기";
-        break;
+//         /////////////////// 메뉴 선택 설정 //////////////////////////////
+//     case MENU_SELECT_ITEM:
+//         qDebug() << "메뉴가 선택됨";
+//         break;
 
-    case CART_REMOVE:
-        qDebug() << "장바구니 항목 취소";
-        break;
+//     case MENU_CANCEL_ITEM:
+//         qDebug() << "메뉴 선택 취소됨";
+//         break;
+//         /////////////////// 메뉴 선택 끝 //////////////////////////////
 
-    case CART_CHECKOUT:
-        qDebug() << "결제 진행";
-        break;
-        /////////////////// 장바구니 설정 끝 //////////////////////////////
 
-    default:
-        qDebug() << "정의되지 않은 액션입니다.";
-        break;
-    }
-}
-////////////////////////////// 핸들 함수 끝 //////////////////////////////////////
+//         /////////////////// 장바구니 설정 //////////////////////////////
+//     case CART_ADD:
+//         qDebug() << "장바구니에 담기";
+//         break;
+
+//     case CART_REMOVE:
+//         qDebug() << "장바구니 항목 취소";
+//         break;
+
+//     case CART_CHECKOUT:
+//         qDebug() << "결제 진행";
+//         break;
+//         /////////////////// 장바구니 설정 끝 //////////////////////////////
+
+//     default:
+//         qDebug() << "정의되지 않은 액션입니다.";
+//         break;
+//     }
+// }
+// ////////////////////////////// 핸들 함수 끝 //////////////////////////////////////
 
