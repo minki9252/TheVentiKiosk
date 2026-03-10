@@ -25,6 +25,7 @@ signals:
 private slots:
     // [추가] 확인 버튼 클릭 시 동작할 로직 선언
     void on_btnConfirm_clicked();
+    void on_btnCancel_clicked();  // 🌟 이 줄이 없어서 에러가 났을 거예요! (이름 확인 필수)
     void updatePrice();  // ✅ 추가
 
 private:

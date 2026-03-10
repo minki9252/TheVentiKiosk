@@ -38,8 +38,10 @@ beverage::beverage(QWidget *parent)
         priceStr.remove("원");
         selectedMenu.basePrice = priceStr.toInt();  // ✅ 여기가 핵심!
 
-        qDebug() << "선택된 메뉴:" << selectedMenu.menuName;
+        // ✅ [추가] UserRole에 저장해둔 이미지 경로를 꺼내서 구조체에 담기
+        selectedMenu.imagePath = item->data(Qt::UserRole).toString();
 
+        qDebug() << "선택된 메뉴:" << selectedMenu.menuName;
         qDebug() << "클릭된 아이템 텍스트:" << item->text();
 
         // option_modal 객체 생성
@@ -89,6 +91,10 @@ void beverage::loadMenus(const QString &categoryName)
         item->setText(itemText);
 
         QString imgPath = menuData["image"].toString().trimmed();
+
+        // ✅ [추가] 이미지 경로를 아이템의 UserRole에 함께 저장
+        item->setData(Qt::UserRole, imgPath);
+
         QIcon icon(imgPath);
 
         if (icon.isNull())

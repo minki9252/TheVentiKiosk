@@ -2,6 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QButtonGroup> // 🌟 [추가] 버튼 그룹 관리를 위해 필요
 #include <QVariant>
 #include <QSqlDatabase>
 #include <QTimer>
@@ -48,14 +49,21 @@ private slots:
     void toggleTouchText(); // 텍스트 깜빡임용 슬롯
     // 🌟 [수정] 인자 타입을 KioskData로 변경 (beverage에서 보낼 타입)
     void onReceiveCartData(QList<KioskData> list);
+    // 🌟 [추가] 옵션 버튼이 눌렸을 때 가격을 실시간으로 계산할 슬롯
 
 private:
     Ui::MainWindow *ui;
     QSqlDatabase db;
     QTimer *touchTimer;     // 타이머 객체
     QMap<QString, int> cartData;
+
+    // 🌟 [추가] 배타적 선택(하나만 선택)을 위한 버튼 그룹
+    QButtonGroup *sizeGroup;  // 라지, 점보 등 사이즈 그룹
+    QButtonGroup *beanGroup;  // 원두 선택 그룹 (필요 시)
+
     // 🌟 [추가] 장바구니에 담길 '진짜 데이터' 보관함
     QList<KioskData> m_cartList;
+
 
     bool isVisible = true;  // 가시성 상태 변수
     int currentOrderType = 0; // 0: 매장, 1: 포장
@@ -63,6 +71,8 @@ private:
     void loadMenus(const QString &categoryName);    // 메뉴판을 채우는 함수
     void updateCartTable();
     void processCheckout();
+    // 🌟 [추가] 현재 최종 합산 금액을 UI에 업데이트하는 함수
+    void calculateTotalPrice();
 
 };
 

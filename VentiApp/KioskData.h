@@ -8,6 +8,7 @@ struct KioskData {
     int menuId;
     QString menuName;
     int basePrice;
+    QString imagePath;  // ✅ 이게 있어야 함
     int totalPrice;
     int quantity = 1;
     QString sizeName;
