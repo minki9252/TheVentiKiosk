@@ -4,9 +4,11 @@
 #include <QJsonArray>
 #include <QDebug>
 
-void loadMenuData() {
+void loadMenuData()
+{
     QFile file(":/data/menus.json");
-    if (!file.open(QIODevice::ReadOnly)) {
+    if (!file.open(QIODevice::ReadOnly))
+    {
         qDebug() << "JSON 파일을 열 수 없습니다.";
         return;
     }
@@ -20,13 +22,15 @@ void loadMenuData() {
 
     // 카테고리 배열 추출
     QJsonArray categoryArray = root["categories"].toArray();
-    for (int i = 0; i < categoryArray.size(); ++i) {
+    for (int i = 0; i < categoryArray.size(); ++i)
+    {
         qDebug() << "카테고리:" << categoryArray[i].toString();
     }
 
     // 메뉴 상세 배열 추출
     QJsonArray menuArray = root["menus"].toArray();
-    for (int i = 0; i < menuArray.size(); ++i) {
+    for (int i = 0; i < menuArray.size(); ++i)
+    {
         QJsonObject menuObj = menuArray[i].toObject();
         QString name = menuObj["name"].toString();
         int price = menuObj["price"].toInt();

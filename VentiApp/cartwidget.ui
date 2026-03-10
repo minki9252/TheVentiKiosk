@@ -66,11 +66,7 @@
       </layout>
      </item>
      <item>
-<<<<<<< HEAD
       <widget class="QListWidget" name="ListCart"/>
-=======
-      <widget class="QListView" name="listView"/>
->>>>>>> origin/main
      </item>
      <item>
       <layout class="QHBoxLayout" name="horizontalLayout_9">

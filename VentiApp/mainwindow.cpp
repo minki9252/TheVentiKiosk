@@ -30,7 +30,7 @@ MainWindow::MainWindow(QWidget *parent)
     }
 
     // 초기화면 설정
-    ui->introButton->setStyleSheet("border-image: url(:/G-dragon/벤티홍보.jpg); border: none;");
+    ui->introButton->setStyleSheet("border-image: url(:/Benner/Image/Benner/g_dragon.png); border: none;");
 
     // 안내 문구 깜빡임 타이머
     touchTimer = new QTimer(this);
@@ -157,17 +157,17 @@ void MainWindow::handle(const KioskEvent &event)
         break;
     case CATEGORY_ICED_COFFEE:
         qDebug() << "아이스커피 카테고리 선택됨";
-        ui->widget_2->loadMenus("커피");
+        ui->widget_2->loadMenus("커피(아이스)");
         break;
 
-    case CATEGORY_BEVERAGE:
+    // case CATEGORY_BEVERAGE:
 
-        qDebug() << "음료 카테고리 선택됨";
-        break;
+    //     qDebug() << "음료 카테고리 선택됨";
+    //     break;
 
-    case CATEGORY_DESSERT:
-        qDebug() << "디저트 카테고리 선택됨";
-        break;
+    // // case CATEGORY_DESSERT:
+    //     qDebug() << "디저트 카테고리 선택됨";
+    //     break;
         /////////////////// 카테고리 설정 끝 //////////////////////////////
 
         /////////////////// 메뉴 선택 설정 //////////////////////////////

@@ -197,7 +197,7 @@ QPushButton:checked {
          <item row="3" column="2">
           <widget class="QPushButton" name="btnBeanDecaf">
            <property name="text">
-            <string>디카페인원두(0원)</string>
+            <string>디카페인원두(+800원)</string>
            </property>
            <property name="checkable">
             <bool>true</bool>

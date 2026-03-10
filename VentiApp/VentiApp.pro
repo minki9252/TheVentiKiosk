@@ -16,7 +16,6 @@ SOURCES += main.cpp \
     beverage.cpp \
     cartwidget.cpp \
     categorywidget.cpp \
-    main_page.cpp \
     mainwindow.cpp \
     option_modal.cpp
 
@@ -25,14 +24,12 @@ HEADERS += mainwindow.h \
     beverage.h \
     cartwidget.h \
     categorywidget.h \
-    main_page.h \
     option_modal.h
 
 FORMS += mainwindow.ui \
     beverage.ui \
     cartwidget.ui \
     categorywidget.ui \
-    main_page.ui \
     option_modal.ui
 
 RESOURCES += \
