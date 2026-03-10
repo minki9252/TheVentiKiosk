@@ -1,0 +1,17 @@
+# [TheVentiKiosk.pro]
+# 최상위 프로젝트 설정 파일
+
+TEMPLATE = subdirs
+
+# 🌟 중요: 하위 프로젝트 폴더 이름과 반드시 일치해야 합니다.
+SUBDIRS += VentiCore \
+           VentiApp
+
+VentiApp.subdir = VentiApp
+VentiApp.file = VentiApp/VentiApp.pro
+
+# 빌드 순서 설정 (라이브러리인 Core가 먼저 빌드되어야 함)
+VentiApp.depends = VentiCore
+
+# 프로젝트 전체 공통 설정 (Qt 버전 등)
+CONFIG += ordered

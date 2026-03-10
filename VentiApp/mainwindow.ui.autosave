@@ -1,0 +1,588 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>558</width>
+    <height>1024</height>
+   </rect>
+  </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Preferred" vsizetype="Minimum">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>540</width>
+    <height>960</height>
+   </size>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>1280</width>
+    <height>1024</height>
+   </size>
+  </property>
+  <property name="acceptDrops">
+   <bool>true</bool>
+  </property>
+  <property name="windowTitle">
+   <string>MainWindow</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <layout class="QVBoxLayout" name="verticalLayout_4">
+    <item>
+     <widget class="QStackedWidget" name="stackedWidget">
+      <property name="currentIndex">
+       <number>2</number>
+      </property>
+      <widget class="QWidget" name="page">
+       <property name="minimumSize">
+        <size>
+         <width>540</width>
+         <height>960</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>540</width>
+         <height>960</height>
+        </size>
+       </property>
+       <layout class="QVBoxLayout" name="verticalLayout_2">
+        <item>
+         <widget class="QPushButton" name="introButton">
+          <property name="minimumSize">
+           <size>
+            <width>540</width>
+            <height>960</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>540</width>
+            <height>960</height>
+           </size>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">border-image: url(:/Benner/Image/Benner/g_dragon.png);</string>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLabel" name="lblTouchNotice">
+          <property name="styleSheet">
+           <string notr="true">/* [위치: introButton의 StyleSheet] */
+QPushButton#introButton {
+    border: none;
+    background-color: transparent; /* 배경 투명하게 해서 모델 이미지만 강조 */
+}
+
+QPushButton#introButton:pressed {
+    background-color: rgba(0, 0, 0, 50); /* 터치 시 살짝 어둡게 피드백 */
+}
+
+/* 안내 문구 라벨 스타일 */
+QLabel#lblTouchNotice {
+    font-size: 24pt;
+    font-family: &quot;NanumSquare&quot;, &quot;Malgun Gothic&quot;; /* 설치된 폰트 기준 */
+    background-color: rgba(255, 255, 255, 180); /* 반투명 흰색 배경으로 가독성 확보 */
+    border-radius: 15px;
+    padding: 10px;
+}</string>
+          </property>
+          <property name="text">
+           <string>마우스를 클릭해주세요</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignmentFlag::AlignCenter</set>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="page_2">
+       <layout class="QVBoxLayout" name="verticalLayout_3">
+        <item>
+         <widget class="QLabel" name="lblLogo">
+          <property name="maximumSize">
+           <size>
+            <width>250</width>
+            <height>50</height>
+           </size>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">border-image: url(:/Benner/Image/Benner/logo.png);
+
+QLabel#lblLogo {
+	border-image: url(:/Downloads/the_venty_menu/the_venty/logo.jpg);
+    border-repeat: no-repeat;
+    border-position: center;
+    min-height: 150px; /* 로고 영역 높이 확보 */
+    border: none;
+}</string>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <layout class="QHBoxLayout" name="horizontalLayout_2">
+          <property name="topMargin">
+           <number>0</number>
+          </property>
+          <property name="bottomMargin">
+           <number>200</number>
+          </property>
+          <item>
+           <widget class="QPushButton" name="takeoutButton">
+            <property name="maximumSize">
+             <size>
+              <width>275</width>
+              <height>275</height>
+             </size>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">QPushButton#takeoutButton {
+    background-color: #5d2d91; /* 보라색 배경 */
+    border: 5px solid #5d2d91;
+    border-radius: 30px;
+    font-size: 30pt;
+    font-weight: bold;
+    color: white;
+}
+QPushButton:pressed {
+    background-color: #4a2475;
+    color: #cccccc;
+}</string>
+            </property>
+            <property name="text">
+             <string>포장</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="storeButton">
+            <property name="maximumSize">
+             <size>
+              <width>275</width>
+              <height>275</height>
+             </size>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">QPushButton#storeButton {
+    background-color: white;
+    border: 5px solid #5d2d91; /* 더벤티 보라색 테마 */
+    border-radius: 30px;
+    font-size: 30pt;
+    font-weight: bold;
+    color: #5d2d91;
+}
+
+QPushButton:pressed {
+    background-color: #4a2475;
+    color: #cccccc;
+}</string>
+            </property>
+            <property name="text">
+             <string>매장</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="page_3">
+       <property name="minimumSize">
+        <size>
+         <width>540</width>
+         <height>960</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>540</width>
+         <height>960</height>
+        </size>
+       </property>
+       <widget class="QListWidget" name="listMenu">
+        <property name="geometry">
+         <rect>
+          <x>0</x>
+          <y>180</y>
+          <width>531</width>
+          <height>451</height>
+         </rect>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>200</width>
+          <height>200</height>
+         </size>
+        </property>
+        <property name="resizeMode">
+         <enum>QListView::ResizeMode::Adjust</enum>
+        </property>
+        <property name="spacing">
+         <number>20</number>
+        </property>
+        <property name="viewMode">
+         <enum>QListView::ViewMode::IconMode</enum>
+        </property>
+        <property name="selectionRectVisible">
+         <bool>false</bool>
+        </property>
+       </widget>
+       <widget class="QWidget" name="gridLayoutWidget">
+        <property name="geometry">
+         <rect>
+          <x>0</x>
+          <y>0</y>
+          <width>541</width>
+          <height>152</height>
+         </rect>
+        </property>
+        <layout class="QGridLayout" name="gridLayout">
+         <property name="spacing">
+          <number>10</number>
+         </property>
+         <item row="0" column="4">
+          <widget class="QPushButton" name="pushButton_4">
+           <property name="styleSheet">
+            <string notr="true">/* [위치: 상단 Grid Layout 내의 버튼들 또는 page_3 전체] */
+QPushButton {
+    background-color: #ffffff;
+    border: 2px solid #5d2d91; /* 더벤티 보라색 테두리 */
+    border-radius: 12px;
+    padding: 8px;
+    font-size: 13pt;
+    font-weight: bold;
+    color: #5d2d91;
+    min-height: 50px; /* 버튼 높이를 키워 터치하기 좋게 만듦 */
+}
+
+/* 버튼이 눌렸을 때 (피드백) */
+QPushButton:pressed {
+    background-color: #5d2d91;
+    color: white;
+}</string>
+           </property>
+           <property name="text">
+            <string>블렌디드</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="1">
+          <widget class="QPushButton" name="pushButton_2">
+           <property name="styleSheet">
+            <string notr="true">/* [위치: 상단 Grid Layout 내의 버튼들 또는 page_3 전체] */
+QPushButton {
+    background-color: #ffffff;
+    border: 2px solid #5d2d91; /* 더벤티 보라색 테두리 */
+    border-radius: 12px;
+    padding: 8px;
+    font-size: 13pt;
+    font-weight: bold;
+    color: #5d2d91;
+    min-height: 50px; /* 버튼 높이를 키워 터치하기 좋게 만듦 */
+}
+
+/* 버튼이 눌렸을 때 (피드백) */
+QPushButton:pressed {
+    background-color: #5d2d91;
+    color: white;
+}</string>
+           </property>
+           <property name="text">
+            <string>커피(핫)</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="5">
+          <widget class="QPushButton" name="pushButton_5">
+           <property name="styleSheet">
+            <string notr="true">/* [위치: 상단 Grid Layout 내의 버튼들 또는 page_3 전체] */
+QPushButton {
+    background-color: #ffffff;
+    border: 2px solid #5d2d91; /* 더벤티 보라색 테두리 */
+    border-radius: 12px;
+    padding: 8px;
+    font-size: 13pt;
+    font-weight: bold;
+    color: #5d2d91;
+    min-height: 50px; /* 버튼 높이를 키워 터치하기 좋게 만듦 */
+}
+
+/* 버튼이 눌렸을 때 (피드백) */
+QPushButton:pressed {
+    background-color: #5d2d91;
+    color: white;
+}</string>
+           </property>
+           <property name="text">
+            <string>베버리지</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="3">
+          <widget class="QPushButton" name="pushButton_3">
+           <property name="styleSheet">
+            <string notr="true">/* [위치: 상단 Grid Layout 내의 버튼들 또는 page_3 전체] */
+QPushButton {
+    background-color: #ffffff;
+    border: 2px solid #5d2d91; /* 더벤티 보라색 테두리 */
+    border-radius: 12px;
+    padding: 8px;
+    font-size: 13pt;
+    font-weight: bold;
+    color: #5d2d91;
+    min-height: 50px; /* 버튼 높이를 키워 터치하기 좋게 만듦 */
+}
+
+/* 버튼이 눌렸을 때 (피드백) */
+QPushButton:pressed {
+    background-color: #5d2d91;
+    color: white;
+}</string>
+           </property>
+           <property name="text">
+            <string>버블티</string>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="0">
+          <widget class="QPushButton" name="pushButton_6">
+           <property name="styleSheet">
+            <string notr="true">/* [위치: 상단 Grid Layout 내의 버튼들 또는 page_3 전체] */
+QPushButton {
+    background-color: #ffffff;
+    border: 2px solid #5d2d91; /* 더벤티 보라색 테두리 */
+    border-radius: 12px;
+    padding: 8px;
+    font-size: 13pt;
+    font-weight: bold;
+    color: #5d2d91;
+    min-height: 50px; /* 버튼 높이를 키워 터치하기 좋게 만듦 */
+}
+
+/* 버튼이 눌렸을 때 (피드백) */
+QPushButton:pressed {
+    background-color: #5d2d91;
+    color: white;
+}</string>
+           </property>
+           <property name="text">
+            <string>에이드</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="0">
+          <widget class="QPushButton" name="pushButton">
+           <property name="styleSheet">
+            <string notr="true">/* [위치: 상단 Grid Layout 내의 버튼들 또는 page_3 전체] */
+QPushButton {
+    background-color: #ffffff;
+    border: 2px solid #5d2d91; /* 더벤티 보라색 테두리 */
+    border-radius: 12px;
+    padding: 8px;
+    font-size: 13pt;
+    font-weight: bold;
+    color: #5d2d91;
+    min-height: 50px; /* 버튼 높이를 키워 터치하기 좋게 만듦 */
+}
+
+/* 버튼이 눌렸을 때 (피드백) */
+QPushButton:pressed {
+    background-color: #5d2d91;
+    color: white;
+}</string>
+           </property>
+           <property name="text">
+            <string>신메뉴</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="2">
+          <widget class="QPushButton" name="pushButton_7">
+           <property name="styleSheet">
+            <string notr="true">/* [위치: 상단 Grid Layout 내의 버튼들 또는 page_3 전체] */
+QPushButton {
+    background-color: #ffffff;
+    border: 2px solid #5d2d91; /* 더벤티 보라색 테두리 */
+    border-radius: 12px;
+    padding: 8px;
+    font-size: 13pt;
+    font-weight: bold;
+    color: #5d2d91;
+    min-height: 50px; /* 버튼 높이를 키워 터치하기 좋게 만듦 */
+}
+
+/* 버튼이 눌렸을 때 (피드백) */
+QPushButton:pressed {
+    background-color: #5d2d91;
+    color: white;
+}</string>
+           </property>
+           <property name="text">
+            <string>커피(아이스)</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+       <widget class="QTableWidget" name="tableCart">
+        <property name="geometry">
+         <rect>
+          <x>0</x>
+          <y>650</y>
+          <width>531</width>
+          <height>301</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">QTableWidget {
+    background-color: white;
+    gridline-color: #eeeeee;
+    border: 1px solid #5d2d91;
+    border-radius: 10px;
+}
+
+QHeaderView::section {
+    background-color: #f0eaf6;
+    padding: 4px;
+    border: 1px solid #dddddd;
+    font-weight: bold;
+}</string>
+        </property>
+        <property name="editTriggers">
+         <set>QAbstractItemView::EditTrigger::NoEditTriggers</set>
+        </property>
+        <property name="selectionBehavior">
+         <enum>QAbstractItemView::SelectionBehavior::SelectRows</enum>
+        </property>
+        <attribute name="verticalHeaderStretchLastSection">
+         <bool>true</bool>
+        </attribute>
+        <column>
+         <property name="text">
+          <string>1. 메뉴명</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>2. 수량</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>3. 금액</string>
+         </property>
+        </column>
+       </widget>
+       <widget class="QPushButton" name="btnClearCart">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>882</y>
+          <width>94</width>
+          <height>58</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">/* [위치: 상단 Grid Layout 내의 버튼들 또는 page_3 전체] */
+QPushButton {
+    background-color: #ffffff;
+    border: 2px solid #5d2d91; /* 더벤티 보라색 테두리 */
+    border-radius: 4px;
+    padding: 2px;
+    font-size: 13pt;
+    font-weight: bold;
+    color: #5d2d91;
+    min-height: 50px; /* 버튼 높이를 키워 터치하기 좋게 만듦 */
+}
+
+/* 버튼이 눌렸을 때 (피드백) */
+QPushButton:pressed {
+    background-color: #5d2d91;
+    color: white;
+}</string>
+        </property>
+        <property name="text">
+         <string>취소</string>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="btnCheckout">
+        <property name="geometry">
+         <rect>
+          <x>430</x>
+          <y>882</y>
+          <width>94</width>
+          <height>58</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">/* [위치: 상단 Grid Layout 내의 버튼들 또는 page_3 전체] */
+QPushButton {
+    background-color: #ffffff;
+    border: 2px solid #5d2d91; /* 더벤티 보라색 테두리 */
+    border-radius: 4px;
+    padding: 2px;
+    font-size: 13pt;
+    font-weight: bold;
+    color: #5d2d91;
+    min-height: 50px; /* 버튼 높이를 키워 터치하기 좋게 만듦 */
+}
+
+/* 버튼이 눌렸을 때 (피드백) */
+QPushButton:pressed {
+    background-color: #5d2d91;
+    color: white;
+}</string>
+        </property>
+        <property name="text">
+         <string>결제하기</string>
+        </property>
+       </widget>
+       <widget class="QLabel" name="lblTotal">
+        <property name="geometry">
+         <rect>
+          <x>170</x>
+          <y>900</y>
+          <width>201</width>
+          <height>20</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>총 결제할 금액 :</string>
+        </property>
+       </widget>
+      </widget>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>558</width>
+     <height>23</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QStatusBar" name="statusbar"/>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
