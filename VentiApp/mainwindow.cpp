@@ -40,6 +40,9 @@ MainWindow::MainWindow(QWidget *parent)
     // 4. 🌟 [핵심 연결] 메뉴판(beverage) 위젯 데이터 수신 연결
     // ui->widget_2가 beverage 클래스로 프로모션 되어 있어야 신호를 잡을 수 있습니다.
     connect(ui->widget_2, &beverage::sendToCart, this, &MainWindow::onReceiveCartData);
+    
+    // 장바구니 -> MainWindow 결제 신호 연결
+    connect(ui->Listcart, &cartwidget::checkoutRequested, this, &MainWindow::processCheckout);
 
     // KioskEvent를 던지는 이 딱 한 줄의 connect문이 모든 카테고리 버튼을 처리함
     connect(ui->categoryWidget, &categorywidget::categorySelected, this, [this](int actionCode)
@@ -56,19 +59,22 @@ MainWindow::~MainWindow() { delete ui; }
 // 🌟 데이터 수신 확인용 슬롯: 관리나 출력 없이 전달받은 정보만 확인
 void MainWindow::onReceiveCartData(QList<KioskData> list)
 {
-    for (const KioskData &data : list)
-    {
-        m_cartList.append(data); // 🌟 이게 빠져있었어요!
-        // 이 시점에서 data 구조체 안에는 menuName, totalPrice, summaryText가 다 들어있습니다.
-        qDebug() << "================================";
-        qDebug() << "데이터 수신 성공 (전달 준비 완료)";
-        qDebug() << "메뉴명:" << data.menuName;
-        qDebug() << "옵션요약:" << data.summaryText;
-        qDebug() << "최종가격:" << data.totalPrice;
-        qDebug() << "================================";
-    }
-    // 🌟 추가! 장바구니 위젯으로 전달
-    ui->Listcart->updateCart(m_cartList);
+    ui->Listcart->updateCart(list); // 냅다 던져줍니다.
+}
+
+// 🌟 결제 처리 로직
+void MainWindow::processCheckout()
+{
+    qDebug() << "결제가 완료되었습니다! 초기 화면으로 돌아갑니다.";
+    
+    // 1. 여기서 DB에 주문 내역 저장(INSERT) 등의 로직을 나중에 추가하시면 됩니다.
+
+    // 2. 결제가 완료되었으니 장바구니 비우기
+    ui->Listcart->clearCart();
+    
+    // 3. 주문 방식(매장/포장) 변수 초기화 및 초기 홍보 화면으로 이동
+    currentOrderType = 0; 
+    ui->stackedWidget->setCurrentIndex(0); 
 }
 
 // 안내 문구 깜빡임 로직

@@ -58,9 +58,9 @@ private slots:
     void on_storeButton_clicked();
     void on_takeoutButton_clicked();
     void toggleTouchText(); // 텍스트 깜빡임용 슬롯
-    // 🌟 [수정] 인자 타입을 KioskData로 변경 (beverage에서 보낼 타입)
     void onReceiveCartData(QList<KioskData> list);
-    // 🌟 [추가] 옵션 버튼이 눌렸을 때 가격을 실시간으로 계산할 슬롯
+    void processCheckout();
+
 
 private:
     Ui::MainWindow *ui;
@@ -80,7 +80,6 @@ private:
     void handle(const KioskEvent &event);        // 이벤트를 처리할 핸들 함수
     void loadMenus(const QString &categoryName); // 메뉴판을 채우는 함수
     void updateCartTable();
-    void processCheckout();
     // 🌟 [추가] 현재 최종 합산 금액을 UI에 업데이트하는 함수
     void calculateTotalPrice();
 };
