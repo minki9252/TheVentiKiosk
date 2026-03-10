@@ -56,6 +56,7 @@ MainWindow::~MainWindow() { delete ui; }
 void MainWindow::onReceiveCartData(QList<KioskData> list)
 {
     for (const KioskData &data : list) {
+        m_cartList.append(data); // 🌟 이게 빠져있었어요!
         // 이 시점에서 data 구조체 안에는 menuName, totalPrice, summaryText가 다 들어있습니다.
         qDebug() << "================================";
         qDebug() << "데이터 수신 성공 (전달 준비 완료)";
@@ -64,6 +65,8 @@ void MainWindow::onReceiveCartData(QList<KioskData> list)
         qDebug() << "최종가격:" << data.totalPrice;
         qDebug() << "================================";
     }
+    // 🌟 추가! 장바구니 위젯으로 전달
+    ui->Listcart->updateCart(m_cartList);
 }
 
 // 안내 문구 깜빡임 로직

@@ -162,6 +162,31 @@ void option_modal::on_btnConfirm_clicked()
     }
 
     // 3. 🌟 데이터 최종 가공 (KioskData 완성하기)
+
+    // 여기에 추가!
+    m_selectedMenu.sizeName = ui->btnSizeJumbo->isChecked() ? "jumbo(960ml)" : "Large(600ml)";
+
+    if (ui->btnBeanDecaf->isChecked()) m_selectedMenu.beanName = "디카페인";
+    else if (ui->btnBeanDark->isChecked()) m_selectedMenu.beanName = "다크원두";
+    else m_selectedMenu.beanName = "시그니처";
+
+    if (ui->btnShotSignatureAdd->isChecked()) m_selectedMenu.shotName = "시그니처샷추가";
+    else if (ui->btnShotLight->isChecked()) m_selectedMenu.shotName = "연하게";
+    else m_selectedMenu.shotName = "기본";
+
+    if (ui->btnSyrupVanilla->isChecked()) m_selectedMenu.syrupName = "바닐라시럽";
+    else if (ui->btnSyrupHazelnut->isChecked()) m_selectedMenu.syrupName = "헤이즐넛시럽";
+    else if (ui->btnSyrupSweet->isChecked()) m_selectedMenu.syrupName = "달게";
+
+    m_selectedMenu.sparklingName = ui->btnSparkling->isChecked() ? "탄산수변경" : "";
+
+    if (ui->btnToppingIcecream->isChecked()) m_selectedMenu.toppingName = "아이스크림";
+    else if (ui->btnToppingBubble->isChecked()) m_selectedMenu.toppingName = "타피오카펄";
+    else if (ui->btnToppingWhite->isChecked()) m_selectedMenu.toppingName = "화이트펄";
+    else if (ui->btnOatPearl->isChecked()) m_selectedMenu.toppingName = "오트팝핑펄";
+
+    m_selectedMenu.optionPrice = extraPrice;
+
     m_selectedMenu.summaryText = options.join("/"); // 예: "Regular/샷추가"
     m_selectedMenu.totalPrice = m_selectedMenu.basePrice + extraPrice; // 최종가
     m_selectedMenu.quantity = 1; // 기본 수량 설정
@@ -259,6 +284,7 @@ void option_modal::updatePrice()
 
     int total = m_selectedMenu.basePrice + extraPrice;
     ui->lblPrice->setText(QString::number(total) + "원");
+
 }
 
 // 🧩 [추가] 취소 버튼 로직

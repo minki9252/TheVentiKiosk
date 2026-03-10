@@ -9,11 +9,15 @@ struct KioskData {
     QString menuName;
     int basePrice;
     QString imagePath;  // ✅ 이게 있어야 함
+    int optionPrice = 0;     // 추가
     int totalPrice;
     int quantity = 1;
     QString sizeName;
     QString beanName;
     QString shotName;
+    QString syrupName;       // 추가
+    QString sparklingName;   // 추가
+    QString toppingName;     // 추가
     QString summaryText;
 };
 

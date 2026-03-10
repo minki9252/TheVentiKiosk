@@ -251,7 +251,7 @@ QPushButton:pressed {
            </widget>
           </item>
           <item>
-           <widget class="cartwidget" name="widget" native="true"/>
+           <widget class="cartwidget" name="Listcart" native="true"/>
           </item>
          </layout>
         </item>

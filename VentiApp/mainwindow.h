@@ -8,6 +8,7 @@
 #include <QTimer>
 #include <QMap>
 #include "KioskData.h" // 🌟 [추가] 공통 구조체(KioskEvent) 파일 사용
+#include "cartwidget.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
