@@ -2,8 +2,8 @@
 #include "ui_mainwindow.h"
 #include "databasemanager.h"
 #include "categorywidget.h"
-#include "beverage.h"      // 🌟 beverage 위젯 기능을 쓰기 위해 필수
-#include "KioskData.h"    // 🌟 메뉴 상세 정보 구조체 사용
+#include "beverage.h"  // 🌟 beverage 위젯 기능을 쓰기 위해 필수
+#include "KioskData.h" // 🌟 메뉴 상세 정보 구조체 사용
 #include <QSqlDatabase>
 #include <QSqlError>
 #include <QSqlQuery>
@@ -14,16 +14,17 @@
 #include <utility>
 
 MainWindow::MainWindow(QWidget *parent)
-    : QMainWindow(parent)
-    , ui(new Ui::MainWindow)
+    : QMainWindow(parent), ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
 
     // DB 초기화
-    if(!DatabaseManager::instance().initDatabase("venti.db")) {
+    if (!DatabaseManager::instance().initDatabase("venti.db"))
+    {
         qDebug() << "DB 연결 실패!";
     }
-    else {
+    else
+    {
         // 추가: DB가 열리면 테이블을 만들고 메뉴를 집어넣으라는 명령입니다.
         DatabaseManager::instance().setupDatabase();
     }
@@ -41,11 +42,11 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->widget_2, &beverage::sendToCart, this, &MainWindow::onReceiveCartData);
 
     // KioskEvent를 던지는 이 딱 한 줄의 connect문이 모든 카테고리 버튼을 처리함
-    connect(ui->categoryWidget, &categorywidget::categorySelected, this, [this](int actionCode) {
+    connect(ui->categoryWidget, &categorywidget::categorySelected, this, [this](int actionCode)
+            {
         KioskEvent event;
         event.action = static_cast<KioskAction>(actionCode);
-        handle(event);
-    });
+        handle(event); });
 
     ui->stackedWidget->setCurrentIndex(0); // 시작은 홍보화면
 }
@@ -55,7 +56,8 @@ MainWindow::~MainWindow() { delete ui; }
 // 🌟 데이터 수신 확인용 슬롯: 관리나 출력 없이 전달받은 정보만 확인
 void MainWindow::onReceiveCartData(QList<KioskData> list)
 {
-    for (const KioskData &data : list) {
+    for (const KioskData &data : list)
+    {
         m_cartList.append(data); // 🌟 이게 빠져있었어요!
         // 이 시점에서 data 구조체 안에는 menuName, totalPrice, summaryText가 다 들어있습니다.
         qDebug() << "================================";
@@ -72,10 +74,14 @@ void MainWindow::onReceiveCartData(QList<KioskData> list)
 // 안내 문구 깜빡임 로직
 void MainWindow::toggleTouchText()
 {
-    if (ui->lblTouchNotice) {
-        if (isVisible) {
+    if (ui->lblTouchNotice)
+    {
+        if (isVisible)
+        {
             ui->lblTouchNotice->setStyleSheet("color: rgba(93, 45, 145, 0); font-size: 20pt; font-weight: bold;");
-        } else {
+        }
+        else
+        {
             ui->lblTouchNotice->setStyleSheet("color: rgba(93, 45, 145, 255); font-size: 20pt; font-weight: bold;");
         }
         isVisible = !isVisible;
@@ -83,17 +89,20 @@ void MainWindow::toggleTouchText()
 }
 
 // 버튼 클릭 이벤트 함수
-void MainWindow::on_introButton_clicked() {
+void MainWindow::on_introButton_clicked()
+{
     ui->stackedWidget->setCurrentIndex(1); // 매장/포장 선택 페이지로
 }
 
-void MainWindow::on_storeButton_clicked() {
-    currentOrderType = 0; // 매장
+void MainWindow::on_storeButton_clicked()
+{
+    currentOrderType = 0;                  // 매장
     ui->stackedWidget->setCurrentIndex(2); // 메뉴판 페이지로
     // loadMenus("신메뉴"); // 첫 화면 로딩
 }
 
-void MainWindow::on_takeoutButton_clicked() {
+void MainWindow::on_takeoutButton_clicked()
+{
     currentOrderType = 1; // 포장
     ui->stackedWidget->setCurrentIndex(2);
     // loadMenus("신메뉴");
@@ -136,9 +145,11 @@ void MainWindow::on_takeoutButton_clicked() {
 // }
 
 /////////////////////// 핸들 함수 시작 //////////////////////////////////////
-void MainWindow::handle(const KioskEvent &event) {
+void MainWindow::handle(const KioskEvent &event)
+{
 
-    switch(event.action){
+    switch (event.action)
+    {
 
         /////////////////// 카테고리 설정 //////////////////////////////
     case CATEGORY_NEW_MENU:
@@ -159,7 +170,6 @@ void MainWindow::handle(const KioskEvent &event) {
         break;
         /////////////////// 카테고리 설정 끝 //////////////////////////////
 
-
         /////////////////// 메뉴 선택 설정 //////////////////////////////
     case MENU_SELECT_ITEM:
         qDebug() << "메뉴가 선택됨";
@@ -169,7 +179,6 @@ void MainWindow::handle(const KioskEvent &event) {
         qDebug() << "메뉴 선택 취소됨";
         break;
         /////////////////// 메뉴 선택 끝 //////////////////////////////
-
 
         /////////////////// 장바구니 설정 //////////////////////////////
     case CART_ADD:

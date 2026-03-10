@@ -1,12 +1,14 @@
+
 TEMPLATE = subdirs
 
-# 빌드 순서 강제 옵션
-CONFIG += ordered
+SUBDIRS += VentiCore \
+           VentiApp
 
-# 반드시 라이브러리(Core)가 앱(App)보다 먼저 와야 합니다.
-SUBDIRS += \
-    VentiCore \
-    VentiApp
+VentiApp.subdir = VentiApp
+VentiApp.file = VentiApp/VentiApp.pro
 
-# VentiApp이 VentiCore에 의존함을 명시적으로 설정 (권장)
+# 빌드 순서 설정 (라이브러리인 Core가 먼저 빌드되어야 함)
 VentiApp.depends = VentiCore
+
+# 프로젝트 전체 공통 설정 (Qt 버전 등)
+CONFIG += ordered

@@ -9,7 +9,8 @@
 #include <QStringList>
 
 // 데이터를 담는 순수 객체 (Entity)
-struct MenuData {
+struct MenuData
+{
     QString category;
     QString name;
     int price;
@@ -20,14 +21,16 @@ struct MenuData {
         : category(c), name(n), price(p), imgPath(i) {}
 };
 
-class DatabaseManager {
+class DatabaseManager
+{
 public:
     // 싱글톤 패턴이나 전역 인스턴스로 관리하면 편리
-    static DatabaseManager& instance();
+    static DatabaseManager &instance();
 
-    bool initDatabase(const QString& dbName);
-    bool setupDatabase();      // DB 연결 및 테이블 생성
-    bool insertInitialData();  // 초기 메뉴 데이터 삽입
+    bool initDatabase(const QString &dbName);
+    bool setupDatabase();                                                      // DB 연결 및 테이블 생성
+    bool insertInitialData();                                                  // 초기 메뉴 데이터 삽입
+    bool updateMenuImagePath(const QString &menuName, const QString &newPath); // 이미지 경로 업데이트
 
     // 카테고리 이름 목록 가져오기(3번 화면 상단)
     QStringList getCategoryNames();

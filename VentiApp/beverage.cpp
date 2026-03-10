@@ -2,7 +2,7 @@
 #include "ui_beverage.h"
 #include "databasemanager.h"
 #include "option_modal.h"
-#include "KioskData.h"      // 🛠️ [추가] 공통 구조체 사용을 위해 포함
+#include "KioskData.h" // 🛠️ [추가] 공통 구조체 사용을 위해 포함
 #include <QListWidgetItem>
 #include <QIcon>
 #include <QVariantMap>
@@ -11,9 +11,8 @@
 
 // 🛠️ [변경] 생성자에서 메뉴 데이터를 초기화할 수 있도록 수정 (헤더 변경에 맞춤)
 beverage::beverage(QWidget *parent)
-    : QWidget(parent)
-    , ui(new Ui::beverage)
-    // , m_currentOrder(data) // 🛠️ [추가] 초기 데이터 복사
+    : QWidget(parent), ui(new Ui::beverage)
+// , m_currentOrder(data) // 🛠️ [추가] 초기 데이터 복사
 {
     ui->setupUi(this);
     // UI 파일(Qt Designer)에서 설정한 값들이 여기서 적용됩니다.
@@ -22,7 +21,8 @@ beverage::beverage(QWidget *parent)
     ui->listMenu->setGridSize(QSize(125, 190));
 
     // 리스트의 메뉴를 클릭했을 때 option_modal 띄우기
-    connect(ui->listMenu, &QListWidget::itemClicked, this, [=](QListWidgetItem *item){
+    connect(ui->listMenu, &QListWidget::itemClicked, this, [=](QListWidgetItem *item)
+            {
 
         // 🛠️ [추가] 클릭된 아이템에서 메뉴 정보를 추출하여 구조체에 저장
         // (실제 프로젝트에서는 item->data(Qt::UserRole) 등을 써서 ID를 관리하는 게 좋지만,
@@ -56,16 +56,13 @@ beverage::beverage(QWidget *parent)
         modal->exec();
 
         // 모달창을 닫으면 메모리에서 깔끔하게 지워주기
-        modal->deleteLater();
-    });
-
+        modal->deleteLater(); });
 }
 
 beverage::~beverage()
 {
     delete ui;
 }
-
 
 // 🧩 DB에서 데이터를 가져와 화면에 그리는 함수
 void beverage::loadMenus(const QString &categoryName)
@@ -74,12 +71,11 @@ void beverage::loadMenus(const QString &categoryName)
 
     QList<QVariantMap> menus = DatabaseManager::instance().getMenusByCategory(categoryName);
 
-    //디버깅용 출력
+    // 디버깅용 출력
     qDebug() << "-----------------------------------";
     qDebug() << "요청한 카테고리 이름:" << categoryName;
     qDebug() << "DB에서 가져온 메뉴 개수:" << menus.size() << "개";
     qDebug() << "-----------------------------------";
-
 
     for (const QVariantMap &menuData : std::as_const(menus))
     {

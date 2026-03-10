@@ -17,11 +17,13 @@ HEADERS += databasemanager.h \
            venticore_global.h
 
 SOURCES += databasemanager.cpp \
-    MenuDataLoader.cpp \
+    MenuDataLoader.cpp
 
 # Default rules for deployment.
 unix {
     target.path = /usr/lib
 }
 !isEmpty(target.path): INSTALLS += target
+
+FORMS +=
 
