@@ -3,7 +3,8 @@
 
 #include <QMainWindow>
 #include <QVariant>
-#include <QSqlDatabase> 
+#include <QSqlDatabase>
+#include <QListWidget>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -43,13 +44,20 @@ private slots:
     void on_takeoutButton_clicked();
     void toggleTouchText(); // 텍스트 깜빡임용 슬롯
     // void loadCategoriesToUI();
+    // void on_listMenu_itemClicked(QListWidgetItem *item);
     // void updateMenuDisplay(const QString &categoryName);
+
 
 private:
     Ui::MainWindow *ui;
     QSqlDatabase db;
     QTimer *touchTimer;     // 타이머 객체
     QMap<QString, int> cartData;
+
+    // QTimer *adTimer;          // 광고 전환용 타이머
+    // QStringList adImages;     // 광고 이미지 경로 목록
+    // int currentAdIndex = 0;   // 현재 보여주는 이미지 번호
+    // void showNextAd();        // 다음 이미지로 교체하는 함수
 
     bool isVisible = true;  // 가시성 상태 변수
 

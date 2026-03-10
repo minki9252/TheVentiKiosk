@@ -48,6 +48,8 @@
     <qresource prefix="/Benner">
         <file>Image/Benner/g_dragon.png</file>
         <file>Image/Benner/logo.png</file>
+        <file>Image/Benner/dex.png</file>
+        <file>Image/Benner/eric.png</file>
     </qresource>
     <qresource prefix="/data">
         <file>menus.json</file>

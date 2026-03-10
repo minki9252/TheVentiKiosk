@@ -1,11 +1,13 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "databasemanager.h"
+// #include "menuoptiondialog.h"
+#include <QMessageBox>
 #include <QDebug>
 #include <QTimer>
 #include <QListWidgetItem>
 #include <QIcon>
-#include <utility>
+#include <QListWidget>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -18,9 +20,6 @@ MainWindow::MainWindow(QWidget *parent)
         qDebug() << "DB 연결 실패!";
     }
 
-    // 초기화면 설정
-    ui->introButton->setStyleSheet("border-image: url(:/G-dragon/벤티홍보.jpg); border: none;");
-
     // 안내 문구 깜빡임 타이머
     touchTimer = new QTimer(this);
     connect(touchTimer, &QTimer::timeout, this, &MainWindow::toggleTouchText);
@@ -28,11 +27,12 @@ MainWindow::MainWindow(QWidget *parent)
 
     // // 카테고리 버튼들 연결
     // connect(ui->pushButton,   &QPushButton::clicked, this, [this](){ loadMenus("신메뉴"); });
-    // connect(ui->pushButton_2, &QPushButton::clicked, this, [this](){ loadMenus("커피"); });
+    // connect(ui->pushButton_2, &QPushButton::clicked, this, [this](){ loadMenus("커피(핫)"); });
+    // connect(ui->pushButton_7, &QPushButton::clicked, this, [this](){ loadMenus("커피(아이스)"); });
     // connect(ui->pushButton_3, &QPushButton::clicked, this, [this](){ loadMenus("버블티&티"); });
     // connect(ui->pushButton_4, &QPushButton::clicked, this, [this](){ loadMenus("블렌디드"); });
-    // connect(ui->pushButton_5,   &QPushButton::clicked, this, [this](){ loadMenus("베버리지"); });
-    // connect(ui->pushButton_6,   &QPushButton::clicked, this, [this](){ loadMenus("에이드"); });
+    // connect(ui->pushButton_5, &QPushButton::clicked, this, [this](){ loadMenus("베버리지"); });
+    // connect(ui->pushButton_6, &QPushButton::clicked, this, [this](){ loadMenus("에이드"); });
 
     // connect(ui->listMenu, &QListWidget::itemClicked, this, [this](QListWidgetItem *item){
     //     // 클릭한 아이템에서 메뉴 이름만 분리 (줄바꿈 기준 첫 줄)
@@ -97,16 +97,11 @@ MainWindow::~MainWindow() { delete ui; }
 //         QListWidgetItem *item = new QListWidgetItem();
 //         item->setText(itemText);
 
-//         // DB에서 경로를 가져온 후 양끝 공백을 제거(.trimmed()) 합니다.
 //         QString imgPath = menuData["image"].toString().trimmed();
-
-//         // 디버깅용: 실제 어떤 경로를 찾고 있는지 콘솔에 찍어봅니다.
-//         qDebug() << "이미지 로드 시도:" << imgPath;
 
 //         QIcon icon(imgPath);
 //         if (icon.isNull()) {
 //             qDebug() << "경고: 이미지를 찾을 수 없음 ->" << imgPath;
-//             // 이미지를 못 찾을 때를 대비해 기본 아이콘을 넣거나 빈 공간을 확보합니다.
 //         } else {
 //             item->setIcon(icon);
 //         }
@@ -131,55 +126,186 @@ void MainWindow::toggleTouchText()
 
 // 버튼 클릭 이벤트 함수
 void MainWindow::on_introButton_clicked() {
-    ui->stackedWidget->setCurrentIndex(1); // 매장/포장 선택 페이지로
+    ui->stackedWidget->setCurrentIndex(1); // 매장or포장 선택 페이지로
 }
 
 void MainWindow::on_storeButton_clicked() {
-    currentOrderType = 0; // 매장
-    ui->stackedWidget->setCurrentIndex(2); // 메뉴판 페이지로
-    // loadMenus("신메뉴"); // 첫 화면 로딩
+    currentOrderType = 0; // 매장 선택 저장
+    ui->stackedWidget->setCurrentIndex(2); // 메뉴판 페이지(page_3)로 이동
+
+    // loadMenus(QString("신메뉴").trimmed());
 }
 
 void MainWindow::on_takeoutButton_clicked() {
-    currentOrderType = 1; // 포장
-    ui->stackedWidget->setCurrentIndex(2);
-    // loadMenus("신메뉴");
+    currentOrderType = 1; // 포장 선택 저장
+    ui->stackedWidget->setCurrentIndex(2); // 메뉴판 페이지로 이동
+
+    // loadMenus(QString("신메뉴").trimmed());
 }
 
+// void MainWindow::loadCategoriesToUI() {}
+
+// void MainWindow::updateMenuDisplay(const QString &categoryName) {
+//     loadMenus(categoryName);
+// }
+
+// void MainWindow::on_listMenu_itemClicked(QListWidgetItem *item)
+// {
+//     // 이제 에러 없이 item 객체를 사용할 수 있습니다.
+//     QString menuName = item->text();
+//     qDebug() << "선택된 메뉴:" << menuName;
+
+//     // 1. 옵션 선택 창(다이얼로그) 객체를 메모리에 만듭니다.
+//     MenuOptionDialog *optionDialog = new MenuOptionDialog(this);
+
+//     // 2. 창을 화면에 띄웁니다 (모달 방식: 이 창이 닫히기 전까지 메인창 클릭 불가)
+//     // exec()가 실행되면 코드는 여기서 잠시 멈추고 사용자의 입력을 기다립니다.
+//     if (optionDialog->exec() == QDialog::Accepted) {
+//         // 사용자가 다이얼로그에서 '확인'을 눌렀을 때 실행됩니다.
+//         qDebug() << "아메리카노 옵션 선택 완료!";
+
+//         // 여기서 나중에 장바구니 리스트에 추가하는 코드를 넣을 겁니다.
+//     } else {
+//         // 사용자가 '취소'나 '창 닫기'를 눌렀을 때 실행됩니다.
+//         qDebug() << "주문 취소";
+//     }
+
+//     // 3. 다이얼로그 사용이 끝났으므로 메모리에서 삭제합니다.
+//     delete optionDialog;
+// }
+
+// void MainWindow::changeCartQuantity(const QString &menuName, int delta) {
+//     // 현재 수량에 +1 또는 -1
+//     cartData[menuName] += delta;
+
+//     // 수량이 0 이하라면 장바구니에서 삭제
+//     if (cartData[menuName] <= 0) {
+//         cartData.remove(menuName);
+//     }
+
+//     // UI 갱신
+//     updateCartTable();
+// }
+
+
 // void MainWindow::updateCartTable() {
-//     // 기존 테이블 내용 싹 비우기
 //     ui->tableCart->setRowCount(0);
+
+//     // 모든 행의 높이를 50으로 고정
+//     ui->tableCart->verticalHeader()->setSectionResizeMode(QHeaderView::Fixed);
+//     ui->tableCart->verticalHeader()->setDefaultSectionSize(50);
+
+//     // 마지막 행이 남은 빈 공간을 채우지 않도록 설정
+//     ui->tableCart->verticalHeader()->setStretchLastSection(false);
+
+//     // 테이블 행 번호 안 보이게
+//     ui->tableCart->verticalHeader()->setVisible(false);
 
 //     int row = 0;
 //     int totalAmount = 0;
 
-//     // 장바구니 맵을 순회하며 테이블에 한 줄씩 추가
 //     for (auto it = cartData.begin(); it != cartData.end(); ++it) {
 //         QString name = it.key();
 //         int count = it.value();
 
-//         int pricePerItem = 2000; // 일단 예시로 2000원 고정
-//         int subTotal = pricePerItem * count;
+//         // DB에서 가격 가져오기
+//         QSqlQuery query;
+//         query.prepare("SELECT price FROM MENU_INFO WHERE kr_name = :name");
+//         query.bindValue(":name", name.trimmed()); // 공백 제거 후 조회
+
+//         int realPrice = 0;
+//         if (query.exec() && query.next()) {
+//             realPrice = query.value(0).toInt();
+//         }
+
+//         int subTotal = realPrice * count;
+//         totalAmount += subTotal;
 
 //         ui->tableCart->insertRow(row);
-//         ui->tableCart->setItem(row, 0, new QTableWidgetItem(name));
-//         ui->tableCart->setItem(row, 1, new QTableWidgetItem(QString::number(count)));
-//         ui->tableCart->setItem(row, 2, new QTableWidgetItem(QString::number(subTotal) + "원"));
 
-//         totalAmount += subTotal;void processCheckout();      // 결제 처리 로직
+//         QTableWidgetItem *nameItem = new QTableWidgetItem(name);
+//         nameItem->setTextAlignment(Qt::AlignCenter);
+//         ui->tableCart->setItem(row, 0, nameItem);
+
+
+//         QWidget *pWidget = new QWidget();
+//         QHBoxLayout *pLayout = new QHBoxLayout(pWidget);
+//         QPushButton *btnMinus = new QPushButton("-");
+//         QPushButton *btnPlus = new QPushButton("+");
+//         QLabel *lblCount = new QLabel(QString::number(count));
+
+//         btnMinus->setFixedSize(30, 30);
+//         btnPlus->setFixedSize(30, 30);
+//         lblCount->setAlignment(Qt::AlignCenter);
+//         lblCount->setStyleSheet("font-weight: bold;");
+
+//         pLayout->addWidget(btnMinus);
+//         pLayout->addWidget(lblCount);
+//         pLayout->addWidget(btnPlus);
+//         pLayout->setContentsMargins(5, 0, 5, 0);
+//         pLayout->setSpacing(10);
+//         pWidget->setLayout(pLayout);
+
+//         // 버튼 클릭 시 수량 변경
+//         connect(btnMinus, &QPushButton::clicked, this, [this, name](){ changeCartQuantity(name, -1); });
+//         connect(btnPlus, &QPushButton::clicked, this, [this, name](){ changeCartQuantity(name, 1); });
+
+//         ui->tableCart->setCellWidget(row, 1, pWidget);
+
+//         QTableWidgetItem *priceItem = new QTableWidgetItem(QString::number(subTotal) + "원");
+//         priceItem->setTextAlignment(Qt::AlignCenter);
+//         ui->tableCart->setItem(row, 2, priceItem);
+
 //         row++;
 //     }
-//     ui->lblTotal->setText(QString("총 결제 금액: %1원").arg(totalAmount));
+
+//     // 총 결제 금액
+//     if(ui->lblTotal) ui->lblTotal->setText(QString("총 결제 금액: %1원").arg(totalAmount));
 // }
 
 // void MainWindow::processCheckout() {
-//     qDebug() << "결제 진행 중... 총 항목 수:" << cartData.size();
-//     qDebug() << "결제가 완료되었습니다! 초기 화면으로 돌아갑니다.";
+//     orderNumber++; // 주문번호 증가
+//     int totalAmount = 0;
 
-//     // 결제 완료 후 장바구니 비우기 및 초기 화면으로 이동
-//     cartData.clear();
+//     //  DB에서 정보를 불러와 합산
+//     for (int i = 0; i < ui->tableCart->rowCount(); ++i) {
+
+//         QString priceText = ui->tableCart->item(i, 2)->text();
+
+//         int price = priceText.replace("원", "").trimmed().toInt();
+//         totalAmount += price;
+//     }
+
+//     // 메시지 박스 설정
+//     QMessageBox msgBox(this);
+//     msgBox.setWindowTitle("결제 확인");
+
+//     // 영수증 및 결제금액 창
+//     QString msg = QString("주문번호 : %1\n"
+//                           "총 결제 금액 : %2원\n\n"
+//                           "결제를 완료하시겠습니까?\n"
+//                           "영수증 출력을 원하시면 아래 버튼을 눌러주세요.")
+//                       .arg(orderNumber)
+//                       .arg(totalAmount);
+//     msgBox.setText(msg);
+
+//     // 버튼 및 아이콘 설정
+//     QPushButton *btnReceipt = msgBox.addButton("영수증 출력", QMessageBox::AcceptRole);
+//     QPushButton *btnNoReceipt = msgBox.addButton("출력 안 함", QMessageBox::RejectRole);
+//     QPushButton *btnCancel = msgBox.addButton("결제 취소", QMessageBox::DestructiveRole);
+
+//     msgBox.setIcon(QMessageBox::Information);
+//     msgBox.exec();
+
+//     // 결과 처리
+//     if (msgBox.clickedButton() == btnCancel) {
+//         return; // 결제 취소 시 함수 종료
+//     }
+
+//     // 결제 완료
+//     cartData.clear();   // 카트 초기화
 //     updateCartTable();
-//     ui->stackedWidget->setCurrentIndex(0);
+//     ui->stackedWidget->setCurrentIndex(0); // 초기화면으로 이동
 // }
 
 /////////////////////// 핸들 함수 시작 //////////////////////////////////////
@@ -235,3 +361,4 @@ void MainWindow::handle(const KioskEvent &event) {
     }
 }
 ////////////////////////////// 핸들 함수 끝 //////////////////////////////////////
+
