@@ -43,9 +43,10 @@ private slots:
     void on_storeButton_clicked();
     void on_takeoutButton_clicked();
     void toggleTouchText(); // 텍스트 깜빡임용 슬롯
-    // void loadCategoriesToUI();
-    // void on_listMenu_itemClicked(QListWidgetItem *item);
-    // void updateMenuDisplay(const QString &categoryName);
+    void loadCategoriesToUI();
+    void on_listMenu_itemClicked(QListWidgetItem *item);
+    void updateMenuDisplay(const QString &categoryName);
+    void updateTotalAmount(int amount);
 
 
 private:
@@ -54,21 +55,17 @@ private:
     QTimer *touchTimer;     // 타이머 객체
     QMap<QString, int> cartData;
 
-    // QTimer *adTimer;          // 광고 전환용 타이머
-    // QStringList adImages;     // 광고 이미지 경로 목록
-    // int currentAdIndex = 0;   // 현재 보여주는 이미지 번호
-    // void showNextAd();        // 다음 이미지로 교체하는 함수
-
     bool isVisible = true;  // 가시성 상태 변수
 
     int currentOrderType = 0; // 0: 매장, 1: 포장
-    // int orderNumber = 100;  // 주문번호 (100번부터)
+    int orderNumber = 100;  // 주문번호 (100번부터)
+    int totalAmount = 0; // 전체 합계를 저장할 변수
 
     void handle(const KioskEvent &event); // 이벤트를 처리할 핸들 함수
-    // void loadMenus(const QString &categoryName);    // 메뉴판을 채우는 함수
-    // void updateCartTable();
-    // void processCheckout();
-    // void changeCartQuantity(const QString &menuName, int delta);    // 수량 변경
+    void loadMenus(const QString &categoryName);    // 메뉴판을 채우는 함수
+    void updateCartTable();
+    void processCheckout();
+    void changeCartQuantity(const QString &menuName, int delta);    // 수량 변경
 };
 
 #endif // MAINWINDOW_H

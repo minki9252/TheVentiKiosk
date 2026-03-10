@@ -470,24 +470,33 @@ QHeaderView::section {
         <property name="selectionBehavior">
          <enum>QAbstractItemView::SelectionBehavior::SelectRows</enum>
         </property>
+        <property name="columnCount">
+         <number>5</number>
+        </property>
         <attribute name="verticalHeaderStretchLastSection">
          <bool>true</bool>
         </attribute>
         <column>
          <property name="text">
-          <string>1. 메뉴명</string>
+          <string>1. 메뉴</string>
          </property>
         </column>
         <column>
          <property name="text">
-          <string>2. 수량</string>
+          <string>2. 옵션</string>
          </property>
         </column>
         <column>
          <property name="text">
-          <string>3. 금액</string>
+          <string>3. 수량</string>
          </property>
         </column>
+        <column>
+         <property name="text">
+          <string>4. 금액</string>
+         </property>
+        </column>
+        <column/>
        </widget>
        <widget class="QPushButton" name="btnClearCart">
         <property name="geometry">

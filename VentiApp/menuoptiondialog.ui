@@ -6,143 +6,222 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>694</width>
+    <width>751</width>
     <height>640</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Dialog</string>
   </property>
-  <widget class="QLabel" name="label">
-   <property name="geometry">
-    <rect>
-     <x>360</x>
-     <y>110</y>
-     <width>66</width>
-     <height>18</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>TextLabel</string>
-   </property>
-  </widget>
-  <widget class="QLabel" name="label_2">
-   <property name="geometry">
-    <rect>
-     <x>210</x>
-     <y>110</y>
-     <width>66</width>
-     <height>18</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>TextLabel</string>
-   </property>
-  </widget>
-  <widget class="QRadioButton" name="radioButton">
-   <property name="geometry">
-    <rect>
-     <x>200</x>
-     <y>230</y>
-     <width>110</width>
-     <height>23</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>RadioButton</string>
-   </property>
-  </widget>
-  <widget class="QRadioButton" name="radioButton_2">
-   <property name="geometry">
-    <rect>
-     <x>430</x>
-     <y>240</y>
-     <width>110</width>
-     <height>23</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>RadioButton</string>
-   </property>
-  </widget>
-  <widget class="QCheckBox" name="checkBox">
-   <property name="geometry">
-    <rect>
-     <x>180</x>
-     <y>310</y>
-     <width>91</width>
-     <height>23</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>CheckBox</string>
-   </property>
-  </widget>
-  <widget class="QCheckBox" name="checkBox_2">
-   <property name="geometry">
-    <rect>
-     <x>320</x>
-     <y>310</y>
-     <width>91</width>
-     <height>23</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>CheckBox</string>
-   </property>
-  </widget>
-  <widget class="QCheckBox" name="checkBox_3">
-   <property name="geometry">
-    <rect>
-     <x>490</x>
-     <y>310</y>
-     <width>91</width>
-     <height>23</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>CheckBox</string>
-   </property>
-  </widget>
-  <widget class="QCheckBox" name="checkBox_4">
-   <property name="geometry">
-    <rect>
-     <x>30</x>
-     <y>300</y>
-     <width>91</width>
-     <height>23</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>CheckBox</string>
-   </property>
-  </widget>
-  <widget class="QPushButton" name="pushButton">
-   <property name="geometry">
-    <rect>
-     <x>80</x>
-     <y>550</y>
-     <width>94</width>
-     <height>26</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>PushButton</string>
-   </property>
-  </widget>
-  <widget class="QPushButton" name="pushButton_2">
-   <property name="geometry">
-    <rect>
-     <x>450</x>
-     <y>550</y>
-     <width>94</width>
-     <height>26</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>PushButton</string>
-   </property>
-  </widget>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <item>
+    <widget class="QListWidget" name="listSelectedMenu">
+     <property name="styleSheet">
+      <string notr="true">ui-&gt;listSelectedMenu-&gt;setStyleSheet(
+    &quot;QListWidget::item {&quot;
+    &quot;   margin: 10px;&quot;           // 아이템 주변 여백
+    &quot;   font-size: 18pt;&quot;        // 글자 크기 키우기
+    &quot;   font-weight: bold;&quot;      // 글자 굵게
+    &quot;   color: #333333;&quot;         // 글자 색상
+    &quot;}&quot;
+    &quot;QListWidget::item:selected {&quot;
+    &quot;   background: transparent;&quot; // 선택 시 배경색 변하지 않게 (옵션창이므로)
+    &quot;   border: none;&quot;
+    &quot;}&quot;
+);</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <layout class="QGridLayout" name="gridLayout">
+     <property name="verticalSpacing">
+      <number>20</number>
+     </property>
+     <item row="1" column="1">
+      <widget class="QRadioButton" name="radioButton_5">
+       <property name="text">
+        <string>Jumbo</string>
+       </property>
+       <property name="autoExclusive">
+        <bool>false</bool>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="0">
+      <widget class="QRadioButton" name="radioButton_4">
+       <property name="text">
+        <string>Large</string>
+       </property>
+       <property name="autoExclusive">
+        <bool>false</bool>
+       </property>
+      </widget>
+     </item>
+     <item row="3" column="0">
+      <widget class="QRadioButton" name="radioButton">
+       <property name="text">
+        <string>시그니처</string>
+       </property>
+       <property name="autoExclusive">
+        <bool>false</bool>
+       </property>
+      </widget>
+     </item>
+     <item row="6" column="0">
+      <widget class="QLabel" name="label_4">
+       <property name="text">
+        <string>당도 선택</string>
+       </property>
+      </widget>
+     </item>
+     <item row="8" column="0">
+      <widget class="QLabel" name="label_5">
+       <property name="text">
+        <string>토핑 선택</string>
+       </property>
+      </widget>
+     </item>
+     <item row="5" column="0">
+      <widget class="QRadioButton" name="radioButton_6">
+       <property name="text">
+        <string>기본</string>
+       </property>
+       <property name="autoExclusive">
+        <bool>false</bool>
+       </property>
+      </widget>
+     </item>
+     <item row="4" column="0">
+      <widget class="QLabel" name="label_3">
+       <property name="text">
+        <string>샷 선택</string>
+       </property>
+      </widget>
+     </item>
+     <item row="7" column="2">
+      <widget class="QCheckBox" name="checkBox_3">
+       <property name="text">
+        <string>헤이즐넛시럽 추가(+500원</string>
+       </property>
+      </widget>
+     </item>
+     <item row="3" column="2">
+      <widget class="QRadioButton" name="radioButton_3">
+       <property name="text">
+        <string>디카페인(+800원)</string>
+       </property>
+       <property name="autoExclusive">
+        <bool>false</bool>
+       </property>
+      </widget>
+     </item>
+     <item row="5" column="1">
+      <widget class="QRadioButton" name="radioButton_7">
+       <property name="text">
+        <string>연하게</string>
+       </property>
+       <property name="autoExclusive">
+        <bool>false</bool>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="0">
+      <widget class="QLabel" name="label">
+       <property name="text">
+        <string>사이즈 선택</string>
+       </property>
+      </widget>
+     </item>
+     <item row="7" column="1">
+      <widget class="QCheckBox" name="checkBox_2">
+       <property name="text">
+        <string>바닐라시럽 추가(+500원)</string>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="0">
+      <widget class="QLabel" name="label_2">
+       <property name="text">
+        <string>원두 선택</string>
+       </property>
+      </widget>
+     </item>
+     <item row="5" column="2">
+      <widget class="QRadioButton" name="radioButton_8">
+       <property name="text">
+        <string>시그니처 샷추가(2샷 +500원)</string>
+       </property>
+       <property name="autoExclusive">
+        <bool>false</bool>
+       </property>
+      </widget>
+     </item>
+     <item row="3" column="1">
+      <widget class="QRadioButton" name="radioButton_2">
+       <property name="text">
+        <string>다크</string>
+       </property>
+       <property name="autoExclusive">
+        <bool>false</bool>
+       </property>
+      </widget>
+     </item>
+     <item row="7" column="3">
+      <widget class="QCheckBox" name="checkBox_4">
+       <property name="text">
+        <string>흑설탕시럽 추가(+500원)</string>
+       </property>
+      </widget>
+     </item>
+     <item row="7" column="0">
+      <widget class="QCheckBox" name="checkBox">
+       <property name="text">
+        <string>달게</string>
+       </property>
+      </widget>
+     </item>
+     <item row="9" column="2">
+      <widget class="QCheckBox" name="checkBox_7">
+       <property name="text">
+        <string>화이트펄 추가(+900원)</string>
+       </property>
+      </widget>
+     </item>
+     <item row="9" column="1">
+      <widget class="QCheckBox" name="checkBox_6">
+       <property name="text">
+        <string>버블 추가(+900원)</string>
+       </property>
+      </widget>
+     </item>
+     <item row="9" column="0">
+      <widget class="QCheckBox" name="checkBox_5">
+       <property name="text">
+        <string>아이스크림 추가(+500원)</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout">
+     <item>
+      <widget class="QPushButton" name="onCancelClicked">
+       <property name="text">
+        <string>취소</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="onConfirmClicked">
+       <property name="text">
+        <string>주문담기</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+  </layout>
  </widget>
  <resources/>
  <connections/>
