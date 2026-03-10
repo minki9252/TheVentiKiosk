@@ -1,9 +1,6 @@
-# [TheVentiKiosk.pro]
-# 최상위 프로젝트 설정 파일
 
 TEMPLATE = subdirs
 
-# 🌟 중요: 하위 프로젝트 폴더 이름과 반드시 일치해야 합니다.
 SUBDIRS += VentiCore \
            VentiApp
 
