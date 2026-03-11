@@ -100,7 +100,7 @@ void MainWindow::toggleTouchText()
     }
 }
 
-// 버튼 클릭 이벤트 함수
+// 선택 화면 매장 / 포장 함수
 void MainWindow::on_introButton_clicked()
 {
     ui->stackedWidget->setCurrentIndex(1); // 매장/포장 선택 페이지로
@@ -108,16 +108,14 @@ void MainWindow::on_introButton_clicked()
 
 void MainWindow::on_storeButton_clicked()
 {
-    currentOrderType = 0;                  // 매장
-    ui->stackedWidget->setCurrentIndex(2); // 메뉴판 페이지로
-    // loadMenus("신메뉴"); // 첫 화면 로딩
+    ui->stackedWidget->setCurrentIndex(2);
+    ui->widget_2->loadMenus("신메뉴");
 }
 
 void MainWindow::on_takeoutButton_clicked()
 {
-    currentOrderType = 1; // 포장
     ui->stackedWidget->setCurrentIndex(2);
-    // loadMenus("신메뉴");
+    ui->widget_2->loadMenus("신메뉴");
 }
 
 
