@@ -14,11 +14,20 @@ categorywidget::categorywidget(QWidget *parent)
     connect(ui->category_icedcoffee_button, &QPushButton::clicked, this, [this]()
             { emit categorySelected(CATEGORY_ICED_COFFEE); });
 
-    connect(ui->category_icedcoffee_button, &QPushButton::clicked, this, [this]()
+    connect(ui->category_hotcoffee_button, &QPushButton::clicked, this, [this]()
             { emit categorySelected(CATEGORY_HOT_COFFEE); });
 
+    connect(ui->category_tea_button, &QPushButton::clicked, this, [this]()
+            { emit categorySelected(CATEGORY_TEA); });
 
-    // (나머지 카테고리 버튼들도 여기에 쭉 추가하기.3/6)
+    connect(ui->category_blended_button, &QPushButton::clicked, this, [this]()
+            { emit categorySelected(CATEGORY_BLENDED); });
+
+    connect(ui->category_beverage_button, &QPushButton::clicked, this, [this]()
+            { emit categorySelected(CATEGORY_BEVERAGE); });
+
+    connect(ui->category_ade_button, &QPushButton::clicked, this, [this]()
+            { emit categorySelected(CATEGORY_ADE); });
 }
 
 categorywidget::~categorywidget()

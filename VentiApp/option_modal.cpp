@@ -40,9 +40,9 @@ option_modal::option_modal(KioskData data, QWidget *parent)
 
     // 탄산수 변경 그룹 (이미지상 버튼이 하나뿐이라면 그룹화는 생략해도 되지만,
     // 나중에 '일반 물' 같은 옵션이 생길 걸 대비해 묶어두면 좋습니다)
-    QButtonGroup *sparklingGroup = new QButtonGroup(this);
-    sparklingGroup->addButton(ui->btnSparkling); // 탄산수(+500)
-    sparklingGroup->setExclusive(true);
+    // QButtonGroup *sparklingGroup = new QButtonGroup(this);
+    // sparklingGroup->addButton(ui->btnSparkling); // 탄산수(+500)
+    // sparklingGroup->setExclusive(true);
 
     // 토핑 선택 그룹 (하나만 선택 가능한 경우)
     QButtonGroup *toppingGroup = new QButtonGroup(this);
@@ -116,7 +116,10 @@ void option_modal::on_btnConfirm_clicked()
     }
 
     // --- 2. 원두 선택 (0원이지만 텍스트로 남김) ---
-    if (ui->btnBeanDecaf->isChecked()) options << "디카페인";
+    if (ui->btnBeanDecaf->isChecked()){
+        options << "디카페인";
+        extraPrice += 800;
+    }
     else if (ui->btnBeanDark->isChecked()) options << "다크원두";
     else options << "시그니처";
 
@@ -124,20 +127,31 @@ void option_modal::on_btnConfirm_clicked()
     // 2. 추가 옵션 체크 (예시: 샷 추가 체크박스)
     if (ui->btnShotBasic->isChecked()) {
         options << "샷추가";
-        extraPrice += 500;
+        extraPrice += 0;
     }
+
+    if (ui->btnShotLight->isChecked()) {
+        options << "연하게";
+        extraPrice += 0;
+    }
+
     if (ui->btnShotSignatureAdd->isChecked()) {
         options << "시그니처샷추가";
         extraPrice += 500;
-    } else if (ui->btnShotLight->isChecked()) {
-        options << "연하게";
     }
 
     // --- 4. 시럽 선택 ---
+
+    if (ui->btnSyrupSweet->isChecked()) {
+        options << "달게";
+        extraPrice += 0;
+    }
+
     if (ui->btnSyrupVanilla->isChecked()) {
         options << "바닐라시럽";
         extraPrice += 500;
     }
+
     if (ui->btnSyrupHazelnut->isChecked()) {
         options << "헤이즐넛시럽";
         extraPrice += 500;
@@ -156,6 +170,11 @@ void option_modal::on_btnConfirm_clicked()
         options << "타피오카펄";
         extraPrice += 900;
     }
+    if (ui->btnToppingWhite->isChecked()) {
+        options << "화이트펄";
+        extraPrice += 900;
+    }
+
     if (ui->btnOatPearl->isChecked()) {
         options << "오트팝핑펄";
         extraPrice += 900;
@@ -194,6 +213,10 @@ void option_modal::on_btnConfirm_clicked()
     // 4. 완성된 데이터를 리스트에 담아 발송 (MainWindow가 이 신호를 받음)
     QList<KioskData> list;
     list.append(m_selectedMenu);
+
+    qDebug() << "basePrice:" << m_selectedMenu.basePrice;
+    qDebug() << "extraPrice:" << extraPrice;
+    qDebug() << "totalPrice:" << m_selectedMenu.totalPrice;
 
     emit sendToCart(list); // 밖으로 데이터 발사!
 
@@ -237,7 +260,8 @@ void option_modal::updatePrice()
     if (ui->btnSyrupVanilla->isChecked()) {
         extraPrice += 500;
         selectedOptions << "바닐라시럽";
-    } else if (ui->btnSyrupHazelnut->isChecked()) {
+    }
+    if (ui->btnSyrupHazelnut->isChecked()) {
         extraPrice += 500;
         selectedOptions << "헤이즐넛시럽";
     } /*else if (ui->btnSyrupHoney->isChecked()) { // 추가된 옵션
@@ -260,10 +284,12 @@ void option_modal::updatePrice()
     if (ui->btnToppingIcecream->isChecked()) {
         extraPrice += 500;
         selectedOptions << "아이스크림추가";
-    } else if (ui->btnToppingBubble->isChecked()) {
+    }
+    if (ui->btnToppingBubble->isChecked()) {
         extraPrice += 900;
-        selectedOptions << "버블추가";
-    } else if (ui->btnToppingWhite->isChecked()) {
+        selectedOptions << "버블(타피오카펄)추가";
+    }
+    if (ui->btnToppingWhite->isChecked()) {
         extraPrice += 900;
         selectedOptions << "화이트펄추가";
     }
@@ -273,6 +299,7 @@ void option_modal::updatePrice()
         extraPrice += 900;
         selectedOptions << "오트팝핑펄추가";
     }
+
     else{
         // 🚩 만약 선택이 안 되어 있다면 아무것도 더하지 않음
     }
