@@ -39,7 +39,6 @@ private slots:
 private:
     Ui::MenuOptionDialog *ui;
     QString currentMenuName; // 현재 선택된 메뉴 이름을 저장할 변수
-    QList<OrderInfo> cartList;
 
     int currentBasePrice;
 };

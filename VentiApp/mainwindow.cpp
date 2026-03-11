@@ -73,25 +73,35 @@ MainWindow::MainWindow(QWidget *parent)
         // 클릭한 아이템에서 메뉴 이름만 분리 (줄바꿈 기준 첫 줄)
         QString menuName = item->text().split("\n")[0];
 
-        // 장바구니 데이터에 추가 (이미 있으면 수량 +1, 없으면 1로 시작)
-        cartData[menuName]++;
+        for(int i=0; i < cartList.size(); ++i) {
+            if(cartList[i].menuName == menuName) {
+                cartList[i].quantity++;
+                // 가격도 업데이트 (단가 * 수량)
+                cartList[i].totalPrice = (cartList[i].totalPrice / (cartList[i].quantity - 1)) * cartList[i].quantity;
+                break;
+            }
+        }
 
         // UI 테이블 갱신
         updateCartTable();
 
-        qDebug() << menuName << "이(가) 장바구니에 담겼습니다. 현재 수량:" << cartData[menuName];
+        int currentQty = 0;
+        for(const auto& item : cartList) {
+            if(item.menuName == menuName) currentQty += item.quantity;
+        }
+        qDebug() << menuName << "이(가) 담겼습니다. 현재 수량:" << currentQty;
     });
 
     connect(ui->btnClearCart, &QPushButton::clicked, this, [this](){
         // 장바구니 데이터를 모두 지우고 테이블을 갱신
-        cartData.clear();
+        cartList.clear(); // 수정 후
         updateCartTable();
         qDebug() << "장바구니가 비워졌습니다.";
     });
 
     // 결제하기 버튼 연결
     connect(ui->btnCheckout, &QPushButton::clicked, this, [this](){
-        if (cartData.isEmpty()) {
+        if (cartList.isEmpty()) {
             qDebug() << "장바구니가 비어있어 결제할 수 없습니다.";
             return;
         }
@@ -107,7 +117,13 @@ MainWindow::MainWindow(QWidget *parent)
         QString menuName = ui->tableCart->item(row, 0)->text();
 
 
-        cartData.remove(menuName);
+        for(int i = 0; i < cartList.size(); ++i) {
+            if(cartList[i].menuName == menuName) {
+                cartList.removeAt(i);
+                break; // 찾으면 삭제 후 중단
+            }
+        }
+
         updateCartTable();
 
         qDebug() << menuName << " 항목이 삭제되었습니다.";
@@ -243,7 +259,7 @@ void MainWindow::updateCartTable() {
 
         // [1] 옵션 (선택한 옵션 문자열 출력)
         QTableWidgetItem *optItem = new QTableWidgetItem(order.options);
-        optItem->setTextAlignment(Qt::AlignLeft | Qt::AlignVCenter);
+        optItem->setTextAlignment(Qt::AlignCenter);
         ui->tableCart->setItem(i, 1, optItem);
 
         // [2] 수량 위젯
@@ -333,62 +349,7 @@ void MainWindow::processCheckout() {
     }
 
     // 결제 완료
-    cartData.clear();   // 카트 초기화
+    cartList.clear();
     updateCartTable();
     ui->stackedWidget->setCurrentIndex(0); // 초기화면으로 이동
 }
-
-/////////////////////// 핸들 함수 시작 //////////////////////////////////////
-// void MainWindow::handle(const KioskEvent &event) {
-
-//     switch(event.action){
-
-//         /////////////////// 카테고리 설정 //////////////////////////////
-//     case CATEGORY_COFFEE:
-//         qDebug() << "커피 카테고리 선택됨";
-//         // TODO: DatabaseManager::instance().getMenusByCategory("커피") 호출하여 UI 출력
-//         break;
-
-//     case CATEGORY_BEVERAGE:
-
-//         qDebug() << "음료 카테고리 선택됨";
-//         break;
-
-//     case CATEGORY_DESSERT:
-//         qDebug() << "디저트 카테고리 선택됨";
-//         break;
-//         /////////////////// 카테고리 설정 끝 //////////////////////////////
-
-
-//         /////////////////// 메뉴 선택 설정 //////////////////////////////
-//     case MENU_SELECT_ITEM:
-//         qDebug() << "메뉴가 선택됨";
-//         break;
-
-//     case MENU_CANCEL_ITEM:
-//         qDebug() << "메뉴 선택 취소됨";
-//         break;
-//         /////////////////// 메뉴 선택 끝 //////////////////////////////
-
-
-//         /////////////////// 장바구니 설정 //////////////////////////////
-//     case CART_ADD:
-//         qDebug() << "장바구니에 담기";
-//         break;
-
-//     case CART_REMOVE:
-//         qDebug() << "장바구니 항목 취소";
-//         break;
-
-//     case CART_CHECKOUT:
-//         qDebug() << "결제 진행";
-//         break;
-//         /////////////////// 장바구니 설정 끝 //////////////////////////////
-
-//     default:
-//         qDebug() << "정의되지 않은 액션입니다.";
-//         break;
-//     }
-// }
-// ////////////////////////////// 핸들 함수 끝 //////////////////////////////////////
-

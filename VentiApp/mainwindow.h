@@ -1,6 +1,7 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
+#include <menuoptiondialog.h>
 #include <QMainWindow>
 #include <QVariant>
 #include <QSqlDatabase>
@@ -9,6 +10,7 @@
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
 QT_END_NAMESPACE
+
 
 class MainWindow : public QMainWindow
 {
@@ -35,6 +37,7 @@ private:
     Ui::MainWindow *ui;
     QSqlDatabase db;
     QTimer *touchTimer;     // 타이머 객체
+    QList<OrderInfo> cartList;     // 새로 만든 상세 정보 리스트
 
     bool isVisible = true;  // 가시성 상태 변수
 

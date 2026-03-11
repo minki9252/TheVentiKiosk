@@ -12,18 +12,12 @@ MenuOptionDialog::MenuOptionDialog(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    // 아이콘 크기
+    connect(ui->onConfirmClicked, &QPushButton::clicked, this, &MenuOptionDialog::onConfirmClicked);
+    connect(ui->onCancelClicked, &QPushButton::clicked, this, &MenuOptionDialog::onCancelClicked);
+
     ui->listSelectedMenu->setIconSize(QSize(200, 200));
-
-    // 아이템이 창 크기에 맞춰 정렬되도록 설정
     ui->listSelectedMenu->setResizeMode(QListView::Adjust);
-
-    // 사용자가 클릭해서 위치를 옮기지 못하도록 고정
     ui->listSelectedMenu->setMovement(QListView::Static);
-
-    // 담기/취소 버튼 시그널 연결
-    connect(ui->onConfirmClicked, &QPushButton::clicked, this, &MenuOptionDialog::accept);
-    connect(ui->onCancelClicked, &QPushButton::clicked, this, &MenuOptionDialog::reject);
 }
 
 MenuOptionDialog::~MenuOptionDialog()
@@ -31,29 +25,31 @@ MenuOptionDialog::~MenuOptionDialog()
     delete ui;
 }
 
-// 담기 버튼 클릭 시 실행되는 슬롯 함수
-void MenuOptionDialog::onConfirmClicked()
-{
-    qDebug() << "옵션 선택 완료";
-    accept();
-}
+// // 담기 버튼 클릭 시 실행되는 슬롯 함수
+// void MenuOptionDialog::onConfirmClicked()
+// {
+//     qDebug() << "옵션 선택 완료";
+//     this->accept();
+// }
 
-// 취소 버튼 클릭 시 실행되는 슬롯 함수
-void MenuOptionDialog::onCancelClicked()
-{
-    reject();
-}
+// // 취소 버튼 클릭 시 실행되는 슬롯 함수
+// void MenuOptionDialog::onCancelClicked()
+// {
+//     this->reject();
+//}
 
 void MenuOptionDialog::setMenuInfo(const QString &menuName)
 {
-    // 기존 리스트 항목 초기화
+    // [위치: 옵션창이 뜰 때 초기 데이터를 로드하는 부분]
+
+    // 1. 기존 리스트 항목 초기화 (이전 메뉴 잔상 제거)
     ui->listSelectedMenu->clear();
 
+    // 2. 전달받은 문자열에서 순수 메뉴 이름만 추출 (개행 문자 기준)
     QString pureMenuName = menuName.split("\n").at(0);
-    qDebug() << "DB 조회를 위한 순수 메뉴명:" << pureMenuName;
 
     QSqlQuery query;
-
+    // 3. 데이터베이스에서 메뉴 상세 정보(이름, 가격, 이미지) 조회
     query.prepare("SELECT kr_name, price, image_path FROM MENU_INFO WHERE kr_name = :name");
     query.bindValue(":name", pureMenuName);
 
@@ -62,35 +58,37 @@ void MenuOptionDialog::setMenuInfo(const QString &menuName)
         int price = query.value("price").toInt();
         QString imgPath = query.value("image_path").toString();
 
-        qDebug() << "이미지 경로 확인:" << imgPath;
+        // [중요] 멤버 변수에 현재 메뉴 정보를 저장하여 나중에 '담기' 버튼 클릭 시 사용함
+        this->currentMenuName = name;
+        this->currentBasePrice = price;
 
-        // 리스트 아이템 생성
+        // 4. 옵션창 상단 리스트 위젯에 선택한 메뉴 표시
         QString itemText = QString("%1\n(%2원)").arg(name).arg(price);
         QListWidgetItem *item = new QListWidgetItem(itemText, ui->listSelectedMenu);
-
         item->setTextAlignment(Qt::AlignCenter);
 
-        // 이미지 설정
+        // 5. 메뉴 이미지 로드 및 설정
         QIcon menuIcon(imgPath);
-        if (menuIcon.isNull()) {
-            qDebug() << "이미지 로드 실패. 경로를 다시 확인하세요:" << imgPath;
-        } else {
+        if (!menuIcon.isNull()) {
             item->setIcon(menuIcon);
+        } else {
+            qDebug() << "이미지를 찾을 수 없음:" << imgPath;
         }
     } else {
-        qDebug() << "메뉴 데이터 로드 실패. 쿼리문 확인:" << query.lastQuery();
-        qDebug() << "에러 메시지:" << query.lastError().text();
+        qDebug() << "DB 조회 실패:" << query.lastError().text();
     }
 }
 
 OrderInfo MenuOptionDialog::getSelectedOrderInfo() const
 {
     OrderInfo info;
-    info.menuName = this->currentMenuName.split("\n").at(0);
+    // setMenuInfo에서 저장한 멤버 변수를 사용해야 함
+    info.menuName = this->currentMenuName;
     info.basePrice = this->currentBasePrice;
-    info.quantity = 1; // 필요 시 SpinBox를 추가해 조절 가능
+    info.quantity = 1;
 
-    int addedPrice = 0; // 추가 금액 합계
+    int addedPrice = 0;
+
     QStringList selectedOpts;
 
     // 사이즈 선택
@@ -143,9 +141,8 @@ OrderInfo MenuOptionDialog::getSelectedOrderInfo() const
         addedPrice += 900;
     }
 
-
     info.options = selectedOpts.join(", ");
-    info.totalPrice = info.basePrice + addedPrice;
+    info.totalPrice = (info.basePrice + addedPrice) * info.quantity;
 
     return info;
 }
