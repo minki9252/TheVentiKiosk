@@ -19,6 +19,9 @@ public:
     ~cartwidget();
     void updateCart(QList<KioskData> list); // 추가
 
+private slots:
+    void on_btnCheckout_clicked();
+
 private:
     Ui::cartwidget *ui;
 };

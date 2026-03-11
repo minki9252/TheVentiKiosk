@@ -4,6 +4,7 @@
 #include "categorywidget.h"
 #include "beverage.h"  // 🌟 beverage 위젯 기능을 쓰기 위해 필수
 #include "KioskData.h" // 🌟 메뉴 상세 정보 구조체 사용
+#include "couponmanagerwidget.h"
 #include <QSqlDatabase>
 #include <QSqlError>
 #include <QSqlQuery>

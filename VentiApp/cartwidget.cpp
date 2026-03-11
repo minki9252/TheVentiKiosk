@@ -1,5 +1,6 @@
 #include "cartwidget.h"
 #include "ui_cartwidget.h"
+#include "couponmanagerwidget.h"
 
 cartwidget::cartwidget(QWidget *parent)
     : QWidget(parent), ui(new Ui::cartwidget)
@@ -27,3 +28,11 @@ void cartwidget::updateCart(QList<KioskData> list)
         ui->ListCart->addItem(itemText);
     }
 }
+
+void cartwidget::on_btnCheckout_clicked()
+{
+    CouponManagerWidget* manager = new CouponManagerWidget();
+    manager->setWindowModality(Qt::ApplicationModal);
+    manager->show();
+}
+

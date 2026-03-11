@@ -91,7 +91,7 @@
         </spacer>
        </item>
        <item>
-        <widget class="QPushButton" name="pushButton_62">
+        <widget class="QPushButton" name="btnCheckout">
          <property name="text">
           <string>결제하기</string>
          </property>
