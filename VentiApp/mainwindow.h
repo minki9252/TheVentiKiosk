@@ -47,7 +47,9 @@ private slots:
     void on_listMenu_itemClicked(QListWidgetItem *item);
     void updateMenuDisplay(const QString &categoryName);
     void updateTotalAmount(int amount);
+    void changeCartQuantity(const QString &menuName, int delta);
 
+    QWidget* createQuantityWidget(int row, int initialQty);
 
 private:
     Ui::MainWindow *ui;
@@ -65,7 +67,6 @@ private:
     void loadMenus(const QString &categoryName);    // 메뉴판을 채우는 함수
     void updateCartTable();
     void processCheckout();
-    void changeCartQuantity(const QString &menuName, int delta);    // 수량 변경
 };
 
 #endif // MAINWINDOW_H

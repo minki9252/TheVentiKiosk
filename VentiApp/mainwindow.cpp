@@ -8,12 +8,47 @@
 #include <QListWidgetItem>
 #include <QIcon>
 #include <QListWidget>
+#include <QHBoxLayout>
+#include <QPushButton>
+#include <QLabel>
+
+QWidget* MainWindow::createQuantityWidget(int row, int initialQty)
+{
+    QWidget* pWidget = new QWidget();
+    QHBoxLayout* pLayout = new QHBoxLayout(pWidget);
+
+    QPushButton* btnMinus = new QPushButton("-");
+    QPushButton* btnPlus = new QPushButton("+");
+    QLabel* lblQty = new QLabel(QString::number(initialQty));
+
+    btnMinus->setFixedSize(25, 25);
+    btnPlus->setFixedSize(25, 25);
+    lblQty->setAlignment(Qt::AlignCenter);
+
+    pLayout->addWidget(btnMinus);
+    pLayout->addWidget(lblQty);
+    pLayout->addWidget(btnPlus);
+    pLayout->setContentsMargins(5, 2, 5, 2);
+    pLayout->setSpacing(5);
+    pWidget->setLayout(pLayout);
+
+    return pWidget;
+}
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+
+    // 열 순서에 맞춰 너비 배분
+    ui->tableCart->setColumnWidth(0, 130); // 메뉴
+    ui->tableCart->setColumnWidth(1, 200); // 옵션 (글자가 길어서 넉넉하게!)
+    ui->tableCart->setColumnWidth(2, 110); // 수량 위젯
+    ui->tableCart->setColumnWidth(3, 100); // 금액
+
+    // 만약 옵션 칸을 유동적으로 꽉 채우고 싶다면:
+    ui->tableCart->horizontalHeader()->setSectionResizeMode(1, QHeaderView::Stretch);
 
     // DB 초기화
     if(!DatabaseManager::instance().initDatabase("venti.db")) {
@@ -151,49 +186,32 @@ void MainWindow::updateMenuDisplay(const QString &categoryName) {
 
 void MainWindow::on_listMenu_itemClicked(QListWidgetItem *item)
 {
-    // 다이얼로그 포인터 생성
     MenuOptionDialog *optionDialog = new MenuOptionDialog(this);
-
-    // 포인터이므로 -> 기호를 사용하여 함수 호출
     optionDialog->setMenuInfo(item->text());
 
-    // 다이얼로그 실행
     if (optionDialog->exec() == QDialog::Accepted) {
         OrderInfo order = optionDialog->getSelectedOrderInfo();
 
-        // 현재 테이블의 마지막 행 번호
         int row = ui->tableCart->rowCount();
-
-        // 새 행을 하나 추가
         ui->tableCart->insertRow(row);
 
-        // 각 열에 데이터를 넣기
+        // [0번 열] 메뉴 (헤더: 1. 메뉴)
         ui->tableCart->setItem(row, 0, new QTableWidgetItem(order.menuName));
-        ui->tableCart->setItem(row, 1, new QTableWidgetItem(order.options));
-        ui->tableCart->setItem(row, 2, new QTableWidgetItem(QString::number(order.quantity)));
-        ui->tableCart->setItem(row, 3, new QTableWidgetItem(QString("%1원").arg(order.totalPrice)));
 
-        // 전체 금액 합산 업데이트
+        // [1번 열] 옵션 (헤더: 2. 옵션) -> 이 부분이 누락되거나 번호가 틀리면 칸이 밀립니다.
+        ui->tableCart->setItem(row, 1, new QTableWidgetItem(order.options));
+
+        // [2번 열] 수량 위젯 (헤더: 3. 수량) -> - 1 + 버튼 세트
+        ui->tableCart->setCellWidget(row, 2, createQuantityWidget(row, order.quantity));
+
+        // [3번 열] 금액 (헤더: 4. 금액)
+        ui->tableCart->setItem(row, 3, new QTableWidgetItem(QString::number(order.totalPrice) + "원"));
+
+        // 전체 합계 업데이트
         updateTotalAmount(order.totalPrice);
     }
-
-    // 사용 후 메모리 해제
     delete optionDialog;
 }
-
-void MainWindow::changeCartQuantity(const QString &menuName, int delta) {
-    // 현재 수량에 +1 또는 -1
-    cartData[menuName] += delta;
-
-    // 수량이 0 이하라면 장바구니에서 삭제
-    if (cartData[menuName] <= 0) {
-        cartData.remove(menuName);
-    }
-
-    // UI 갱신
-    updateCartTable();
-}
-
 
 void MainWindow::updateCartTable() {
     ui->tableCart->setRowCount(0);
@@ -280,6 +298,29 @@ void MainWindow::updateTotalAmount(int amount)
     ui->lblTotal->setText(QString("총 결제금액: %1원").arg(totalAmount));
 
     qDebug() << "현재 총 주문 금액:" << totalAmount;
+}
+
+void MainWindow::changeCartQuantity(const QString &menuName, int delta)
+{
+    // 1. 현재 테이블을 돌며 해당 메뉴가 있는 행(row)을 찾습니다.
+    for (int i = 0; i < ui->tableCart->rowCount(); ++i) {
+        if (ui->tableCart->item(i, 0)->text() == menuName) {
+
+            // 2. 현재 수량을 가져옵니다 (2번 열의 위젯에서 가져오거나 별도 관리 필요)
+            // 간단하게 구현하기 위해, 만약 수량이 텍스트로도 관리된다면:
+            int currentQty = ui->tableCart->item(i, 2) ? ui->tableCart->item(i, 2)->text().toInt() : 1;
+            int newQty = currentQty + delta;
+
+            if (newQty < 1) return; // 1개 미만으로는 안 내려가게 방지
+
+            // 3. 테이블의 수량 및 금액 업데이트
+            // (금액 계산 로직은 각자 프로젝트의 가격 관리 방식에 맞춰 추가하세요)
+            // ui->tableCart->setItem(i, 2, new QTableWidgetItem(QString::number(newQty)));
+
+            qDebug() << menuName << "수량 변경:" << newQty;
+            break;
+        }
+    }
 }
 
 void MainWindow::processCheckout() {

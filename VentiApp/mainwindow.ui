@@ -471,7 +471,7 @@ QHeaderView::section {
          <enum>QAbstractItemView::SelectionBehavior::SelectRows</enum>
         </property>
         <property name="columnCount">
-         <number>5</number>
+         <number>4</number>
         </property>
         <attribute name="verticalHeaderStretchLastSection">
          <bool>true</bool>
@@ -496,7 +496,6 @@ QHeaderView::section {
           <string>4. 금액</string>
          </property>
         </column>
-        <column/>
        </widget>
        <widget class="QPushButton" name="btnClearCart">
         <property name="geometry">
