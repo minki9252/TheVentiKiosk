@@ -154,20 +154,35 @@ void MainWindow::handle(const KioskEvent &event)
         /////////////////// 카테고리 설정 //////////////////////////////
     case CATEGORY_NEW_MENU:
         qDebug() << "신메뉴 카테고리 선택됨";
+        ui->widget_2->loadMenus("신메뉴");
         break;
     case CATEGORY_ICED_COFFEE:
         qDebug() << "아이스커피 카테고리 선택됨";
         ui->widget_2->loadMenus("커피(아이스)");
         break;
+    case CATEGORY_HOT_COFFEE:
+        qDebug() << "핫커피 카테고리 선택됨";
+        ui->widget_2->loadMenus("커피(핫)");
+        break;
+    case CATEGORY_TEA:
+        qDebug() << "티 카테고리 선택됨";
+        ui->widget_2->loadMenus("버블티&티");
+        break;
+    case CATEGORY_BLENDED:
+        qDebug() << "블렌디드 카테고리 선택됨";
+        ui->widget_2->loadMenus("블렌디드");
+        break;
+    case CATEGORY_BEVERAGE:
+        qDebug() << "베버리지 카테고리 선택됨";
+        ui->widget_2->loadMenus("베버리지");
+        break;
+    case CATEGORY_ADE:
+        qDebug() << "에이드 카테고리 선택됨";
+        ui->widget_2->loadMenus("에이드");
+        break;
 
-    // case CATEGORY_BEVERAGE:
 
-    //     qDebug() << "음료 카테고리 선택됨";
-    //     break;
 
-    // // case CATEGORY_DESSERT:
-    //     qDebug() << "디저트 카테고리 선택됨";
-    //     break;
         /////////////////// 카테고리 설정 끝 //////////////////////////////
 
         /////////////////// 메뉴 선택 설정 //////////////////////////////
