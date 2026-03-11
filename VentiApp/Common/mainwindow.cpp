@@ -2,8 +2,14 @@
 #include "ui_mainwindow.h"
 #include "databasemanager.h"
 #include "categorywidget.h"
+<<<<<<< HEAD
 #include "beverage.h"
 #include "KioskData.h"
+=======
+#include "beverage.h"  // 🌟 beverage 위젯 기능을 쓰기 위해 필수
+#include "KioskData.h" // 🌟 메뉴 상세 정보 구조체 사용
+#include "couponselectview.h"
+>>>>>>> 0e5e481453466ce6e6929e66708805260656be02
 #include "couponmanagerwidget.h"
 #include "coupondialog.h"
 #include "paymentmaindialog.h"
@@ -54,7 +60,10 @@ MainWindow::MainWindow(QWidget *parent)
 
     ui->stackedWidget->setCurrentIndex(0); // 시작은 홍보화면
 
+<<<<<<< HEAD
     connect(ui->Listcart, &cartwidget::checkoutRequested, this, &MainWindow::openPaymentModal);
+=======
+>>>>>>> 0e5e481453466ce6e6929e66708805260656be02
 }
 
 
@@ -66,11 +75,16 @@ void MainWindow::onReceiveCartData(QList<KioskData> list)
     ui->Listcart->updateCart(list); // 냅다 던져줍니다.
 }
 
+<<<<<<< HEAD
 // 결제 처리 로직
+=======
+>>>>>>> 0e5e481453466ce6e6929e66708805260656be02
 void MainWindow::processCheckout()
 {
-    qDebug() << "결제가 완료되었습니다! 초기 화면으로 돌아갑니다.";
+    QList<KioskData> currentCart = ui->Listcart->getCartList();
+    int currentTotal = ui->Listcart->getTotalAmount();
 
+<<<<<<< HEAD
     // 여기서 DB에 주문 내역 저장 등의 로직을 나중에 추가
 
     // 결제가 완료되었으니 장바구니 비우기
@@ -79,6 +93,22 @@ void MainWindow::processCheckout()
     // 주문 방식(매장/포장) 변수 초기화 및 초기 홍보 화면으로 이동
     // currentOrderType = 0;
     // ui->stackedWidget->setCurrentIndex(0);
+=======
+    // 🌟 1. 중재자(CouponManagerWidget) 모달창 띄우기
+    CouponManagerWidget managerDialog(currentCart, currentTotal, this);
+
+    // 2. 결제 진행 
+    if (managerDialog.exec() == QDialog::Accepted) {
+        qDebug() << "최종 결제/쿠폰 확인 완료! DB 저장 단계로 넘어갑니다.";
+
+        // (이후 DB 저장, 장바구니 비우기 로직 수행)
+        ui->Listcart->clearCart(); 
+        currentOrderType = 0;      
+        // ui->stackedWidget->setCurrentIndex(0); 
+    } else {
+        qDebug() << "결제가 취소되었습니다.";
+    }
+>>>>>>> 0e5e481453466ce6e6929e66708805260656be02
 }
 
 // 안내 문구 깜빡임 로직
