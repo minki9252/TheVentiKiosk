@@ -18,7 +18,8 @@ SOURCES += main.cpp \
     categorywidget.cpp \
     coupondialog.cpp \
     mainwindow.cpp \
-    option_modal.cpp
+    option_modal.cpp \
+    orderconfirmdialog.cpp
 
 HEADERS += mainwindow.h \
     KioskData.h \
@@ -26,7 +27,8 @@ HEADERS += mainwindow.h \
     cartwidget.h \
     categorywidget.h \
     coupondialog.h \
-    option_modal.h
+    option_modal.h \
+    orderconfirmdialog.h
 
 FORMS += mainwindow.ui \
     beverage.ui \

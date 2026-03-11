@@ -4,6 +4,7 @@
 #include "categorywidget.h"
 #include "beverage.h"  // 🌟 beverage 위젯 기능을 쓰기 위해 필수
 #include "KioskData.h" // 🌟 메뉴 상세 정보 구조체 사용
+#include "orderconfirmdialog.h"
 #include "coupondialog.h"
 #include <QSqlDatabase>
 #include <QSqlError>
@@ -66,16 +67,23 @@ void MainWindow::onReceiveCartData(QList<KioskData> list)
 // 🌟 결제 처리 로직
 void MainWindow::processCheckout()
 {
-    qDebug() << "결제가 완료되었습니다! 초기 화면으로 돌아갑니다.";
-    
-    // 1. 여기서 DB에 주문 내역 저장(INSERT) 등의 로직을 나중에 추가하시면 됩니다.
+    // 장바구니 데이터 가져오기
+    QList<KioskData> currentCart = ui->Listcart->getCartList();
+    int currentTotal = ui->Listcart->getTotalAmount();
 
-    // 2. 결제가 완료되었으니 장바구니 비우기
-    ui->Listcart->clearCart();
-    
-    // 3. 주문 방식(매장/포장) 변수 초기화 및 초기 홍보 화면으로 이동
-    currentOrderType = 0; 
-    ui->stackedWidget->setCurrentIndex(0); 
+    // 1. 주문 내역 확인 모달창 띄우기
+    OrderConfirmDialog confirmDialog(currentCart, currentTotal, this);
+
+    // 2. 결제 진행 (사용자가 결제 버튼(accept)을 눌렀을 때만 동작)
+    if (confirmDialog.exec() == QDialog::Accepted) {
+        qDebug() << "최종 결제가 완료되었습니다! 초기 화면으로 돌아갑니다.";
+
+        ui->Listcart->clearCart(); // 장바구니 비우기
+        currentOrderType = 0;
+        ui->stackedWidget->setCurrentIndex(0); // 홈 화면으로 이동
+    } else {
+        qDebug() << "결제가 취소되었습니다. 메뉴 화면 유지.";
+    }
 }
 
 // 안내 문구 깜빡임 로직
