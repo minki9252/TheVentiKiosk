@@ -13,7 +13,7 @@
 #include <QTimer>
 #include <QListWidgetItem>
 #include <QIcon>
-#include <utility>
+// #include <utility>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent), ui(new Ui::MainWindow)
@@ -123,28 +123,28 @@ void MainWindow::on_takeoutButton_clicked()
     // loadMenus("신메뉴");
 }
 
-void MainWindow::processCheckout()
-{
-    // 장바구니가 비어있는지 체크는 이미 cartwidget에서 하고 여기로 넘어옵니다.
+// void MainWindow::processCheckout()
+// {
+//     // 장바구니가 비어있는지 체크는 이미 cartwidget에서 하고 여기로 넘어옵니다.
 
-    // 1. 쿠폰 모달창 생성 및 띄우기
-    CouponDialog dialog(this);
+//     // 1. 쿠폰 모달창 생성 및 띄우기
+//     CouponDialog dialog(this);
 
-    // exec()는 창이 닫힐 때까지 코드를 멈추고 기다립니다.
-    // 사용자가 accept()로 창을 닫았다면 결제를 진행합니다.
-    if (dialog.exec() == QDialog::Accepted) {
+//     // exec()는 창이 닫힐 때까지 코드를 멈추고 기다립니다.
+//     // 사용자가 accept()로 창을 닫았다면 결제를 진행합니다.
+//     if (dialog.exec() == QDialog::Accepted) {
 
-        qDebug() << "결제가 완료되었습니다! 초기 화면으로 돌아갑니다.";
+//         qDebug() << "결제가 완료되었습니다! 초기 화면으로 돌아갑니다.";
 
-        // 2. 결제 완료되었으니 장바구니 비우기
-        ui->Listcart->clearCart();
+//         // 2. 결제 완료되었으니 장바구니 비우기
+//         ui->Listcart->clearCart();
 
-        // 3. 주문 방식 초기화 및 첫 화면으로 이동
-        currentOrderType = 0;
-        ui->stackedWidget->setCurrentIndex(0);
-    }
-    // 창을 강제로 끄거나 거부(reject)했다면 아무 일도 일어나지 않고 원래 메뉴판에 머뭅니다.
-}
+//         // 3. 주문 방식 초기화 및 첫 화면으로 이동
+//         currentOrderType = 0;
+//         ui->stackedWidget->setCurrentIndex(0);
+//     }
+//     // 창을 강제로 끄거나 거부(reject)했다면 아무 일도 일어나지 않고 원래 메뉴판에 머뭅니다.
+// }
 
 
 // void MainWindow::updateCartTable() {
