@@ -6,7 +6,6 @@
 #include "KioskData.h" // 🌟 메뉴 상세 정보 구조체 사용
 #include "couponselectview.h"
 #include "couponmanagerwidget.h"
-#include "coupondialog.h"
 #include "paymentmaindialog.h"
 #include <QSqlDatabase>
 #include <QSqlError>
