@@ -187,28 +187,37 @@ void MainWindow::updateMenuDisplay(const QString &categoryName) {
 void MainWindow::on_listMenu_itemClicked(QListWidgetItem *item)
 {
     MenuOptionDialog *optionDialog = new MenuOptionDialog(this);
+
+    // DB에서 기본 가격을 가져와서 Dialog에 넘겨줘야 합니다.
+    QString pureName = item->text().split("\n")[0];
+    QSqlQuery query;
+    query.prepare("SELECT price FROM MENU_INFO WHERE kr_name = :name");
+    query.bindValue(":name", pureName);
+    int basePrice = 0;
+    if (query.exec() && query.next()) basePrice = query.value(0).toInt();
+
     optionDialog->setMenuInfo(item->text());
+    // ※ 주의: MenuOptionDialog 내부에서 basePrice를 설정하는 setBasePrice(basePrice) 같은 함수가 필요할 수 있습니다.
 
     if (optionDialog->exec() == QDialog::Accepted) {
         OrderInfo order = optionDialog->getSelectedOrderInfo();
 
-        int row = ui->tableCart->rowCount();
-        ui->tableCart->insertRow(row);
+        // 동일 메뉴 & 동일 옵션이 있는지 확인 (있으면 수량만 증가)
+        bool found = false;
+        for(int i=0; i < cartList.size(); ++i) {
+            if(cartList[i].menuName == order.menuName && cartList[i].options == order.options) {
+                cartList[i].quantity += order.quantity;
+                cartList[i].totalPrice += order.totalPrice;
+                found = true;
+                break;
+            }
+        }
 
-        // [0번 열] 메뉴 (헤더: 1. 메뉴)
-        ui->tableCart->setItem(row, 0, new QTableWidgetItem(order.menuName));
+        if(!found) {
+            cartList.append(order); // 새로운 항목 추가
+        }
 
-        // [1번 열] 옵션 (헤더: 2. 옵션) -> 이 부분이 누락되거나 번호가 틀리면 칸이 밀립니다.
-        ui->tableCart->setItem(row, 1, new QTableWidgetItem(order.options));
-
-        // [2번 열] 수량 위젯 (헤더: 3. 수량) -> - 1 + 버튼 세트
-        ui->tableCart->setCellWidget(row, 2, createQuantityWidget(row, order.quantity));
-
-        // [3번 열] 금액 (헤더: 4. 금액)
-        ui->tableCart->setItem(row, 3, new QTableWidgetItem(QString::number(order.totalPrice) + "원"));
-
-        // 전체 합계 업데이트
-        updateTotalAmount(order.totalPrice);
+        updateCartTable(); // 테이블 새로고침
     }
     delete optionDialog;
 }
@@ -216,78 +225,39 @@ void MainWindow::on_listMenu_itemClicked(QListWidgetItem *item)
 void MainWindow::updateCartTable() {
     ui->tableCart->setRowCount(0);
 
-    // 모든 행의 높이를 50으로 고정
-    ui->tableCart->verticalHeader()->setSectionResizeMode(QHeaderView::Fixed);
-    ui->tableCart->verticalHeader()->setDefaultSectionSize(50);
-
-    // 마지막 행이 남은 빈 공간을 채우지 않도록 설정
-    ui->tableCart->verticalHeader()->setStretchLastSection(false);
-
-    // 테이블 행 번호 안 보이게
+    // 테이블 기본 설정
     ui->tableCart->verticalHeader()->setVisible(false);
+    ui->tableCart->horizontalHeader()->setSectionResizeMode(QHeaderView::Interactive); // 수동 조절 가능하게
+    ui->tableCart->horizontalHeader()->setSectionResizeMode(1, QHeaderView::Stretch);   // 옵션칸만 늘리기
 
-    ui->tableCart->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+    int totalSum = 0;
 
-    int row = 0;
-    int totalAmount = 0;
+    for (int i = 0; i < cartList.size(); ++i) {
+        const OrderInfo &order = cartList[i];
+        ui->tableCart->insertRow(i);
 
-    for (auto it = cartData.begin(); it != cartData.end(); ++it) {
-        QString name = it.key();
-        int count = it.value();
-
-        // DB에서 가격 가져오기
-        QSqlQuery query;
-        query.prepare("SELECT price FROM MENU_INFO WHERE kr_name = :name");
-        query.bindValue(":name", name.trimmed()); // 공백 제거 후 조회
-
-        int realPrice = 0;
-        if (query.exec() && query.next()) {
-            realPrice = query.value(0).toInt();
-        }
-
-        int subTotal = realPrice * count;
-        totalAmount += subTotal;
-
-        ui->tableCart->insertRow(row);
-
-        QTableWidgetItem *nameItem = new QTableWidgetItem(name);
+        // [0] 메뉴 이름
+        QTableWidgetItem *nameItem = new QTableWidgetItem(order.menuName);
         nameItem->setTextAlignment(Qt::AlignCenter);
-        ui->tableCart->setItem(row, 0, nameItem);
+        ui->tableCart->setItem(i, 0, nameItem);
 
+        // [1] 옵션 (선택한 옵션 문자열 출력)
+        QTableWidgetItem *optItem = new QTableWidgetItem(order.options);
+        optItem->setTextAlignment(Qt::AlignLeft | Qt::AlignVCenter);
+        ui->tableCart->setItem(i, 1, optItem);
 
-        QWidget *pWidget = new QWidget();
-        QHBoxLayout *pLayout = new QHBoxLayout(pWidget);
-        QPushButton *btnMinus = new QPushButton("-");
-        QPushButton *btnPlus = new QPushButton("+");
-        QLabel *lblCount = new QLabel(QString::number(count));
+        // [2] 수량 위젯
+        ui->tableCart->setCellWidget(i, 2, createQuantityWidget(i, order.quantity));
 
-        btnMinus->setFixedSize(30, 30);
-        btnPlus->setFixedSize(30, 30);
-        lblCount->setAlignment(Qt::AlignCenter);
-        lblCount->setStyleSheet("font-weight: bold;");
-
-        pLayout->addWidget(btnMinus);
-        pLayout->addWidget(lblCount);
-        pLayout->addWidget(btnPlus);
-        pLayout->setContentsMargins(5, 0, 5, 0);
-        pLayout->setSpacing(10);
-        pWidget->setLayout(pLayout);
-
-        // 버튼 클릭 시 수량 변경
-        connect(btnMinus, &QPushButton::clicked, this, [this, name](){ changeCartQuantity(name, -1); });
-        connect(btnPlus, &QPushButton::clicked, this, [this, name](){ changeCartQuantity(name, 1); });
-
-        ui->tableCart->setCellWidget(row, 1, pWidget);
-
-        QTableWidgetItem *priceItem = new QTableWidgetItem(QString::number(subTotal) + "원");
+        // [3] 금액
+        QTableWidgetItem *priceItem = new QTableWidgetItem(QString::number(order.totalPrice) + "원");
         priceItem->setTextAlignment(Qt::AlignCenter);
-        ui->tableCart->setItem(row, 2, priceItem);
+        ui->tableCart->setItem(i, 3, priceItem);
 
-        row++;
+        totalSum += order.totalPrice;
     }
 
-    // 총 결제 금액
-    if(ui->lblTotal) ui->lblTotal->setText(QString("총 결제 금액: %1원").arg(totalAmount));
+    if(ui->lblTotal) ui->lblTotal->setText(QString("총 결제 금액: %1원").arg(totalSum));
 }
 
 void MainWindow::updateTotalAmount(int amount)

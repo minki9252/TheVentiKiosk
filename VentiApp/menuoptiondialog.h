@@ -10,11 +10,11 @@
 #include <QJsonArray>
 
 struct OrderInfo {
-    QString menuName;   // 메뉴 이름
-    int basePrice;      // 기본 가격
-    int totalPrice;     // 옵션 포함 총 가격
-    int quantity;       // 수량 (보통 1로 시작)
-    QString options;    // 선택한 옵션들을 합친 문자열
+    QString menuName;
+    QString options;
+    int quantity;
+    int basePrice;
+    int totalPrice;
 };
 
 namespace Ui {
@@ -39,6 +39,7 @@ private slots:
 private:
     Ui::MenuOptionDialog *ui;
     QString currentMenuName; // 현재 선택된 메뉴 이름을 저장할 변수
+    QList<OrderInfo> cartList;
 
     int currentBasePrice;
 };
