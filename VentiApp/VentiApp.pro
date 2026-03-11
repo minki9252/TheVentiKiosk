@@ -20,6 +20,7 @@ SOURCES += main.cpp \
     couponmanagerwidget.cpp \
     couponresultview.cpp \
     couponselectview.cpp \
+    coupondialog.cpp \
     mainwindow.cpp \
     option_modal.cpp \
     ordernumberview.cpp \
@@ -56,6 +57,8 @@ HEADERS += mainwindow.h \
     pointresultview.h \
     receiptmanagerwidget.h \
     receiptselectview.h
+    coupondialog.h \
+    option_modal.h
 
 FORMS += mainwindow.ui \
     beverage.ui \

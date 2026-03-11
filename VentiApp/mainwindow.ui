@@ -39,7 +39,7 @@
     <item>
      <widget class="QStackedWidget" name="stackedWidget">
       <property name="currentIndex">
-       <number>0</number>
+       <number>2</number>
       </property>
       <widget class="QWidget" name="page">
        <property name="minimumSize">
@@ -239,13 +239,13 @@ QPushButton:pressed {
             <property name="minimumSize">
              <size>
               <width>0</width>
-              <height>500</height>
+              <height>420</height>
              </size>
             </property>
             <property name="maximumSize">
              <size>
               <width>16777215</width>
-              <height>500</height>
+              <height>420</height>
              </size>
             </property>
            </widget>
