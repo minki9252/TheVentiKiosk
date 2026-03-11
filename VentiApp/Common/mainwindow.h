@@ -9,6 +9,7 @@
 #include <QMap>
 #include "KioskData.h" // 🌟 [추가] 공통 구조체(KioskEvent) 파일 사용
 #include "cartwidget.h"
+#include "pointinputview.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui
@@ -61,6 +62,10 @@ private slots:
     void openPaymentModal(); //결제창 띄울 전용 슬롯
 
 
+    // 🌟 [추가] PointInputView 에서 오는 시그널 받는 슬롯
+    void onPhoneConfirmed(const QString &phoneNum);  // 번호 입력 완료
+    void onPhoneCancelled();                         // 취소 버튼
+
 
 private:
     Ui::MainWindow *ui;
@@ -74,6 +79,12 @@ private:
 
     // 🌟 [추가] 장바구니에 담길 '진짜 데이터' 보관함
     QList<KioskData> m_cartList;
+
+    // 🌟 [추가] PointInputView 멤버변수로 등록
+    PointInputView *m_pointInputView;
+
+    // 🌟 [추가] 적립 완료 메시지용 번호 임시 저장
+    QString m_phoneNum;
 
     bool isVisible = true;                       // 가시성 상태 변수
     int currentOrderType = 0;                    // 0: 매장, 1: 포장
