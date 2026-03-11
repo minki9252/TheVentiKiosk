@@ -12,7 +12,6 @@
 #include <QTimer>
 #include <QListWidgetItem>
 #include <QIcon>
-// #include <utility>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent), ui(new Ui::MainWindow)

@@ -8,7 +8,7 @@
 #include <QDebug>
 #include <QStringList>
 
-// 데이터를 담는 순수 객체 (Entity)
+// 데이터를 담는 순수 객체
 struct MenuData
 {
     QString category;
@@ -21,8 +21,20 @@ struct MenuData
         : category(c), name(n), price(p), imgPath(i) {}
 };
 
-class DatabaseManager
-{
+struct OptionInfo {
+    int id;
+    QString name;
+    int extraPrice;
+};
+
+struct OptionGroup {
+    QString groupName;
+    bool isExclusive;
+    QList<OptionInfo> options;
+};
+
+class DatabaseManager{
+
 public:
     // 싱글톤 패턴이나 전역 인스턴스로 관리하면 편리
     static DatabaseManager &instance();
@@ -37,6 +49,8 @@ public:
 
     // 특정 카테고리에 속한 메뉴 정보 가져오기 (3번 화면 중간))
     QList<QVariantMap> getMenusByCategory(const QString &categoryName);
+
+    QList<OptionGroup> getAllOptions();
 
 private:
     DatabaseManager(); // 생성자 비공개
