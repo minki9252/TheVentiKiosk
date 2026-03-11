@@ -106,8 +106,11 @@ void cartwidget::removeItem(int index)
 // 수량 증가 로직
 void cartwidget::increaseQty(int index)
 {
-    m_cartList[index].quantity++;
-    refreshCartUI();
+    //예외처리: 99개 제한으로 수정함
+    if(m_cartList[index].quantity < 99){
+        m_cartList[index].quantity++;
+        refreshCartUI();
+    }
 }
 
 // 수량 감소 로직 (1 이하로는 내려가지 않게)
