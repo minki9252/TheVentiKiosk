@@ -4,79 +4,102 @@
 #include <QJsonObject>
 #include <QJsonArray>
 #include <QCoreApplication>
+#include <QFileInfo>
+#include <QSqlError>
 
 // 데이터를 읽어오는 객체
-class MenuDataLoader {
+class MenuDataLoader
+{
 public:
-    static bool loadFromJson(const QString& filePath, QStringList& categories, QList<MenuData>& menus) {
+    static bool loadFromJson(const QString &filePath, QStringList &categories, QList<MenuData> &menus)
+    {
         QFile file(filePath);
-
-        if (!file.open(QIODevice::ReadOnly)) return false;
+        if (!file.open(QIODevice::ReadOnly))
+            qDebug() << "❌ JSON 파일을 열 수 없습니다. 시도한 경로:" << filePath;
+        return false;
 
         QJsonDocument doc = QJsonDocument::fromJson(file.readAll());
         QJsonObject root = doc.object();
 
         QJsonArray catArray = root["categories"].toArray();
-        for (const QJsonValue &v : catArray) categories << v.toString();
+        for (const QJsonValue &v : catArray)
+            categories << v.toString();
 
         QJsonArray menuArray = root["menus"].toArray();
-        for (const QJsonValue &v : menuArray) {
+        for (const QJsonValue &v : menuArray)
+        {
             QJsonObject obj = v.toObject();
             menus.append(MenuData(
                 obj["category"].toString(),
                 obj["name"].toString(),
                 obj["price"].toInt(),
-                obj["image"].toString()
-                ));
+                obj["image"].toString()));
         }
         return true;
     }
 };
 
-
-void initDatabase() {
+void initDatabase()
+{
     // SQLite DB 연결 설정
     QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
     db.setDatabaseName("venti.db");
 }
 
-
 // static으로 선언된 instance 함수 구현
-DatabaseManager& DatabaseManager::instance() {
+DatabaseManager &DatabaseManager::instance()
+{
     static DatabaseManager inst;
     return inst;
 }
 
+bool DatabaseManager::initDatabase(const QString &dbName)
+{
+    // 1. 이미 연결된 DB가 있는지 확인하여 중복 에러 방지
+    if (QSqlDatabase::contains(QSqlDatabase::defaultConnection))
+    {
+        db = QSqlDatabase::database(QSqlDatabase::defaultConnection);
+    }
+    else
+    {
+        db = QSqlDatabase::addDatabase("QSQLITE");
+    }
 
-bool DatabaseManager::initDatabase(const QString& dbName) {
-
-    db = QSqlDatabase::addDatabase("QSQLITE");
     db.setDatabaseName(dbName);
 
-    if (db.open()) {
-        setupDatabase();      // 테이블 생성
-        insertInitialData();  // 데이터 삽입
-        return true;
+    // 2. DB 열기
+    if (!db.open())
+    {
+        qDebug() << "❌ DB 열기 실패:" << db.lastError().text();
+        return false;
     }
-    return false;
 
-    qDebug() << "DB 연결 성공!";
+    qDebug() << "✅ DB 연결 성공!";
 
-    // 외래 키 활성화 및 테이블 생성 로직
+    // 3. 외래 키(Foreign Key) 기능 활성화
     QSqlQuery query;
     query.exec("PRAGMA foreign_keys = ON;");
 
-    // 테이블 생성
-    if(setupDatabase()) { 
-        insertInitialData(); 
+    // 4. 테이블 생성 및 데이터 삽입 (setupDatabase 내부에 다 들어있음)
+    if (setupDatabase())
+    {
+        return true;
     }
-    
-    return true;
+
+    return false;
 }
 
-
-DatabaseManager::DatabaseManager() {
-    db = QSqlDatabase::addDatabase("QSQLITE");
+DatabaseManager::DatabaseManager()
+{
+    // 이미 DB 연결이 되어있는지 확인하여 중복 생성 방지
+    if (QSqlDatabase::contains(QSqlDatabase::defaultConnection))
+    {
+        db = QSqlDatabase::database(QSqlDatabase::defaultConnection);
+    }
+    else
+    {
+        db = QSqlDatabase::addDatabase("QSQLITE");
+    }
 
     QString dbPath = QCoreApplication::applicationDirPath() + "/venti.db";
     db.setDatabaseName(dbPath);
@@ -84,14 +107,23 @@ DatabaseManager::DatabaseManager() {
     qDebug() << "현재 사용 중인 DB 절대 경로:" << dbPath;
 }
 
-bool DatabaseManager::setupDatabase() {
-    if (!db.open()) {
+bool DatabaseManager::setupDatabase()
+{
+    // [추가] 앱이 실행되는 동안 단 한 번만 실행되도록 막아주는 방어막
+    static bool isSetupDone = false;
+    if (isSetupDone) {
+        return true; // 이미 한 번 세팅했다면 아무것도 안 하고 바로 돌아감
+    }
+    isSetupDone = true;
+
+    if (!db.open())
+    {
         qDebug() << "DB 연결 실패:" << db.lastError().text();
         return false;
     }
 
     QSqlQuery query;
-    query.exec("PRAGMA foreign_keys = ON;");    // FK 활성화
+    query.exec("PRAGMA foreign_keys = ON;"); // FK 활성화
 
     // 테이블 생성 쿼리
     query.exec("CREATE TABLE CATEGORIES (category_id INTEGER PRIMARY KEY, category_name VARCHAR(50));");
@@ -100,63 +132,102 @@ bool DatabaseManager::setupDatabase() {
     query.exec("CREATE TABLE ORDERS (order_id INTEGER PRIMARY KEY, member_phone VARCHAR(20), order_date DATETIME, total_amount INTEGER, pay_method VARCHAR(30), is_takeout INTEGER, FOREIGN KEY (member_phone) REFERENCES MEMBERS(phone_num));");
     query.exec("CREATE TABLE ORDER_ITEMS (item_id INTEGER PRIMARY KEY, order_id INTEGER, menu_id INTEGER, quantity INTEGER, subtotal INTEGER, selected_options TEXT, FOREIGN KEY (order_id) REFERENCES ORDERS(order_id), FOREIGN KEY (menu_id) REFERENCES MENU_INFO(menu_id));");
     qDebug() << "DB 테이블 세팅 완료";
-    
+
     // 테이블 생성 호출
     insertInitialData();
-    
+
     return true;
 }
 
-bool DatabaseManager::insertInitialData() {
+bool DatabaseManager::insertInitialData()
+{
     QSqlQuery query;
-
-    // 확실하게 기존 데이터를 모두 삭제합
-    if(!query.exec("DELETE FROM MENU_INFO")) qDebug() << "MENU_INFO 삭제 실패";
-    if(!query.exec("DELETE FROM CATEGORIES")) qDebug() << "CATEGORIES 삭제 실패";
-
+    // 기존 데이터 싹 비우기
+    query.exec("DELETE FROM MENU_INFO");
+    query.exec("DELETE FROM CATEGORIES");
     query.exec("DELETE FROM sqlite_sequence WHERE name='CATEGORIES' OR name='MENU_INFO'");
 
-    QStringList categories;
-    QList<MenuData> menus;
+    QString exePath = QCoreApplication::applicationDirPath();
+    QString jsonPath = exePath + "/../../../VentiApp/menus.json";
 
-    // JSON 로드
-    if (!MenuDataLoader::loadFromJson(":/data/menus.json", categories, menus)) {
+    QFile file(jsonPath);
+    if (!file.open(QIODevice::ReadOnly))
+    {
+        qDebug() << "❌ JSON 파일을 열 수 없습니다.";
         return false;
     }
 
-    // 카테고리 삽입 부분 수정
-    for (const QString &cat : categories) {
+    // 1. 파일 데이터 읽기
+    QByteArray fileData = file.readAll();
+    qDebug() << "💡 읽어들인 파일 크기:" << fileData.size() << "bytes";
+
+    QJsonDocument doc = QJsonDocument::fromJson(fileData);
+    if (doc.isNull())
+    {
+        qDebug() << "❌ 치명적 에러: JSON 내용 파싱 실패! 쉼표나 괄호가 빠졌는지 확인하세요.";
+        return false;
+    }
+
+    QJsonObject root = doc.object();
+    QJsonArray catArray = root["categories"].toArray();
+    QJsonArray menuArray = root["menus"].toArray();
+
+    qDebug() << "✅ 발견된 카테고리 개수:" << catArray.size();
+    qDebug() << "✅ 발견된 메뉴 개수:" << menuArray.size();
+
+    // 2. 카테고리 DB 삽입
+    for (int i = 0; i < catArray.size(); ++i)
+    {
+        QString catName = catArray[i].toString().trimmed();
         query.prepare("INSERT INTO CATEGORIES (category_name) VALUES (:name)");
-        query.bindValue(":name", cat.trimmed());
-        query.exec();
+        query.bindValue(":name", catName);
+        if (query.exec())
+        {
+            qDebug() << "✔️ DB 카테고리 등록:" << catName;
+        }
+        else
+        {
+            qDebug() << "❌ 카테고리 등록 실패:" << query.lastError().text();
+        }
     }
 
-    // 메뉴 정보 삽입 부분 수정
-    for (const auto &m : menus) {
+    // 3. 메뉴 DB 삽입
+    for (int i = 0; i < menuArray.size(); ++i)
+    {
+        QJsonObject obj = menuArray[i].toObject();
+        QString catName = obj["category"].toString().trimmed();
+        QString menuName = obj["name"].toString().trimmed();
+        int price = obj["price"].toInt();
+        QString imgPath = obj["image"].toString().trimmed();
+
         query.prepare("INSERT INTO MENU_INFO (category_id, kr_name, price, image_path, is_soldout) "
-                      "SELECT (SELECT category_id FROM CATEGORIES WHERE category_name = :cat), "
-                      ":name, :price, :img, 0");
+                      "SELECT category_id, :name, :price, :img, 0 FROM CATEGORIES WHERE category_name = :cat");
 
-        query.bindValue(":cat", m.category.trimmed());
-        query.bindValue(":name", m.name.trimmed());
-        query.bindValue(":price", m.price);
-        query.bindValue(":img", m.imgPath.trimmed());
+        query.bindValue(":cat", catName);
+        query.bindValue(":name", menuName);
+        query.bindValue(":price", price);
+        query.bindValue(":img", imgPath);
 
-        query.exec();
+        if (!query.exec())
+        {
+            qDebug() << "❌ DB 메뉴 등록 실패 (" << menuName << "):" << query.lastError().text();
+        }
     }
 
-    qDebug() << "📢 DB 초기화 및 데이터 삽입 완료";
+    qDebug() << "📢 DB 데이터 삽입 최종 완료!";
     return true;
 }
 
-bool DatabaseManager::updateMenuImagePath(const QString &menuName, const QString &newPath) {
+bool DatabaseManager::updateMenuImagePath(const QString &menuName, const QString &newPath)
+{
     QSqlQuery query;
 
     query.prepare("UPDATE MENU_INFO SET image_path = :path WHERE kr_name = :name");
     query.bindValue(":path", newPath);
     query.bindValue(":name", menuName);
 
-    if (!query.exec()) {
+    if (!query.exec())
+    {
         qDebug() << "경로 업데이트 실패:" << query.lastError().text();
         return false;
     }
@@ -164,11 +235,13 @@ bool DatabaseManager::updateMenuImagePath(const QString &menuName, const QString
 }
 
 // 카테고리 목록 호출 함수
-QStringList DatabaseManager::getCategoryNames() {
+QStringList DatabaseManager::getCategoryNames()
+{
     QStringList list;
     QSqlQuery query("SELECT category_name FROM CATEGORIES ORDER BY category_id");
 
-    while (query.next()) {
+    while (query.next())
+    {
         // DB에서 꺼낸 카테고리 이름을 리스트에 담기
         list.append(query.value(0).toString());
     }
@@ -176,7 +249,8 @@ QStringList DatabaseManager::getCategoryNames() {
 }
 
 // 특정 카테고리의 메뉴 호출
-QList<QVariantMap> DatabaseManager::getMenusByCategory(const QString &categoryName) {
+QList<QVariantMap> DatabaseManager::getMenusByCategory(const QString &categoryName)
+{
     QList<QVariantMap> menuList;
     QSqlQuery query;
 
@@ -185,8 +259,10 @@ QList<QVariantMap> DatabaseManager::getMenusByCategory(const QString &categoryNa
                   "WHERE category_id = (SELECT category_id FROM CATEGORIES WHERE category_name = :catName)");
     query.bindValue(":catName", categoryName);
 
-    if (query.exec()) {
-        while (query.next()) {
+    if (query.exec())
+    {
+        while (query.next())
+        {
             QVariantMap menu;
             menu["name"] = query.value(0).toString();
             menu["price"] = query.value(1).toInt();

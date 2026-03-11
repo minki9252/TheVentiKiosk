@@ -1,5 +1,13 @@
 {
-  "categories": ["신메뉴", "커피(핫)", "커피(아이스)", "버블티&티", "블렌디드", "베버리지", "에이드"],
+  "categories": [
+    "신메뉴",
+    "커피(핫)",
+    "커피(아이스)",
+    "버블티&티",
+    "블렌디드",
+    "베버리지",
+    "에이드"
+  ],
   "menus": [
     {
       "category": "신메뉴",
@@ -8,16 +16,16 @@
       "image": ":/New_menu/Image/New_menu/honey_pear.png"
     },
     {
-    "category": "신메뉴",
-    "name": "더 쌍화차",
-    "price": 3500,
-    "image": ":/New_menu/Image/New_menu/ssanghwa.png"
+      "category": "신메뉴",
+      "name": "더 쌍화차",
+      "price": 3500,
+      "image": ":/New_menu/Image/New_menu/ssanghwa.png"
     },
     {
-    "category": "신메뉴",
-    "name": "오미자석류티",
-    "price": 3500,
-    "image": ":/New_menu/Image/New_menu/omija.png"
+      "category": "신메뉴",
+      "name": "오미자석류티",
+      "price": 3500,
+      "image": ":/New_menu/Image/New_menu/omija.png"
     },
     {
       "category": "커피(핫)",
@@ -26,40 +34,40 @@
       "image": ":/Coffe/Image/Coffe/americano.png"
     },
     {
-    "category": "커피(핫)",
-    "name": "믹스커피",
-    "price": 2500,
-    "image": ":/Coffe/Image/Coffe/mix.png"
+      "category": "커피(핫)",
+      "name": "믹스커피",
+      "price": 2500,
+      "image": ":/Coffe/Image/Coffe/mix.png"
     },
     {
-    "category": "커피(핫)",
-    "name": "아인슈페너",
-    "price": 3500,
-    "image": ":/Coffe/Image/Coffe/einspanner.png"
+      "category": "커피(핫)",
+      "name": "아인슈페너",
+      "price": 3500,
+      "image": ":/Coffe/Image/Coffe/einspanner.png"
     },
     {
-    "category": "커피(핫)",
-    "name": "카라멜마끼아또",
-    "price": 3500,
-    "image": ":/Coffe/Image/Coffe/caramel.png"
+      "category": "커피(핫)",
+      "name": "카라멜마끼아또",
+      "price": 3500,
+      "image": ":/Coffe/Image/Coffe/caramel.png"
     },
     {
-    "category": "커피(핫)",
-    "name": "카페라떼",
-    "price": 3000,
-    "image": ":/Coffe/Image/Coffe/latte.png"
+      "category": "커피(핫)",
+      "name": "카페라떼",
+      "price": 3000,
+      "image": ":/Coffe/Image/Coffe/latte.png"
     },
     {
-    "category": "커피(핫)",
-    "name": "카페모카",
-    "price": 3500,
-    "image": ":/Coffe/Image/Coffe/mocha.png"
+      "category": "커피(핫)",
+      "name": "카페모카",
+      "price": 3500,
+      "image": ":/Coffe/Image/Coffe/mocha.png"
     },
     {
-    "category": "커피(핫)",
-    "name": "토피넛라떼",
-    "price": 3700,
-    "image": ":/Coffe/Image/Coffe/toffeenut.png"
+      "category": "커피(핫)",
+      "name": "토피넛라떼",
+      "price": 3700,
+      "image": ":/Coffe/Image/Coffe/toffeenut.png"
     },
     {
       "category": "커피(아이스)",
@@ -68,184 +76,184 @@
       "image": ":/Coffe/Image/Coffe/americano.png"
     },
     {
-    "category": "커피(아이스)",
-    "name": "믹스커피",
-    "price": 2500,
-    "image": ":/Coffe/Image/Coffe/mix.png"
+      "category": "커피(아이스)",
+      "name": "믹스커피",
+      "price": 2500,
+      "image": ":/Coffe/Image/Coffe/mix.png"
     },
     {
-    "category": "커피(아이스)",
-    "name": "아인슈페너",
-    "price": 3500,
-    "image": ":/Coffe/Image/Coffe/einspanner.png"
+      "category": "커피(아이스)",
+      "name": "아인슈페너",
+      "price": 3500,
+      "image": ":/Coffe/Image/Coffe/einspanner.png"
     },
     {
-    "category": "커피(아이스)",
-    "name": "카라멜마끼아또",
-    "price": 3500,
-    "image": ":/Coffe/Image/Coffe/caramel.png"
+      "category": "커피(아이스)",
+      "name": "카라멜마끼아또",
+      "price": 3500,
+      "image": ":/Coffe/Image/Coffe/caramel.png"
     },
     {
-    "category": "커피(아이스)",
-    "name": "카페라떼",
-    "price": 3000,
-    "image": ":/Coffe/Image/Coffe/latte.png"
+      "category": "커피(아이스)",
+      "name": "카페라떼",
+      "price": 3000,
+      "image": ":/Coffe/Image/Coffe/latte.png"
     },
     {
-    "category": "커피(아이스)",
-    "name": "카페모카",
-    "price": 3500,
-    "image": ":/Coffe/Image/Coffe/mocha.png"
+      "category": "커피(아이스)",
+      "name": "카페모카",
+      "price": 3500,
+      "image": ":/Coffe/Image/Coffe/mocha.png"
     },
     {
-    "category": "커피(아이스)",
-    "name": "토피넛라떼",
-    "price": 3700,
-    "image": ":/Coffe/Image/Coffe/toffeenut.png"
+      "category": "커피(아이스)",
+      "name": "토피넛라떼",
+      "price": 3700,
+      "image": ":/Coffe/Image/Coffe/toffeenut.png"
     },
     {
-    "category": "버블티&티",
-    "name": "리치캐모마일티",
-    "price":  2500,
-    "image": ":/Bubble_tea/Image/Bubble_tea&tea/rich_camomile.png"
+      "category": "버블티&티",
+      "name": "리치캐모마일티",
+      "price": 2500,
+      "image": ":/Bubble_tea/Image/Bubble_tea&tea/rich_camomile.png"
     },
     {
-    "category": "버블티&티",
-    "name": "복숭아아이스티",
-    "price": 3000,
-    "image": ":/Bubble_tea/Image/Bubble_tea&tea/peach_ice_tea.png"
+      "category": "버블티&티",
+      "name": "복숭아아이스티",
+      "price": 3000,
+      "image": ":/Bubble_tea/Image/Bubble_tea&tea/peach_ice_tea.png"
     },
     {
-    "category": "버블티&티",
-    "name": "자몽허니블랙티",
-    "price": 3500,
-    "image": ":/Bubble_tea/Image/Bubble_tea&tea/grapefruit_honey.png"
+      "category": "버블티&티",
+      "name": "자몽허니블랙티",
+      "price": 3500,
+      "image": ":/Bubble_tea/Image/Bubble_tea&tea/grapefruit_honey.png"
     },
     {
-    "category": "버블티&티",
-    "name": "타로버블티",
-    "price": 3900,
-    "image": ":/Bubble_tea/Image/Bubble_tea&tea/taro_bubble.png"
+      "category": "버블티&티",
+      "name": "타로버블티",
+      "price": 3900,
+      "image": ":/Bubble_tea/Image/Bubble_tea&tea/taro_bubble.png"
     },
     {
-    "category": "버블티&티",
-    "name": "흑설탕버블티",
-    "price": 3900,
-    "image": ":/Bubble_tea/Image/Bubble_tea&tea/black_sugar_bubble.png"
+      "category": "버블티&티",
+      "name": "흑설탕버블티",
+      "price": 3900,
+      "image": ":/Bubble_tea/Image/Bubble_tea&tea/black_sugar_bubble.png"
     },
     {
-    "category": "블렌디드",
-    "name": "드래곤스무디소다",
-    "price": 4500,
-    "image": ":/Blended/Image/Blended/dragon_soda.png"
+      "category": "블렌디드",
+      "name": "드래곤스무디소다",
+      "price": 4500,
+      "image": ":/Blended/Image/Blended/dragon_soda.png"
     },
     {
-    "category": "블렌디드",
-    "name": "드래곤스무디요거트",
-    "price": 4300,
-    "image": ":/Blended/Image/Blended/dragon_yogurt.png"
+      "category": "블렌디드",
+      "name": "드래곤스무디요거트",
+      "price": 4300,
+      "image": ":/Blended/Image/Blended/dragon_yogurt.png"
     },
     {
-    "category": "블렌디드",
-    "name": "딸기요거트스무디",
-    "price": 3900,
-    "image": ":/Blended/Image/Blended/strawberry_yogurt.png"
+      "category": "블렌디드",
+      "name": "딸기요거트스무디",
+      "price": 3900,
+      "image": ":/Blended/Image/Blended/strawberry_yogurt.png"
     },
     {
-    "category": "블렌디드",
-    "name": "망고요거트스무디",
-    "price": 3900,
-    "image": ":/Blended/Image/Blended/mango_yogurt.png"
+      "category": "블렌디드",
+      "name": "망고요거트스무디",
+      "price": 3900,
+      "image": ":/Blended/Image/Blended/mango_yogurt.png"
     },
     {
-    "category": "블렌디드",
-    "name": "밀크쉐이크",
-    "price":  3900,
-    "image":  ":/Blended/Image/Blended/milk_shake.png"
+      "category": "블렌디드",
+      "name": "밀크쉐이크",
+      "price": 3900,
+      "image": ":/Blended/Image/Blended/milk_shake.png"
     },
     {
-    "category": "블렌디드",
-    "name": "블루베리요거트스무디",
-    "price":  3900,
-    "image":  ":/Blended/Image/Blended/blueberry_yogurt.png"
+      "category": "블렌디드",
+      "name": "블루베리요거트스무디",
+      "price": 3900,
+      "image": ":/Blended/Image/Blended/blueberry_yogurt.png"
     },
     {
-    "category": "블렌디드",
-    "name": "자바칩프라페",
-    "price":  3900,
-    "image":  ":/Blended/Image/Blended/javachip.png"
+      "category": "블렌디드",
+      "name": "자바칩프라페",
+      "price": 3900,
+      "image": ":/Blended/Image/Blended/javachip.png"
     },
     {
-    "category": "블렌디드",
-    "name": "초코쉐이크",
-    "price": 3900,
-    "image":  ":/Blended/Image/Blended/choco_shake.png"
+      "category": "블렌디드",
+      "name": "초코쉐이크",
+      "price": 3900,
+      "image": ":/Blended/Image/Blended/choco_shake.png"
     },
     {
-    "category": "블렌디드",
-    "name": "쿠키앤크림프라페",
-    "price":  3900,
-    "image":  ":/Blended/Image/Blended/cookie_cream.png"
+      "category": "블렌디드",
+      "name": "쿠키앤크림프라페",
+      "price": 3900,
+      "image": ":/Blended/Image/Blended/cookie_cream.png"
     },
     {
-    "category": "블렌디드",
-    "name": "플레인요거트스무디",
-    "price":  3900,
-    "image":  ":/Blended/Image/Blended/plain_yogurt.png"
+      "category": "블렌디드",
+      "name": "플레인요거트스무디",
+      "price": 3900,
+      "image": ":/Blended/Image/Blended/plain_yogurt.png"
     },
     {
-    "category": "베버리지",
-    "name": "군고구마라떼",
-    "price":  3500,
-    "image":  ":/Beverage/Image/Beverage/sweet_potato.png"
+      "category": "베버리지",
+      "name": "군고구마라떼",
+      "price": 3500,
+      "image": ":/Beverage/Image/Beverage/sweet_potato.png"
     },
     {
-    "category": "베버리지",
-    "name": "딸기라떼",
-    "price":  3500,
-    "image":  ":/Beverage/Image/Beverage/strawberry_latte.png"
+      "category": "베버리지",
+      "name": "딸기라떼",
+      "price": 3500,
+      "image": ":/Beverage/Image/Beverage/strawberry_latte.png"
     },
     {
-    "category": "베버리지",
-    "name": "로얄밀크티",
-    "price": 3500,
-    "image":  ":/Beverage/Image/Beverage/royal_milk_tea.png"
+      "category": "베버리지",
+      "name": "로얄밀크티",
+      "price": 3500,
+      "image": ":/Beverage/Image/Beverage/royal_milk_tea.png"
     },
     {
-    "category": "베버리지",
-    "name": "말차라떼",
-    "price":  3500,
-    "image":  ":/Beverage/Image/Beverage/matcha_latte.png"
+      "category": "베버리지",
+      "name": "말차라떼",
+      "price": 3500,
+      "image": ":/Beverage/Image/Beverage/matcha_latte.png"
     },
     {
-    "category": "베버리지",
-    "name": "말차아인슈페너",
-    "price":  3500,
-    "image":  ":/Beverage/Image/Beverage/matcha_einspanner.png"
+      "category": "베버리지",
+      "name": "말차아인슈페너",
+      "price": 3500,
+      "image": ":/Beverage/Image/Beverage/matcha_einspanner.png"
     },
     {
-    "category": "베버리지",
-    "name": "미숫가루",
-    "price":  3500,
-    "image":  ":/Beverage/Image/Beverage/misugaru.png"
+      "category": "베버리지",
+      "name": "미숫가루",
+      "price": 3500,
+      "image": ":/Beverage/Image/Beverage/misugaru.png"
     },
     {
-    "category": "에이드",
-    "name": "레몬에이드",
-    "price":  3900,
-    "image":  ":/Ade/Image/Ade/lemon_ade.png"
+      "category": "에이드",
+      "name": "레몬에이드",
+      "price": 3900,
+      "image": ":/Ade/Image/Ade/lemon_ade.png"
     },
     {
-    "category": "에이드",
-    "name": "애플망고에이드",
-    "price":  3900,
-    "image":  ":/Ade/Image/Ade/apple_mango.png"
+      "category": "에이드",
+      "name": "애플망고에이드",
+      "price": 3900,
+      "image": ":/Ade/Image/Ade/apple_mango.png"
     },
     {
-    "category": "에이드",
-    "name": "자몽에이드",
-    "price":  3900,
-    "image":  ":/Ade/Image/Ade/grapefruit_ade.png"
+      "category": "에이드",
+      "name": "자몽에이드",
+      "price": 3900,
+      "image": ":/Ade/Image/Ade/grapefruit_ade.png"
     }
   ]
 }

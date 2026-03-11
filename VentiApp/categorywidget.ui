@@ -29,46 +29,29 @@
    <item>
     <layout class="QGridLayout" name="bar_layout">
      <item row="0" column="0">
-      <spacer name="horizontalSpacer">
-       <property name="orientation">
-        <enum>Qt::Orientation::Horizontal</enum>
-       </property>
-       <property name="sizeHint" stdset="0">
-        <size>
-         <width>40</width>
-         <height>20</height>
-        </size>
-       </property>
-      </spacer>
-     </item>
-     <item row="0" column="1">
       <widget class="QPushButton" name="home_button">
        <property name="text">
         <string>home</string>
        </property>
       </widget>
      </item>
-     <item row="0" column="2">
+     <item row="0" column="1">
       <spacer name="horizontalSpacer_2">
        <property name="orientation">
         <enum>Qt::Orientation::Horizontal</enum>
        </property>
+       <property name="sizeType">
+        <enum>QSizePolicy::Policy::Fixed</enum>
+       </property>
        <property name="sizeHint" stdset="0">
         <size>
-         <width>40</width>
+         <width>130</width>
          <height>20</height>
         </size>
        </property>
       </spacer>
      </item>
      <item row="0" column="3">
-      <widget class="QLabel" name="label">
-       <property name="text">
-        <string>더 벤티 </string>
-       </property>
-      </widget>
-     </item>
-     <item row="0" column="4">
       <spacer name="horizontalSpacer_3">
        <property name="orientation">
         <enum>Qt::Orientation::Horizontal</enum>
@@ -80,6 +63,13 @@
         </size>
        </property>
       </spacer>
+     </item>
+     <item row="0" column="2">
+      <widget class="QLabel" name="label">
+       <property name="text">
+        <string>더 벤티 </string>
+       </property>
+      </widget>
      </item>
     </layout>
    </item>
@@ -102,37 +92,37 @@
         </widget>
        </item>
        <item row="1" column="0">
-        <widget class="QPushButton" name="category_latte_button">
+        <widget class="QPushButton" name="category_beverage_button">
          <property name="text">
-          <string>라떼/버블티 아인슈페너</string>
+          <string>베버리지</string>
          </property>
         </widget>
        </item>
        <item row="1" column="1">
         <widget class="QPushButton" name="category_ade_button">
          <property name="text">
-          <string>에이드/주스</string>
+          <string>에이드</string>
          </property>
         </widget>
        </item>
        <item row="1" column="2">
-        <widget class="QPushButton" name="category_blended_button">
+        <widget class="QPushButton" name="pushButton">
          <property name="text">
-          <string>아이스 블렌디드</string>
+          <string/>
          </property>
         </widget>
        </item>
        <item row="0" column="5">
-        <widget class="QPushButton" name="category_lowcal_button">
+        <widget class="QPushButton" name="category_blended_button">
          <property name="text">
-          <string>저당</string>
+          <string>블렌디드</string>
          </property>
         </widget>
        </item>
        <item row="1" column="3">
-        <widget class="QPushButton" name="category_tea_button">
+        <widget class="QPushButton" name="pushButton_2">
          <property name="text">
-          <string>티</string>
+          <string/>
          </property>
         </widget>
        </item>
@@ -144,9 +134,9 @@
         </widget>
        </item>
        <item row="0" column="4">
-        <widget class="QPushButton" name="category_decaffeine_button">
+        <widget class="QPushButton" name="category_tea_button">
          <property name="text">
-          <string>디카페인</string>
+          <string>버블티/티</string>
          </property>
         </widget>
        </item>

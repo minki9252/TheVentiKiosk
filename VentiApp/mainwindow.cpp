@@ -1,123 +1,94 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "databasemanager.h"
-// #include "menuoptiondialog.h"
-#include <QMessageBox>
+#include "categorywidget.h"
+#include "beverage.h"  // 🌟 beverage 위젯 기능을 쓰기 위해 필수
+#include "KioskData.h" // 🌟 메뉴 상세 정보 구조체 사용
+#include "coupondialog.h"
+#include <QSqlDatabase>
+#include <QSqlError>
+#include <QSqlQuery>
 #include <QDebug>
 #include <QTimer>
 #include <QListWidgetItem>
 #include <QIcon>
-#include <QListWidget>
+// #include <utility>
 
 MainWindow::MainWindow(QWidget *parent)
-    : QMainWindow(parent)
-    , ui(new Ui::MainWindow)
+    : QMainWindow(parent), ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
 
     // DB 초기화
-    if(!DatabaseManager::instance().initDatabase("venti.db")) {
+    if (!DatabaseManager::instance().initDatabase("venti.db"))
+    {
         qDebug() << "DB 연결 실패!";
     }
+    else
+    {
+        // 추가: DB가 열리면 테이블을 만들고 메뉴를 집어넣으라는 명령입니다.
+        DatabaseManager::instance().setupDatabase();
+    }
+
+    // 초기화면 설정
+    ui->introButton->setStyleSheet("border-image: url(:/Benner/Image/Benner/g_dragon.png); border: none;");
 
     // 안내 문구 깜빡임 타이머
     touchTimer = new QTimer(this);
     connect(touchTimer, &QTimer::timeout, this, &MainWindow::toggleTouchText);
     touchTimer->start(700);
 
-    // // 카테고리 버튼들 연결
-    // connect(ui->pushButton,   &QPushButton::clicked, this, [this](){ loadMenus("신메뉴"); });
-    // connect(ui->pushButton_2, &QPushButton::clicked, this, [this](){ loadMenus("커피(핫)"); });
-    // connect(ui->pushButton_7, &QPushButton::clicked, this, [this](){ loadMenus("커피(아이스)"); });
-    // connect(ui->pushButton_3, &QPushButton::clicked, this, [this](){ loadMenus("버블티&티"); });
-    // connect(ui->pushButton_4, &QPushButton::clicked, this, [this](){ loadMenus("블렌디드"); });
-    // connect(ui->pushButton_5, &QPushButton::clicked, this, [this](){ loadMenus("베버리지"); });
-    // connect(ui->pushButton_6, &QPushButton::clicked, this, [this](){ loadMenus("에이드"); });
+    // 4. 🌟 [핵심 연결] 메뉴판(beverage) 위젯 데이터 수신 연결
+    // ui->widget_2가 beverage 클래스로 프로모션 되어 있어야 신호를 잡을 수 있습니다.
+    connect(ui->widget_2, &beverage::sendToCart, this, &MainWindow::onReceiveCartData);
+    
+    // 장바구니 -> MainWindow 결제 신호 연결
+    connect(ui->Listcart, &cartwidget::checkoutRequested, this, &MainWindow::processCheckout);
 
-    // connect(ui->listMenu, &QListWidget::itemClicked, this, [this](QListWidgetItem *item){
-    //     // 클릭한 아이템에서 메뉴 이름만 분리 (줄바꿈 기준 첫 줄)
-    //     QString menuName = item->text().split("\n")[0];
-
-    //     // 장바구니 데이터에 추가 (이미 있으면 수량 +1, 없으면 1로 시작)
-    //     cartData[menuName]++;
-
-    //     // UI 테이블 갱신
-    //     updateCartTable();
-
-    //     qDebug() << menuName << "이(가) 장바구니에 담겼습니다. 현재 수량:" << cartData[menuName];
-    // });
-
-    // connect(ui->btnClearCart, &QPushButton::clicked, this, [this](){
-    //     // 장바구니 데이터를 모두 지우고 테이블을 갱신
-    //     cartData.clear();
-    //     updateCartTable();
-    //     qDebug() << "장바구니가 비워졌습니다.";
-    // });
-
-    // // 결제하기 버튼 연결
-    // connect(ui->btnCheckout, &QPushButton::clicked, this, [this](){
-    //     if (cartData.isEmpty()) {
-    //         qDebug() << "장바구니가 비어있어 결제할 수 없습니다.";
-    //         return;
-    //     }
-
-
-    //     processCheckout();
-    // });
-
-    // // 테이블의 특정 셀을 더블클릭하면 해당 항목 삭제
-    // connect(ui->tableCart, &QTableWidget::cellDoubleClicked, this, [this](int row, int column){
-    //     (void)column;
-
-    //     QString menuName = ui->tableCart->item(row, 0)->text();
-
-
-    //     cartData.remove(menuName);
-    //     updateCartTable();
-
-    //     qDebug() << menuName << " 항목이 삭제되었습니다.";
-    // });
+    // KioskEvent를 던지는 이 딱 한 줄의 connect문이 모든 카테고리 버튼을 처리함
+    connect(ui->categoryWidget, &categorywidget::categorySelected, this, [this](int actionCode)
+            {
+        KioskEvent event;
+        event.action = static_cast<KioskAction>(actionCode);
+        handle(event); });
 
     ui->stackedWidget->setCurrentIndex(0); // 시작은 홍보화면
 }
 
 MainWindow::~MainWindow() { delete ui; }
 
-// // 메뉴 로딩 로직
-// void MainWindow::loadMenus(const QString &categoryName) {
-//     ui->listMenu->clear(); // 기존 아이템 삭제
+// 🌟 데이터 수신 확인용 슬롯: 관리나 출력 없이 전달받은 정보만 확인
+void MainWindow::onReceiveCartData(QList<KioskData> list)
+{
+    ui->Listcart->updateCart(list); // 냅다 던져줍니다.
+}
 
-//     QList<QVariantMap> menus = DatabaseManager::instance().getMenusByCategory(categoryName);
+// 🌟 결제 처리 로직
+void MainWindow::processCheckout()
+{
+    qDebug() << "결제가 완료되었습니다! 초기 화면으로 돌아갑니다.";
+    
+    // 1. 여기서 DB에 주문 내역 저장(INSERT) 등의 로직을 나중에 추가하시면 됩니다.
 
-//     for (const QVariantMap &menuData : std::as_const(menus)) {
-//         QString itemText = QString("%1\n%2원")
-//                                .arg(menuData["name"].toString())
-//                                .arg(menuData["price"].toInt());
-
-//         QListWidgetItem *item = new QListWidgetItem();
-//         item->setText(itemText);
-
-//         QString imgPath = menuData["image"].toString().trimmed();
-
-//         QIcon icon(imgPath);
-//         if (icon.isNull()) {
-//             qDebug() << "경고: 이미지를 찾을 수 없음 ->" << imgPath;
-//         } else {
-//             item->setIcon(icon);
-//         }
-
-//         item->setTextAlignment(Qt::AlignCenter);
-//         ui->listMenu->addItem(item);
-//     }
-// }
+    // 2. 결제가 완료되었으니 장바구니 비우기
+    ui->Listcart->clearCart();
+    
+    // 3. 주문 방식(매장/포장) 변수 초기화 및 초기 홍보 화면으로 이동
+    currentOrderType = 0; 
+    ui->stackedWidget->setCurrentIndex(0); 
+}
 
 // 안내 문구 깜빡임 로직
 void MainWindow::toggleTouchText()
 {
-    if (ui->lblTouchNotice) {
-        if (isVisible) {
+    if (ui->lblTouchNotice)
+    {
+        if (isVisible)
+        {
             ui->lblTouchNotice->setStyleSheet("color: rgba(93, 45, 145, 0); font-size: 20pt; font-weight: bold;");
-        } else {
+        }
+        else
+        {
             ui->lblTouchNotice->setStyleSheet("color: rgba(93, 45, 145, 255); font-size: 20pt; font-weight: bold;");
         }
         isVisible = !isVisible;
@@ -125,66 +96,46 @@ void MainWindow::toggleTouchText()
 }
 
 // 버튼 클릭 이벤트 함수
-void MainWindow::on_introButton_clicked() {
-    ui->stackedWidget->setCurrentIndex(1); // 매장or포장 선택 페이지로
+void MainWindow::on_introButton_clicked()
+{
+    ui->stackedWidget->setCurrentIndex(1); // 매장/포장 선택 페이지로
 }
 
-void MainWindow::on_storeButton_clicked() {
-    currentOrderType = 0; // 매장 선택 저장
-    ui->stackedWidget->setCurrentIndex(2); // 메뉴판 페이지(page_3)로 이동
-
-    // loadMenus(QString("신메뉴").trimmed());
+void MainWindow::on_storeButton_clicked()
+{
+    currentOrderType = 0;                  // 매장
+    ui->stackedWidget->setCurrentIndex(2); // 메뉴판 페이지로
+    // loadMenus("신메뉴"); // 첫 화면 로딩
 }
 
-void MainWindow::on_takeoutButton_clicked() {
-    currentOrderType = 1; // 포장 선택 저장
-    ui->stackedWidget->setCurrentIndex(2); // 메뉴판 페이지로 이동
-
-    // loadMenus(QString("신메뉴").trimmed());
+void MainWindow::on_takeoutButton_clicked()
+{
+    currentOrderType = 1; // 포장
+    ui->stackedWidget->setCurrentIndex(2);
+    // loadMenus("신메뉴");
 }
 
-// void MainWindow::loadCategoriesToUI() {}
-
-// void MainWindow::updateMenuDisplay(const QString &categoryName) {
-//     loadMenus(categoryName);
-// }
-
-// void MainWindow::on_listMenu_itemClicked(QListWidgetItem *item)
+// void MainWindow::processCheckout()
 // {
-//     // 이제 에러 없이 item 객체를 사용할 수 있습니다.
-//     QString menuName = item->text();
-//     qDebug() << "선택된 메뉴:" << menuName;
+//     // 장바구니가 비어있는지 체크는 이미 cartwidget에서 하고 여기로 넘어옵니다.
 
-//     // 1. 옵션 선택 창(다이얼로그) 객체를 메모리에 만듭니다.
-//     MenuOptionDialog *optionDialog = new MenuOptionDialog(this);
+//     // 1. 쿠폰 모달창 생성 및 띄우기
+//     CouponDialog dialog(this);
 
-//     // 2. 창을 화면에 띄웁니다 (모달 방식: 이 창이 닫히기 전까지 메인창 클릭 불가)
-//     // exec()가 실행되면 코드는 여기서 잠시 멈추고 사용자의 입력을 기다립니다.
-//     if (optionDialog->exec() == QDialog::Accepted) {
-//         // 사용자가 다이얼로그에서 '확인'을 눌렀을 때 실행됩니다.
-//         qDebug() << "아메리카노 옵션 선택 완료!";
+//     // exec()는 창이 닫힐 때까지 코드를 멈추고 기다립니다.
+//     // 사용자가 accept()로 창을 닫았다면 결제를 진행합니다.
+//     if (dialog.exec() == QDialog::Accepted) {
 
-//         // 여기서 나중에 장바구니 리스트에 추가하는 코드를 넣을 겁니다.
-//     } else {
-//         // 사용자가 '취소'나 '창 닫기'를 눌렀을 때 실행됩니다.
-//         qDebug() << "주문 취소";
+//         qDebug() << "결제가 완료되었습니다! 초기 화면으로 돌아갑니다.";
+
+//         // 2. 결제 완료되었으니 장바구니 비우기
+//         ui->Listcart->clearCart();
+
+//         // 3. 주문 방식 초기화 및 첫 화면으로 이동
+//         currentOrderType = 0;
+//         ui->stackedWidget->setCurrentIndex(0);
 //     }
-
-//     // 3. 다이얼로그 사용이 끝났으므로 메모리에서 삭제합니다.
-//     delete optionDialog;
-// }
-
-// void MainWindow::changeCartQuantity(const QString &menuName, int delta) {
-//     // 현재 수량에 +1 또는 -1
-//     cartData[menuName] += delta;
-
-//     // 수량이 0 이하라면 장바구니에서 삭제
-//     if (cartData[menuName] <= 0) {
-//         cartData.remove(menuName);
-//     }
-
-//     // UI 갱신
-//     updateCartTable();
+//     // 창을 강제로 끄거나 거부(reject)했다면 아무 일도 일어나지 않고 원래 메뉴판에 머뭅니다.
 // }
 
 
@@ -309,26 +260,45 @@ void MainWindow::on_takeoutButton_clicked() {
 // }
 
 /////////////////////// 핸들 함수 시작 //////////////////////////////////////
-void MainWindow::handle(const KioskEvent &event) {
+void MainWindow::handle(const KioskEvent &event)
+{
 
-    switch(event.action){
+    switch (event.action)
+    {
 
         /////////////////// 카테고리 설정 //////////////////////////////
-    case CATEGORY_COFFEE:
-        qDebug() << "커피 카테고리 선택됨";
-        // TODO: DatabaseManager::instance().getMenusByCategory("커피") 호출하여 UI 출력
+    case CATEGORY_NEW_MENU:
+        qDebug() << "신메뉴 카테고리 선택됨";
+        ui->widget_2->loadMenus("신메뉴");
         break;
-
+    case CATEGORY_ICED_COFFEE:
+        qDebug() << "아이스커피 카테고리 선택됨";
+        ui->widget_2->loadMenus("커피(아이스)");
+        break;
+    case CATEGORY_HOT_COFFEE:
+        qDebug() << "핫커피 카테고리 선택됨";
+        ui->widget_2->loadMenus("커피(핫)");
+        break;
+    case CATEGORY_TEA:
+        qDebug() << "티 카테고리 선택됨";
+        ui->widget_2->loadMenus("버블티&티");
+        break;
+    case CATEGORY_BLENDED:
+        qDebug() << "블렌디드 카테고리 선택됨";
+        ui->widget_2->loadMenus("블렌디드");
+        break;
     case CATEGORY_BEVERAGE:
-
-        qDebug() << "음료 카테고리 선택됨";
+        qDebug() << "베버리지 카테고리 선택됨";
+        ui->widget_2->loadMenus("베버리지");
+        break;
+    case CATEGORY_ADE:
+        qDebug() << "에이드 카테고리 선택됨";
+        ui->widget_2->loadMenus("에이드");
         break;
 
-    case CATEGORY_DESSERT:
-        qDebug() << "디저트 카테고리 선택됨";
-        break;
+
+
         /////////////////// 카테고리 설정 끝 //////////////////////////////
-
 
         /////////////////// 메뉴 선택 설정 //////////////////////////////
     case MENU_SELECT_ITEM:
@@ -339,7 +309,6 @@ void MainWindow::handle(const KioskEvent &event) {
         qDebug() << "메뉴 선택 취소됨";
         break;
         /////////////////// 메뉴 선택 끝 //////////////////////////////
-
 
         /////////////////// 장바구니 설정 //////////////////////////////
     case CART_ADD:

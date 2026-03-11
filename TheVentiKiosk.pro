@@ -1,11 +1,7 @@
-
 TEMPLATE = subdirs
 
 SUBDIRS += VentiCore \
            VentiApp
-
-VentiApp.subdir = VentiApp
-VentiApp.file = VentiApp/VentiApp.pro
 
 # 빌드 순서 설정 (라이브러리인 Core가 먼저 빌드되어야 함)
 VentiApp.depends = VentiCore

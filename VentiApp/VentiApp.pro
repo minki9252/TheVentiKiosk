@@ -1,44 +1,38 @@
-QT       += core gui sql
+# VentiApp.pro
 
+QT += core gui widgets sql
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
-CONFIG += c++17
+# 라이브러리 헤더 위치 참조 (VentiCore 폴더 안의 헤더 사용)
+INCLUDEPATH += $$PWD/../VentiCore
 
-
-TARGET = VentiApp
-
-TEMPLATE = app
+# 빌드된 .so 파일 링크 (상대 경로 주의)
+# -L: 라이브러리 경로, -l: 라이브러리 이름 (lib와 .so 제외한 이름)
+LIBS += -L$$OUT_PWD/../VentiCore/ -lVentiCore \
+        -Wl,-rpath,$$OUT_PWD/../VentiCore
 
 SOURCES += main.cpp \
-           mainwindow.cpp \
-           categorywidget.cpp \
-           cartwidget.cpp \
-           main_page.cpp \
-           beverage.cpp \
-           menuoptiondialog.cpp
+    beverage.cpp \
+    cartwidget.cpp \
+    categorywidget.cpp \
+    coupondialog.cpp \
+    mainwindow.cpp \
+    option_modal.cpp
 
 HEADERS += mainwindow.h \
-           categorywidget.h \
-           cartwidget.h \
-           beverage.h \
-           main_page.h \
-           menuoptiondialog.h
+    KioskData.h \
+    beverage.h \
+    cartwidget.h \
+    categorywidget.h \
+    coupondialog.h \
+    option_modal.h
 
-FORMS   += mainwindow.ui \
-           categorywidget.ui \
-           cartwidget.ui \
-           beverage.ui \
-           main_page.ui \
-           menuoptiondialog.ui
+FORMS += mainwindow.ui \
+    beverage.ui \
+    cartwidget.ui \
+    categorywidget.ui \
+    option_modal.ui
 
-RESOURCES += venti_image.qrc
-
-
-INCLUDEPATH += ../VentiCore
-LIBS += -L$$OUT_PWD/../VentiCore -lVentiCore
-
-# 기본 빌드 설정
-qnx: target.path = /tmp/$${TARGET}/bin
-else: unix:!android: target.path = /opt/$${TARGET}/bin
-!isEmpty(target.path): INSTALLS += target
+RESOURCES += \
+    venti_image.qrc
