@@ -27,6 +27,7 @@ private slots:
     void on_btnClearAll_clicked(); // 전체 삭제 버튼 (이름이 btnClearAll 인 경우)
     void on_btnCheckout_clicked(); // 결제 하기 버튼 (이름이 btnCheckout 인 경우)
 
+
 private:
     Ui::cartwidget *ui;
     QList<KioskData> m_cartList; // 장바구니 진짜 데이터 보관함

@@ -4,7 +4,9 @@
 #include "categorywidget.h"
 #include "beverage.h"  // 🌟 beverage 위젯 기능을 쓰기 위해 필수
 #include "KioskData.h" // 🌟 메뉴 상세 정보 구조체 사용
+#include "couponmanagerwidget.h"
 #include "coupondialog.h"
+#include "paymentmaindialog.h"
 #include <QSqlDatabase>
 #include <QSqlError>
 #include <QSqlQuery>
@@ -40,7 +42,7 @@ MainWindow::MainWindow(QWidget *parent)
     // 4. 🌟 [핵심 연결] 메뉴판(beverage) 위젯 데이터 수신 연결
     // ui->widget_2가 beverage 클래스로 프로모션 되어 있어야 신호를 잡을 수 있습니다.
     connect(ui->widget_2, &beverage::sendToCart, this, &MainWindow::onReceiveCartData);
-    
+
     // 장바구니 -> MainWindow 결제 신호 연결
     connect(ui->Listcart, &cartwidget::checkoutRequested, this, &MainWindow::processCheckout);
 
@@ -52,7 +54,11 @@ MainWindow::MainWindow(QWidget *parent)
         handle(event); });
 
     ui->stackedWidget->setCurrentIndex(0); // 시작은 홍보화면
+
+    // [핵심 연결] cartwidget(이름: Listcart)이 결제 요청 신호를 보내면, openPaymentModal()을 실행해라!
+    connect(ui->Listcart, &cartwidget::checkoutRequested, this, &MainWindow::openPaymentModal);
 }
+
 
 MainWindow::~MainWindow() { delete ui; }
 
@@ -66,15 +72,15 @@ void MainWindow::onReceiveCartData(QList<KioskData> list)
 void MainWindow::processCheckout()
 {
     qDebug() << "결제가 완료되었습니다! 초기 화면으로 돌아갑니다.";
-    
+
     // 1. 여기서 DB에 주문 내역 저장(INSERT) 등의 로직을 나중에 추가하시면 됩니다.
 
     // 2. 결제가 완료되었으니 장바구니 비우기
     ui->Listcart->clearCart();
-    
+
     // 3. 주문 방식(매장/포장) 변수 초기화 및 초기 홍보 화면으로 이동
-    currentOrderType = 0; 
-    ui->stackedWidget->setCurrentIndex(0); 
+    // currentOrderType = 0;
+    // ui->stackedWidget->setCurrentIndex(0);
 }
 
 // 안내 문구 깜빡임 로직
@@ -114,6 +120,22 @@ void MainWindow::on_takeoutButton_clicked()
     // loadMenus("신메뉴");
 }
 
+
+// 결제창 띄우기 함수 구현
+void MainWindow::openPaymentModal()
+{
+    // 1. 우리가 정성껏 조립한 메인 결제 다이얼로그 생성
+    PaymentMainDialog payDialog(this);
+
+    // 2. 모달 형태로 띄우기 (exec()를 쓰면 결제창이 닫힐 때까지 프로그램이 여기서 대기합니다)
+    if (payDialog.exec() == QDialog::Accepted) {
+        // 3. 결제가 무사히 완료(Accepted)되고 창이 닫혔다면, 장바구니를 비워줍니다!
+        ui->Listcart->clearCart();
+
+        // (선택) 결제 완료 후 처음 화면(page)으로 돌아가게 하려면 아래 코드 추가
+        // ui->stackedWidget->setCurrentIndex(0);
+    }
+}
 // void MainWindow::processCheckout()
 // {
 //     // 장바구니가 비어있는지 체크는 이미 cartwidget에서 하고 여기로 넘어옵니다.
@@ -136,7 +158,6 @@ void MainWindow::on_takeoutButton_clicked()
 //     }
 //     // 창을 강제로 끄거나 거부(reject)했다면 아무 일도 일어나지 않고 원래 메뉴판에 머뭅니다.
 // }
-
 
 // void MainWindow::updateCartTable() {
 //     ui->tableCart->setRowCount(0);
@@ -176,7 +197,6 @@ void MainWindow::on_takeoutButton_clicked()
 //         QTableWidgetItem *nameItem = new QTableWidgetItem(name);
 //         nameItem->setTextAlignment(Qt::AlignCenter);
 //         ui->tableCart->setItem(row, 0, nameItem);
-
 
 //         QWidget *pWidget = new QWidget();
 //         QHBoxLayout *pLayout = new QHBoxLayout(pWidget);
@@ -295,8 +315,6 @@ void MainWindow::handle(const KioskEvent &event)
         ui->widget_2->loadMenus("에이드");
         break;
 
-
-
         /////////////////// 카테고리 설정 끝 //////////////////////////////
 
         /////////////////// 메뉴 선택 설정 //////////////////////////////
@@ -329,4 +347,3 @@ void MainWindow::handle(const KioskEvent &event)
     }
 }
 ////////////////////////////// 핸들 함수 끝 //////////////////////////////////////
-
