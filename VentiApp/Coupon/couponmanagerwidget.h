@@ -1,18 +1,19 @@
 #ifndef COUPONMANAGERWIDGET_H
 #define COUPONMANAGERWIDGET_H
 
-#include <QWidget>
+#include <QDialog> // 🌟 QWidget에서 QDialog로 변경!
+#include <QList>
+#include "KioskData.h"
 
-namespace Ui {
-class CouponManagerWidget;
-}
+namespace Ui { class CouponManagerWidget; }
 
-class CouponManagerWidget : public QWidget
+class CouponManagerWidget : public QDialog
 {
     Q_OBJECT
 
 public:
-    explicit CouponManagerWidget(QWidget *parent = nullptr);
+    // 🌟 MainWindow로부터 장바구니 데이터를 받아옵니다.
+    explicit CouponManagerWidget(const QList<KioskData>& cartList, int totalAmount, QWidget *parent = nullptr);
     ~CouponManagerWidget();
 
 private slots:

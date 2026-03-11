@@ -148,3 +148,19 @@ void cartwidget::clearCart()
     m_cartList.clear();
     refreshCartUI();
 }
+
+QList<KioskData> cartwidget::getCartList() const
+{
+    return m_cartList;
+}
+
+// 🌟 추가된 부분: 현재 장바구니의 총 결제 금액 계산 및 반환
+int cartwidget::getTotalAmount() const
+{
+    int totalAmount = 0;
+    for (const KioskData &item : m_cartList)
+    {
+        totalAmount += item.totalPrice * item.quantity;
+    }
+    return totalAmount;
+}

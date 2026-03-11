@@ -4,7 +4,7 @@
 #include "categorywidget.h"
 #include "beverage.h"  // 🌟 beverage 위젯 기능을 쓰기 위해 필수
 #include "KioskData.h" // 🌟 메뉴 상세 정보 구조체 사용
-#include "orderconfirmdialog.h"
+#include "couponselectview.h"
 #include "couponmanagerwidget.h"
 #include "coupondialog.h"
 #include "paymentmaindialog.h"
@@ -57,8 +57,6 @@ MainWindow::MainWindow(QWidget *parent)
 
     ui->stackedWidget->setCurrentIndex(0); // 시작은 홍보화면
 
-    // [핵심 연결] cartwidget(이름: Listcart)이 결제 요청 신호를 보내면, openPaymentModal()을 실행해라!
-    connect(ui->Listcart, &cartwidget::checkoutRequested, this, &MainWindow::openPaymentModal);
 }
 
 
@@ -70,39 +68,25 @@ void MainWindow::onReceiveCartData(QList<KioskData> list)
     ui->Listcart->updateCart(list); // 냅다 던져줍니다.
 }
 
-// 🌟 결제 처리 로직
 void MainWindow::processCheckout()
 {
-<<<<<<< HEAD:VentiApp/mainwindow.cpp
-    // 장바구니 데이터 가져오기
     QList<KioskData> currentCart = ui->Listcart->getCartList();
     int currentTotal = ui->Listcart->getTotalAmount();
 
-    // 1. 주문 내역 확인 모달창 띄우기
-    OrderConfirmDialog confirmDialog(currentCart, currentTotal, this);
+    // 🌟 1. 중재자(CouponManagerWidget) 모달창 띄우기
+    CouponManagerWidget managerDialog(currentCart, currentTotal, this);
 
-    // 2. 결제 진행 (사용자가 결제 버튼(accept)을 눌렀을 때만 동작)
-    if (confirmDialog.exec() == QDialog::Accepted) {
-        qDebug() << "최종 결제가 완료되었습니다! 초기 화면으로 돌아갑니다.";
+    // 2. 결제 진행 
+    if (managerDialog.exec() == QDialog::Accepted) {
+        qDebug() << "최종 결제/쿠폰 확인 완료! DB 저장 단계로 넘어갑니다.";
 
-        ui->Listcart->clearCart(); // 장바구니 비우기
-        currentOrderType = 0;
-        ui->stackedWidget->setCurrentIndex(0); // 홈 화면으로 이동
+        // (이후 DB 저장, 장바구니 비우기 로직 수행)
+        ui->Listcart->clearCart(); 
+        currentOrderType = 0;      
+        // ui->stackedWidget->setCurrentIndex(0); 
     } else {
-        qDebug() << "결제가 취소되었습니다. 메뉴 화면 유지.";
+        qDebug() << "결제가 취소되었습니다.";
     }
-=======
-    qDebug() << "결제가 완료되었습니다! 초기 화면으로 돌아갑니다.";
-
-    // 1. 여기서 DB에 주문 내역 저장(INSERT) 등의 로직을 나중에 추가하시면 됩니다.
-
-    // 2. 결제가 완료되었으니 장바구니 비우기
-    ui->Listcart->clearCart();
-
-    // 3. 주문 방식(매장/포장) 변수 초기화 및 초기 홍보 화면으로 이동
-    // currentOrderType = 0;
-    // ui->stackedWidget->setCurrentIndex(0);
->>>>>>> ee532cec9d4fb65993e37c61fbdab54e117a77ea:VentiApp/Common/mainwindow.cpp
 }
 
 // 안내 문구 깜빡임 로직

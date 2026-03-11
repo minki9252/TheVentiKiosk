@@ -63,7 +63,7 @@
       <item>
        <layout class="QHBoxLayout" name="horizontalLayout">
         <item>
-         <widget class="QPushButton" name="pushButton">
+         <widget class="QPushButton" name="coupon_app_btn">
           <property name="sizePolicy">
            <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
             <horstretch>0</horstretch>
@@ -88,7 +88,7 @@
          </widget>
         </item>
         <item>
-         <widget class="QPushButton" name="pushButton_2">
+         <widget class="QPushButton" name="coupon_gift_btn">
           <property name="minimumSize">
            <size>
             <width>150</width>
@@ -147,7 +147,7 @@
        </widget>
       </item>
       <item>
-       <widget class="QListWidget" name="listWidget">
+       <widget class="QListWidget" name="listOrderDetails">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
           <horstretch>0</horstretch>
@@ -174,7 +174,7 @@
    <item>
     <layout class="QHBoxLayout" name="horizontalLayout_2">
      <item>
-      <widget class="QPushButton" name="pushButton_3">
+      <widget class="QPushButton" name="btnCancel">
        <property name="minimumSize">
         <size>
          <width>100</width>
@@ -206,7 +206,7 @@
       </spacer>
      </item>
      <item>
-      <widget class="QPushButton" name="pushButton_4">
+      <widget class="QPushButton" name="btnPay">
        <property name="minimumSize">
         <size>
          <width>100</width>

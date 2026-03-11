@@ -17,6 +17,9 @@ public:
     void updateCart(QList<KioskData> list); // 외부에서 아이템 추가
     void clearCart();                       // 외부(결제완료 후)에서 장바구니 비우기
 
+    QList<KioskData> getCartList() const;
+    int getTotalAmount() const;
+
 signals:
     // 🌟 추가: 장바구니 총액이 변경될 때마다 부모 창으로 던질 시그널
     void cartTotalChanged(int totalAmount);
