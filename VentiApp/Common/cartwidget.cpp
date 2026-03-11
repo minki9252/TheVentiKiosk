@@ -1,5 +1,6 @@
 #include "cartwidget.h"
 #include "ui_cartwidget.h"
+#include "couponmanagerwidget.h"
 #include <QHBoxLayout>
 #include <QPushButton>
 #include <QLabel>
@@ -10,7 +11,7 @@ cartwidget::cartwidget(QWidget *parent)
     : QWidget(parent), ui(new Ui::cartwidget)
 {
     ui->setupUi(this);
-    
+
     // 만약 전체삭제 버튼 이름이 btnClearAll 이 아니라면 UI 파일에 맞춰 이름을 변경하세요.
     // connect(ui->전체삭제버튼이름, &QPushButton::clicked, this, &cartwidget::on_btnClearAll_clicked);
 }
@@ -29,7 +30,8 @@ void cartwidget::updateCart(QList<KioskData> list)
 void cartwidget::calculateTotalAndEmit()
 {
     int totalAmount = 0;
-    for (const KioskData &item : m_cartList) {
+    for (const KioskData &item : m_cartList)
+    {
         totalAmount += item.totalPrice * item.quantity;
     }
 
@@ -48,7 +50,7 @@ void cartwidget::refreshCartUI()
     {
         // 1. 리스트에 들어갈 빈 아이템 생성
         QListWidgetItem *item = new QListWidgetItem(ui->ListCart);
-        
+
         // 2. 아이템 안에 들어갈 커스텀 위젯과 레이아웃 생성
         QWidget *rowWidget = new QWidget();
         QHBoxLayout *layout = new QHBoxLayout(rowWidget);
@@ -57,20 +59,20 @@ void cartwidget::refreshCartUI()
         // 3. UI 요소들 생성 (X버튼, 메뉴정보, -, 수량, +, 가격)
         QPushButton *btnDel = new QPushButton("X");
         btnDel->setFixedSize(30, 30);
-        
+
         QLabel *lblInfo = new QLabel(QString("%1 | %2").arg(m_cartList[i].menuName).arg(m_cartList[i].summaryText));
         lblInfo->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred); // 텍스트 영역 확장
-        
+
         QPushButton *btnMinus = new QPushButton("-");
         btnMinus->setFixedSize(30, 30);
-        
+
         QLabel *lblQty = new QLabel(QString::number(m_cartList[i].quantity));
         lblQty->setAlignment(Qt::AlignCenter);
         lblQty->setFixedSize(30, 30);
-        
+
         QPushButton *btnPlus = new QPushButton("+");
         btnPlus->setFixedSize(30, 30);
-        
+
         int itemTotalPrice = m_cartList[i].totalPrice * m_cartList[i].quantity;
         QLabel *lblPrice = new QLabel(QString("%1원").arg(itemTotalPrice));
         lblPrice->setFixedWidth(70);
@@ -89,9 +91,12 @@ void cartwidget::refreshCartUI()
         ui->ListCart->setItemWidget(item, rowWidget);
 
         // 6. 버튼 클릭 이벤트 연결 (람다 함수 사용)
-        connect(btnDel, &QPushButton::clicked, this, [this, i]() { removeItem(i); });
-        connect(btnMinus, &QPushButton::clicked, this, [this, i]() { decreaseQty(i); });
-        connect(btnPlus, &QPushButton::clicked, this, [this, i]() { increaseQty(i); });
+        connect(btnDel, &QPushButton::clicked, this, [this, i]()
+                { removeItem(i); });
+        connect(btnMinus, &QPushButton::clicked, this, [this, i]()
+                { decreaseQty(i); });
+        connect(btnPlus, &QPushButton::clicked, this, [this, i]()
+                { increaseQty(i); });
     }
     calculateTotalAndEmit();
 }
@@ -113,7 +118,8 @@ void cartwidget::increaseQty(int index)
 // 수량 감소 로직 (1 이하로는 내려가지 않게)
 void cartwidget::decreaseQty(int index)
 {
-    if (m_cartList[index].quantity > 1) {
+    if (m_cartList[index].quantity > 1)
+    {
         m_cartList[index].quantity--;
         refreshCartUI();
     }
@@ -128,7 +134,8 @@ void cartwidget::on_btnClearAll_clicked()
 // 🌟 결제하기 버튼 동작
 void cartwidget::on_btnCheckout_clicked()
 {
-    if (m_cartList.isEmpty()) {
+    if (m_cartList.isEmpty())
+    {
         QMessageBox::warning(this, "알림", "장바구니가 비어있습니다.");
         return;
     }
