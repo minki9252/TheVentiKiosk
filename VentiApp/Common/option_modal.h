@@ -32,6 +32,7 @@ private:
     Ui::option_modal *ui;
     // [추가] 넘어온 메뉴 정보를 이 창이 열려있는 동안 저장해둘 보관함
     KioskData m_selectedMenu;
+    void setupDynamicOptions(); // [추가] DB에서 버튼을 만드는 함수 선언
 };
 
 #endif // OPTION_MODAL_H
