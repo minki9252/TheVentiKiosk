@@ -27,8 +27,6 @@ private slots:
     void on_btnClearAll_clicked(); // 전체 삭제 버튼 (이름이 btnClearAll 인 경우)
     void on_btnCheckout_clicked(); // 결제 하기 버튼 (이름이 btnCheckout 인 경우)
 
-private slots:
-    void on_btnCheckout_clicked();
 
 private:
     Ui::cartwidget *ui;

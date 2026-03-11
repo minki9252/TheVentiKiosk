@@ -6,6 +6,7 @@
 #include "KioskData.h" // 🌟 메뉴 상세 정보 구조체 사용
 #include "couponmanagerwidget.h"
 #include "coupondialog.h"
+#include "paymentmaindialog.h"
 #include <QSqlDatabase>
 #include <QSqlError>
 #include <QSqlQuery>
@@ -54,7 +55,11 @@ MainWindow::MainWindow(QWidget *parent)
         handle(event); });
 
     ui->stackedWidget->setCurrentIndex(0); // 시작은 홍보화면
+
+    // [핵심 연결] cartwidget(이름: Listcart)이 결제 요청 신호를 보내면, openPaymentModal()을 실행해라!
+    connect(ui->Listcart, &cartwidget::checkoutRequested, this, &MainWindow::openPaymentModal);
 }
+
 
 MainWindow::~MainWindow() { delete ui; }
 
@@ -75,8 +80,8 @@ void MainWindow::processCheckout()
     ui->Listcart->clearCart();
 
     // 3. 주문 방식(매장/포장) 변수 초기화 및 초기 홍보 화면으로 이동
-    currentOrderType = 0;
-    ui->stackedWidget->setCurrentIndex(0);
+    // currentOrderType = 0;
+    // ui->stackedWidget->setCurrentIndex(0);
 }
 
 // 안내 문구 깜빡임 로직
@@ -116,6 +121,22 @@ void MainWindow::on_takeoutButton_clicked()
     // loadMenus("신메뉴");
 }
 
+
+// 결제창 띄우기 함수 구현
+void MainWindow::openPaymentModal()
+{
+    // 1. 우리가 정성껏 조립한 메인 결제 다이얼로그 생성
+    PaymentMainDialog payDialog(this);
+
+    // 2. 모달 형태로 띄우기 (exec()를 쓰면 결제창이 닫힐 때까지 프로그램이 여기서 대기합니다)
+    if (payDialog.exec() == QDialog::Accepted) {
+        // 3. 결제가 무사히 완료(Accepted)되고 창이 닫혔다면, 장바구니를 비워줍니다!
+        ui->Listcart->clearCart();
+
+        // (선택) 결제 완료 후 처음 화면(page)으로 돌아가게 하려면 아래 코드 추가
+        // ui->stackedWidget->setCurrentIndex(0);
+    }
+}
 // void MainWindow::processCheckout()
 // {
 //     // 장바구니가 비어있는지 체크는 이미 cartwidget에서 하고 여기로 넘어옵니다.
