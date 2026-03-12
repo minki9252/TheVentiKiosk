@@ -6,13 +6,7 @@
 #include "receiptmanagerwidget.h"
 #include <QDebug>
 
-<<<<<<< HEAD
-PaymentMainDialog::PaymentMainDialog(const QList<KioskData>& cartList,
-                                     int totalAmount,
-                                     QWidget *parent)
-=======
 PaymentMainDialog::PaymentMainDialog(const QList<KioskData>& cartList, int totalAmount, QWidget *parent)
->>>>>>> a23c359d2b42293412751b0bf392a26aad20c8bc
     : QDialog(parent)
     , ui(new Ui::PaymentMainDialog)
 {
@@ -62,7 +56,6 @@ PaymentMainDialog::PaymentMainDialog(const QList<KioskData>& cartList, int total
             this, &QDialog::reject);
 
     connect(step4_Receipt, &ReceiptManagerWidget::receiptStepCompleted,
-            this, &QDialog::accept);connect(step4_Receipt, &ReceiptManagerWidget::receiptStepCompleted,
             this, &QDialog::accept);
 
     
