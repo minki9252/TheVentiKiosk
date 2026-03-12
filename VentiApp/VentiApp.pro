@@ -26,7 +26,6 @@ SOURCES += \
     Common/categorywidget.cpp \
     Common/mainwindow.cpp \
     Common/option_modal.cpp \
-    Coupon/coupondialog.cpp \
     Coupon/couponinputview.cpp \
     Coupon/couponmanagerwidget.cpp \
     Coupon/couponresultview.cpp \
@@ -50,7 +49,6 @@ HEADERS += \
     Common/cartwidget.h \
     Common/categorywidget.h \
     Common/option_modal.h \
-    Coupon/coupondialog.h \
     Coupon/couponinputview.h \
     Coupon/couponmanagerwidget.h \
     Coupon/couponresultview.h \

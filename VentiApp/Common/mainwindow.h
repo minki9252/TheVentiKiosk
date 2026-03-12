@@ -58,8 +58,8 @@ private slots:
     void on_takeoutButton_clicked();
     void toggleTouchText(); // 텍스트 깜빡임용 슬롯
     void onReceiveCartData(QList<KioskData> list);
-    // void processCheckout(); mainwindow.h private slots: 안에서 삭제
-    void openPaymentModal(); //결제창 띄울 전용 슬롯
+    void processCheckout();
+    // void openPaymentModal(); //결제창 띄울 전용 슬롯
 
 
     // // 🌟 [추가] PointInputView 에서 오는 시그널 받는 슬롯

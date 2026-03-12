@@ -2,69 +2,66 @@
 #include "ui_couponmanagerwidget.h"
 #include "couponinputview.h"
 #include "couponselectview.h"
-#include <QMessageBox>
+#include "couponresultview.h"
 #include <QDebug>
 
 CouponManagerWidget::CouponManagerWidget(const QList<KioskData>& cartList, int totalAmount, QWidget *parent)
-    : QDialog(parent)
+    : QWidget(parent) // 🌟 QWidget 초기화
     , ui(new Ui::CouponManagerWidget)
 {
     ui->setupUi(this);
     
-    // 1. 두 개의 화면 부품 생성
+    // 1. 세 개의 화면 부품 생성
     CouponSelectView *selectView = new CouponSelectView(cartList, totalAmount, this);
     CouponInputView *inputView = new CouponInputView(this);
+    CouponResultView *resultView = new CouponResultView(this); 
     
-    // 2. 스택에 화면 추가 (Index 0: 주문확인/선택, Index 1: 쿠폰번호입력)
+    // 2. 스택에 화면 추가
     ui->stackedWidget->addWidget(selectView); // Index 0
     ui->stackedWidget->addWidget(inputView);  // Index 1
+    ui->stackedWidget->addWidget(resultView); // Index 2
     
-    // 첫 화면은 선택창으로 고정
     ui->stackedWidget->setCurrentWidget(selectView);
     
-    // 3. 🌟 선택창(selectView) 신호 연결
-    connect(selectView, &CouponSelectView::cancelRequested, this, &QDialog::reject); // 팝업 닫기(취소)
-    // 이것만 교체 ❌→✅
-    // ✅ 교체
-    connect(selectView, &CouponSelectView::payRequested, this, &CouponManagerWidget::readyToNext);
-    //                                                          ↑ 이 부분만 바꿈
+    // 🌟 3. 선택창 신호 연결 (this->accept(), reject() 대신 emit으로 신호 발송)
+    connect(selectView, &CouponSelectView::cancelRequested, this, [this](){
+        emit paymentCanceled(); // 결제창 닫기 신호 발송
+    }); 
+    connect(selectView, &CouponSelectView::payRequested, this, [this](){
+        emit stepCompleted();   // 다음 결제 단계로 넘어가기 신호 발송
+    });    
     connect(selectView, &CouponSelectView::typeSelected, this, &CouponManagerWidget::onTypeSelected);
-    // connect(selectView, &CouponSelectView::skipRequested, ... ); (필요 시 연결)
 
-    // 4. 🌟 입력창(inputView) 신호 연결
-    // 4-1. 입력창에서 취소(뒤로가기)를 누르면? -> 다시 0번(선택창) 화면으로 전환
+    // 4. 입력창 신호 연결
     connect(inputView, &CouponInputView::backRequested, this, [this](){
         ui->stackedWidget->setCurrentIndex(0); 
     });
 
-    // 4-2. 입력창에서 확인을 누르면? -> 쿠폰 적용 로직 실행 후 결제 승인
-    connect(inputView, &CouponInputView::inputConfirmed, this, [this](QString code){
+    connect(inputView, &CouponInputView::inputConfirmed, this, [this, resultView](QString code){
         qDebug() << "입력된 쿠폰 번호:" << code;
-        
-        // 사용자에게 적용 완료 메시지 띄우기
-        QMessageBox::information(this, "알림", "쿠폰 (" + code + ") 적용 완료!");
-        
-        // 💡 향후 추가할 로직:
-        // 여기서 DB나 서버를 조회해 할인 금액을 계산하고, 
-        // selectView(주문 내역 화면)의 총 금액 라벨을 갱신해주는 코드를 넣으면 완벽합니다.
+        resultView->setResult(true);
+        ui->stackedWidget->setCurrentIndex(2); 
+    });
 
-        // 🌟 핵심 수정: 창을 닫지 않고 다시 0번(주문 확인창) 화면으로 되돌립니다!
-        ui->stackedWidget->setCurrentIndex(0); 
+    // 5. 결과창 신호 연결
+    connect(resultView, &CouponResultView::resultConfirmed, this, [this](){
+        ui->stackedWidget->setCurrentIndex(0);
     });
 }
 
-CouponManagerWidget::~CouponManagerWidget() { delete ui; }
-
+CouponManagerWidget::~CouponManagerWidget() 
+{ 
+    delete ui; 
+}
 
 void CouponManagerWidget::onTypeSelected(int type)
 {
     qDebug() << "선택된 쿠폰 타입:" << type;
-    
-    // type(1: APP, 2: 기프티콘) 상관없이 번호 입력창(Index 1)으로 화면을 넘깁니다!
     ui->stackedWidget->setCurrentIndex(1);
 }
 
-// ✅ 교체
-void CouponManagerWidget::onSkipRequested() {
-    emit readyToNext();
+void CouponManagerWidget::onSkipRequested() 
+{
+    // 쿠폰 안 씀! 다음 단계로 넘어가라는 신호 발송
+    emit stepCompleted(); 
 }

@@ -1,24 +1,24 @@
 #ifndef COUPONMANAGERWIDGET_H
 #define COUPONMANAGERWIDGET_H
 
-#include <QDialog> // 🌟 QWidget에서 QDialog로 변경!
+#include <QWidget> // 🌟 QDialog에서 QWidget으로 다시 원복!
 #include <QList>
 #include "KioskData.h"
 
 namespace Ui { class CouponManagerWidget; }
 
-class CouponManagerWidget : public QDialog
+class CouponManagerWidget : public QWidget // 🌟 QWidget 상속
 {
     Q_OBJECT
 
 public:
-    // 🌟 MainWindow로부터 장바구니 데이터를 받아옵니다.
     explicit CouponManagerWidget(const QList<KioskData>& cartList, int totalAmount, QWidget *parent = nullptr);
     ~CouponManagerWidget();
 
-    // 기존 private slots: 위에 아래 블록 추가
 signals:
-    void readyToNext(); // 쿠폰 단계 완료 → PaymentMainDialog에 통보
+    // 🌟 부모(PaymentMainDialog)에게 현재 단계가 끝났음을 알리는 신호들
+    void stepCompleted();    // 다음 단계로 넘어가라!
+    void paymentCanceled();  // 결제창 전체를 닫아라!
 
 private slots:
     void onTypeSelected(int type);
