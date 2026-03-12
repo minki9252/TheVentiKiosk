@@ -2,17 +2,19 @@
 #define PAYMENTMAINDIALOG_H
 
 #include <QDialog>
+#include <QList>
+#include "KioskData.h"
 
-namespace Ui {
-class PaymentMainDialog;
-}
+namespace Ui { class PaymentMainDialog; }
 
 class PaymentMainDialog : public QDialog
 {
     Q_OBJECT
 
 public:
-    explicit PaymentMainDialog(QWidget *parent = nullptr);
+    explicit PaymentMainDialog(const QList<KioskData>& cartList,
+                               int totalAmount,
+                               QWidget *parent = nullptr);
     ~PaymentMainDialog();
 
 private:

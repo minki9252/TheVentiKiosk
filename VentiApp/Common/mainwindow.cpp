@@ -45,9 +45,6 @@ MainWindow::MainWindow(QWidget *parent)
     // 메뉴판 위젯 데이터 수신 연결
     connect(ui->widget_2, &beverage::sendToCart, this, &MainWindow::onReceiveCartData);
 
-    // 장바구니 -> MainWindow 결제 신호 연결
-    connect(ui->Listcart, &cartwidget::checkoutRequested, this, &MainWindow::processCheckout);
-
     // KioskEvent를 던지는 이 딱 한 줄의 connect문이 모든 카테고리 버튼을 처리함
     connect(ui->categoryWidget, &categorywidget::categorySelected, this, [this](int actionCode)
             {
@@ -69,26 +66,27 @@ void MainWindow::onReceiveCartData(QList<KioskData> list)
     ui->Listcart->updateCart(list); // 냅다 던져줍니다.
 }
 
-void MainWindow::processCheckout()
-{
-    QList<KioskData> currentCart = ui->Listcart->getCartList();
-    int currentTotal = ui->Listcart->getTotalAmount();
+// openPaymentModal()이 같은 역할을 하므로 중복입니다.
+// void MainWindow::processCheckout()
+// {
+//     QList<KioskData> currentCart = ui->Listcart->getCartList();
+//     int currentTotal = ui->Listcart->getTotalAmount();
 
-    // 🌟 1. 중재자(CouponManagerWidget) 모달창 띄우기
-    CouponManagerWidget managerDialog(currentCart, currentTotal, this);
+//     // 🌟 1. 중재자(CouponManagerWidget) 모달창 띄우기
+//     CouponManagerWidget managerDialog(currentCart, currentTotal, this);
 
-    // 2. 결제 진행 
-    if (managerDialog.exec() == QDialog::Accepted) {
-        qDebug() << "최종 결제/쿠폰 확인 완료! DB 저장 단계로 넘어갑니다.";
+//     // 2. 결제 진행
+//     if (managerDialog.exec() == QDialog::Accepted) {
+//         qDebug() << "최종 결제/쿠폰 확인 완료! DB 저장 단계로 넘어갑니다.";
 
-        // (이후 DB 저장, 장바구니 비우기 로직 수행)
-        ui->Listcart->clearCart(); 
-        currentOrderType = 0;      
-        // ui->stackedWidget->setCurrentIndex(0); 
-    } else {
-        qDebug() << "결제가 취소되었습니다.";
-    }
-}
+//         // (이후 DB 저장, 장바구니 비우기 로직 수행)
+//         ui->Listcart->clearCart();
+//         currentOrderType = 0;
+//         // ui->stackedWidget->setCurrentIndex(0);
+//     } else {
+//         qDebug() << "결제가 취소되었습니다.";
+//     }
+// }
 
 // 안내 문구 깜빡임 로직
 void MainWindow::toggleTouchText()
@@ -126,17 +124,20 @@ void MainWindow::on_takeoutButton_clicked()
 }
 
 
-// 결제창 띄우기 함수 구현
+// ✅ mainwindow.cpp - openPaymentModal() 교체
 void MainWindow::openPaymentModal()
 {
-    PaymentMainDialog payDialog(this);
+    QList<KioskData> currentCart = ui->Listcart->getCartList();
+    int currentTotal = ui->Listcart->getTotalAmount();
 
-    // 모달 형태로 띄우기
+    PaymentMainDialog payDialog(currentCart, currentTotal, this);
+
     if (payDialog.exec() == QDialog::Accepted) {
-        // 결제가 무사히 완료되고 창이 닫혔다면, 장바구니를 비워주기
         ui->Listcart->clearCart();
+        ui->stackedWidget->setCurrentIndex(0); // ✅ 추가 - 홈 화면으로 복귀
     }
 }
+
 
 /////////////////////// 핸들 함수 시작 //////////////////////////////////////
 void MainWindow::handle(const KioskEvent &event)

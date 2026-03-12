@@ -24,7 +24,10 @@ CouponManagerWidget::CouponManagerWidget(const QList<KioskData>& cartList, int t
     
     // 3. 🌟 선택창(selectView) 신호 연결
     connect(selectView, &CouponSelectView::cancelRequested, this, &QDialog::reject); // 팝업 닫기(취소)
-    connect(selectView, &CouponSelectView::payRequested, this, &QDialog::accept);    // 팝업 닫기(결제 진행)
+    // 이것만 교체 ❌→✅
+    // ✅ 교체
+    connect(selectView, &CouponSelectView::payRequested, this, &CouponManagerWidget::readyToNext);
+    //                                                          ↑ 이 부분만 바꿈
     connect(selectView, &CouponSelectView::typeSelected, this, &CouponManagerWidget::onTypeSelected);
     // connect(selectView, &CouponSelectView::skipRequested, ... ); (필요 시 연결)
 
@@ -61,7 +64,7 @@ void CouponManagerWidget::onTypeSelected(int type)
     ui->stackedWidget->setCurrentIndex(1);
 }
 
+// ✅ 교체
 void CouponManagerWidget::onSkipRequested() {
-    QMessageBox::information(this, "매니저", "쿠폰 안 씀! 결제 진행을 위해 창을 닫습니다.");
-    this->accept(); // 결제 진행을 위해 승인하고 닫음
+    emit readyToNext();
 }

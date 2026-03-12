@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>CouponInputView</class>
- <widget class="QWidget" name="CouponInputView">
+ <class>PointInputView</class>
+ <widget class="QWidget" name="PointInputView">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -40,7 +40,7 @@
       </font>
      </property>
      <property name="text">
-      <string>쿠폰 입력</string>
+      <string>휴대폰 번호 입력</string>
      </property>
     </widget>
    </item>

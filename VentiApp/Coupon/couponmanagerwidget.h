@@ -16,6 +16,10 @@ public:
     explicit CouponManagerWidget(const QList<KioskData>& cartList, int totalAmount, QWidget *parent = nullptr);
     ~CouponManagerWidget();
 
+    // 기존 private slots: 위에 아래 블록 추가
+signals:
+    void readyToNext(); // 쿠폰 단계 완료 → PaymentMainDialog에 통보
+
 private slots:
     void onTypeSelected(int type);
     void onSkipRequested();

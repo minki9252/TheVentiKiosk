@@ -4,7 +4,7 @@
 #include <QWidget>
 
 namespace Ui {
-class CouponInputView;
+class PointInputView;
 }
 
 class PointInputView : public QWidget
@@ -12,19 +12,22 @@ class PointInputView : public QWidget
     Q_OBJECT
 
 public:
+    // ✅ cartList, totalAmount 인자 추가
+    // ✅ 교체
     explicit PointInputView(QWidget *parent = nullptr);
     ~PointInputView();
+    void setDisplay(const QString &maskedText);  // Manager가 마스킹 후 호출
 
 signals:
-    void phoneConfirmed(const QString &phoneNum);  // 입력 버튼 → 번호 전달
-    void cancelled();                               // 취소 버튼
+    void digitPressed(const QString &digit);  // 숫자/010 버튼
+    void deletePressed();                     // 부분삭제 버튼
+    void clearPressed();                      // 전체삭제 버튼
+    void confirmPressed();                    // 입력(확인) 버튼
+    void cancelled();                         // 취소 버튼
 
 private:
-    Ui::CouponInputView *ui;
-    QString m_phoneNum;                            // 입력 번호 임시 저장
-
-    void updateDisplay();                          // lineEdit * 마스킹 업데이트
-    void connectButtons();                         // 버튼 시그널 연결
+    Ui::PointInputView *ui;
+    void connectButtons();
 };
 
 #endif // POINTINPUTVIEW_H
