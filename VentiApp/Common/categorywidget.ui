@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>656</width>
+    <width>540</width>
     <height>150</height>
    </rect>
   </property>
@@ -18,18 +18,61 @@
   </property>
   <property name="maximumSize">
    <size>
-    <width>656</width>
+    <width>540</width>
     <height>150</height>
    </size>
   </property>
   <property name="windowTitle">
    <string>Form</string>
   </property>
+  <property name="styleSheet">
+   <string notr="true">/* 카테고리 위젯 전체 배경 */
+QWidget#categorywidget {
+    background-color: #FFFFFF;
+}
+
+/* 카테고리 버튼 기본 스타일 */
+QPushButton {
+    background-color: #F8F9FA;
+    border: 1px solid #E0E0E0;
+    border-radius: 5px; /* 약간 각진 느낌으로 세련되게 */
+    color: #333333;
+    font-family: &quot;Malgun Gothic&quot;;
+    font-size: 14px; /* 글자 크기를 살짝 줄여서 깨짐 방지 */
+    font-weight: bold;
+    padding: 5px; /* 내부 여백 최적화 */
+}
+
+/* 마우스 올렸을 때 */
+QPushButton:hover {
+    background-color: #F0EAF6;
+}
+
+/* 선택된 카테고리 (더벤티 보라색 강조) */
+/* 체크 상태를 활용하려면 버튼 속성에서 checkable을 true로 하셔야 합니다 */
+QPushButton:checked, QPushButton:pressed {
+    background-color: #5D2D91;
+    color: #FFFFFF;
+    border: 1px solid #5D2D91;
+}
+
+/* 특정 버튼 텍스트가 긴 경우를 위한 예외 처리 */
+QPushButton#category_icedcoffee_button, 
+QPushButton#category_tea_button {
+    font-size: 13px; /* 긴 텍스트는 1pt 더 작게 */
+}</string>
+  </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
     <layout class="QGridLayout" name="bar_layout">
      <item row="0" column="0">
       <widget class="QPushButton" name="home_button">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
        <property name="text">
         <string>home</string>
        </property>
@@ -79,6 +122,12 @@
       <layout class="QGridLayout" name="gridLayout">
        <item row="0" column="3">
         <widget class="QPushButton" name="category_hotcoffee_button">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
          <property name="text">
           <string>커피(핫)</string>
          </property>
@@ -86,6 +135,12 @@
        </item>
        <item row="0" column="1">
         <widget class="QPushButton" name="category_local_button">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
          <property name="text">
           <string>로컬 에디션</string>
          </property>
@@ -93,6 +148,12 @@
        </item>
        <item row="1" column="0">
         <widget class="QPushButton" name="category_beverage_button">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
          <property name="text">
           <string>베버리지</string>
          </property>
@@ -100,6 +161,12 @@
        </item>
        <item row="1" column="1">
         <widget class="QPushButton" name="category_ade_button">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
          <property name="text">
           <string>에이드</string>
          </property>
@@ -114,6 +181,12 @@
        </item>
        <item row="0" column="5">
         <widget class="QPushButton" name="category_blended_button">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
          <property name="text">
           <string>블렌디드</string>
          </property>
@@ -128,6 +201,12 @@
        </item>
        <item row="0" column="2">
         <widget class="QPushButton" name="category_icedcoffee_button">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
          <property name="text">
           <string>커피(아이스)</string>
          </property>
@@ -135,6 +214,12 @@
        </item>
        <item row="0" column="4">
         <widget class="QPushButton" name="category_tea_button">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
          <property name="text">
           <string>버블티/티</string>
          </property>
@@ -142,6 +227,12 @@
        </item>
        <item row="0" column="0">
         <widget class="QPushButton" name="category_new_button">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
          <property name="text">
           <string>신메뉴</string>
          </property>

@@ -9,12 +9,82 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>540</width>
-    <height>710</height>
+    <width>500</width>
+    <height>750</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Dialog</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">/* 전반적인 위젯 배경 및 기본 폰트 설정 */
+QWidget {
+    background-color: #FFFFFF;
+    font-family: &quot;Malgun Gothic&quot;, &quot;NanumSquare&quot;, sans-serif;
+}
+
+/* 더벤티 메인 컬러: 보라색 (#5D2D91) */
+/* 강조 버튼 (결제, 확인, 쿠폰 선택 등) */
+QPushButton#btnPay, QPushButton#btnConfirm, QPushButton#coupon_app_btn, 
+QPushButton#btn_insert_card, QPushButton#storeButton, QPushButton#takeoutButton {
+    background-color: #5D2D91;
+    color: #FFFFFF;
+    border-radius: 12px;
+    font-size: 20px;
+    font-weight: bold;
+    min-height: 60px;
+}
+
+QPushButton#btnPay:pressed, QPushButton#storeButton:pressed {
+    background-color: #4A2475; /* 클릭 시 더 진한 보라색 피드백 */
+}
+
+/* 일반 버튼 및 숫자 패드 */
+QPushButton {
+    background-color: #F2F2F2;
+    border: 1px solid #DCDCDC;
+    border-radius: 8px;
+    font-size: 18px;
+    color: #333333;
+    min-height: 50px;
+}
+
+/* 취소 및 이전 버튼 (회색 계열) */
+QPushButton#btnCancel, QPushButton#btn_cancel, QPushButton#pushButton_14 {
+    background-color: #A0A0A0;
+    color: #FFFFFF;
+    border: none;
+    border-radius: 10px;
+}
+
+/* 입력 필드 스타일 */
+QLineEdit {
+    border: 2px solid #5D2D91;
+    border-radius: 10px;
+    padding: 10px;
+    font-size: 22px;
+    background-color: #F9F9F9;
+}
+
+/* 제목 레이블 */
+QLabel#label_title, QLabel#label_3 {
+    color: #5D2D91;
+    font-weight: bold;
+    font-size: 26px;
+    margin-bottom: 10px;
+}
+
+/* 장바구니 리스트 및 메뉴 리스트 */
+QListWidget {
+    border: 1px solid #E0E0E0;
+    background-color: #FFFFFF;
+    outline: none;
+}
+
+QListWidget::item:selected {
+    background-color: #F0EAF6; /* 연한 보라색 선택 효과 */
+    border-left: 5px solid #5D2D91;
+}</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_2">
    <item>
@@ -75,6 +145,7 @@
        </property>
        <property name="font">
         <font>
+         <family>Malgun Gothic</family>
          <pointsize>20</pointsize>
         </font>
        </property>
@@ -137,8 +208,8 @@ QPushButton:checked {
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>520</width>
-        <height>464</height>
+        <width>480</width>
+        <height>477</height>
        </rect>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout_3">

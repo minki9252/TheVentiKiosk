@@ -3,54 +3,192 @@
  <class>PayMethodView</class>
  <widget class="QWidget" name="PayMethodView">
   <property name="geometry">
-   <rect><x>0</x><y>0</y><width>540</width><height>600</height></rect>
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>482</width>
+    <height>650</height>
+   </rect>
   </property>
-  <property name="minimumSize"><size><width>540</width><height>600</height></size></property>
-  <property name="maximumSize"><size><width>540</width><height>600</height></size></property>
+  <property name="minimumSize">
+   <size>
+    <width>480</width>
+    <height>650</height>
+   </size>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>482</width>
+    <height>650</height>
+   </size>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">/* 전반적인 위젯 배경 */
+QWidget {
+    background-color: #FFFFFF;
+    font-family: &quot;Malgun Gothic&quot;, sans-serif;
+}
+
+/* 제목 레이블 (예: 쿠폰 입력, 결제 수단 선택) */
+QLabel#label, QLabel#label_3, QLabel#label_title {
+    color: #5A2D81;
+    font-weight: bold;
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+/* 숫자 입력칸 (QLineEdit) */
+QLineEdit {
+    border: 2px solid #5A2D81;
+    border-radius: 10px;
+    padding: 10px;
+    font-size: 22px;
+    color: #333333;
+    background-color: #F9F9F9;
+}
+
+/* 일반 버튼 (숫자 패드 등) */
+QPushButton {
+    background-color: #F2F2F2;
+    border: 1px solid #DCDCDC;
+    border-radius: 8px;
+    font-size: 18px;
+    font-weight: bold;
+    color: #333333;
+    min-height: 50px;
+}
+
+QPushButton:pressed {
+    background-color: #E0E0E0;
+}
+
+/* 포인트 버튼 (확인, 결제하기, APP쿠폰 등) */
+QPushButton#pushButton_15, QPushButton#btnPay, QPushButton#coupon_app_btn, QPushButton#btn_insert_card {
+    background-color: #5A2D81;
+    color: #FFFFFF;
+    border: none;
+    border-radius: 10px;
+    font-size: 20px;
+}
+
+QPushButton:hover {
+    background-color: #723D9D;
+}
+
+/* 취소/이전 버튼 */
+QPushButton#pushButton_14, QPushButton#btnCancel, QPushButton#btn_cancel {
+    background-color: #A0A0A0;
+    color: #FFFFFF;
+    border-radius: 10px;
+}
+
+/* 결과창 레이블 (조회 성공/실패) */
+QLabel#label[text=&quot;조회 성공&quot;] {
+    color: #2D815A;
+    font-size: 20px;
+}
+
+QLabel#label_2[text=&quot;조회 실패&quot;] {
+    color: #D32F2F;
+    font-size: 20px;
+}</string>
+  </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
     <widget class="QLabel" name="label_title">
-     <property name="text"><string>결제 수단을 선택하세요</string></property>
-     <property name="font"><font><pointsize>18</pointsize><bold>true</bold></font></property>
-     <property name="alignment"><set>Qt::AlignmentFlag::AlignCenter</set></property>
+     <property name="font">
+      <font>
+       <family>Malgun Gothic</family>
+       <pointsize>-1</pointsize>
+       <bold>true</bold>
+      </font>
+     </property>
+     <property name="text">
+      <string>결제 수단을 선택하세요</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignmentFlag::AlignCenter</set>
+     </property>
     </widget>
    </item>
    <item>
     <layout class="QGridLayout" name="gridLayout">
      <item row="0" column="0">
       <widget class="QPushButton" name="btn_shinhan">
-       <property name="text"><string>신한카드</string></property>
-       <property name="minimumSize"><size><width>150</width><height>80</height></size></property>
+       <property name="minimumSize">
+        <size>
+         <width>150</width>
+         <height>52</height>
+        </size>
+       </property>
+       <property name="text">
+        <string>신한카드</string>
+       </property>
       </widget>
      </item>
      <item row="0" column="1">
       <widget class="QPushButton" name="btn_kb">
-       <property name="text"><string>KB국민카드</string></property>
-       <property name="minimumSize"><size><width>150</width><height>80</height></size></property>
+       <property name="minimumSize">
+        <size>
+         <width>150</width>
+         <height>52</height>
+        </size>
+       </property>
+       <property name="text">
+        <string>KB국민카드</string>
+       </property>
       </widget>
      </item>
      <item row="0" column="2">
       <widget class="QPushButton" name="btn_hyundai">
-       <property name="text"><string>현대카드</string></property>
-       <property name="minimumSize"><size><width>150</width><height>80</height></size></property>
+       <property name="minimumSize">
+        <size>
+         <width>150</width>
+         <height>52</height>
+        </size>
+       </property>
+       <property name="text">
+        <string>현대카드</string>
+       </property>
       </widget>
      </item>
      <item row="1" column="0">
       <widget class="QPushButton" name="btn_samsung">
-       <property name="text"><string>삼성카드</string></property>
-       <property name="minimumSize"><size><width>150</width><height>80</height></size></property>
+       <property name="minimumSize">
+        <size>
+         <width>150</width>
+         <height>52</height>
+        </size>
+       </property>
+       <property name="text">
+        <string>삼성카드</string>
+       </property>
       </widget>
      </item>
      <item row="1" column="1">
       <widget class="QPushButton" name="btn_lotte">
-       <property name="text"><string>롯데카드</string></property>
-       <property name="minimumSize"><size><width>150</width><height>80</height></size></property>
+       <property name="minimumSize">
+        <size>
+         <width>150</width>
+         <height>52</height>
+        </size>
+       </property>
+       <property name="text">
+        <string>롯데카드</string>
+       </property>
       </widget>
      </item>
      <item row="1" column="2">
       <widget class="QPushButton" name="btn_hana">
-       <property name="text"><string>하나카드</string></property>
-       <property name="minimumSize"><size><width>150</width><height>80</height></size></property>
+       <property name="minimumSize">
+        <size>
+         <width>150</width>
+         <height>52</height>
+        </size>
+       </property>
+       <property name="text">
+        <string>하나카드</string>
+       </property>
       </widget>
      </item>
     </layout>
@@ -58,12 +196,29 @@
    <item>
     <layout class="QHBoxLayout">
      <item>
-      <spacer><property name="orientation"><enum>Qt::Orientation::Horizontal</enum></property><property name="sizeHint" stdset="0"><size><width>40</width><height>20</height></size></property></spacer>
+      <spacer>
+       <property name="orientation">
+        <enum>Qt::Orientation::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
      </item>
      <item>
       <widget class="QPushButton" name="btn_cancel">
-       <property name="text"><string>취소</string></property>
-       <property name="minimumSize"><size><width>100</width><height>60</height></size></property>
+       <property name="minimumSize">
+        <size>
+         <width>100</width>
+         <height>52</height>
+        </size>
+       </property>
+       <property name="text">
+        <string>취소</string>
+       </property>
       </widget>
      </item>
     </layout>

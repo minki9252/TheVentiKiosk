@@ -6,41 +6,123 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>540</width>
+    <width>480</width>
     <height>600</height>
    </rect>
   </property>
-  <property name="sizePolicy">
-   <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-    <horstretch>0</horstretch>
-    <verstretch>0</verstretch>
-   </sizepolicy>
-  </property>
   <property name="minimumSize">
    <size>
-    <width>540</width>
-    <height>600</height>
+    <width>0</width>
+    <height>0</height>
    </size>
   </property>
   <property name="maximumSize">
    <size>
-    <width>540</width>
-    <height>600</height>
+    <width>16777215</width>
+    <height>16777215</height>
    </size>
   </property>
   <property name="windowTitle">
    <string>Form</string>
   </property>
+  <property name="styleSheet">
+   <string notr="true">/* 전반적인 위젯 배경 */
+QWidget {
+    background-color: #FFFFFF;
+    font-family: &quot;Malgun Gothic&quot;, sans-serif;
+}
+
+/* 제목 레이블 (예: 쿠폰 입력, 결제 수단 선택) */
+QLabel#label, QLabel#label_3, QLabel#label_title {
+    color: #5A2D81;
+    font-weight: bold;
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+/* 숫자 입력칸 (QLineEdit) */
+QLineEdit {
+    border: 2px solid #5A2D81;
+    border-radius: 10px;
+    padding: 10px;
+    font-size: 22px;
+    color: #333333;
+    background-color: #F9F9F9;
+}
+
+/* 일반 버튼 (숫자 패드 등) */
+QPushButton {
+    background-color: #F2F2F2;
+    border: 1px solid #DCDCDC;
+    border-radius: 8px;
+    font-size: 18px;
+    font-weight: bold;
+    color: #333333;
+    min-height: 50px;
+}
+
+QPushButton:pressed {
+    background-color: #E0E0E0;
+}
+
+/* 포인트 버튼 (확인, 결제하기, APP쿠폰 등) */
+QPushButton#pushButton_15, QPushButton#btnPay, QPushButton#coupon_app_btn, QPushButton#btn_insert_card {
+    background-color: #5A2D81;
+    color: #FFFFFF;
+    border: none;
+    border-radius: 10px;
+    font-size: 20px;
+}
+
+QPushButton:hover {
+    background-color: #723D9D;
+}
+
+/* 취소/이전 버튼 */
+QPushButton#pushButton_14, QPushButton#btnCancel, QPushButton#btn_cancel {
+    background-color: #A0A0A0;
+    color: #FFFFFF;
+    border-radius: 10px;
+}
+
+/* 결과창 레이블 (조회 성공/실패) */
+QLabel#label[text=&quot;조회 성공&quot;] {
+    color: #2D815A;
+    font-size: 20px;
+}
+
+QLabel#label_2[text=&quot;조회 실패&quot;] {
+    color: #D32F2F;
+    font-size: 20px;
+}</string>
+  </property>
   <layout class="QVBoxLayout" name="verticalLayout">
+   <property name="spacing">
+    <number>0</number>
+   </property>
+   <property name="leftMargin">
+    <number>0</number>
+   </property>
+   <property name="topMargin">
+    <number>0</number>
+   </property>
+   <property name="rightMargin">
+    <number>0</number>
+   </property>
+   <property name="bottomMargin">
+    <number>0</number>
+   </property>
    <item>
     <widget class="QLabel" name="label">
      <property name="font">
       <font>
-       <pointsize>20</pointsize>
+       <family>Malgun Gothic</family>
+       <pointsize>-1</pointsize>
+       <bold>true</bold>
       </font>
      </property>
      <property name="autoFillBackground">
-      <bool>true</bool>
+      <bool>false</bool>
      </property>
      <property name="text">
       <string>휴대폰 번호 입력</string>
@@ -50,7 +132,7 @@
    <item>
     <widget class="QLineEdit" name="lineEdit">
      <property name="autoFillBackground">
-      <bool>true</bool>
+      <bool>false</bool>
      </property>
      <property name="text">
       <string>번호 입력 칸</string>
@@ -68,8 +150,33 @@
        <verstretch>0</verstretch>
       </sizepolicy>
      </property>
+     <property name="maximumSize">
+      <size>
+       <width>16777215</width>
+       <height>16777215</height>
+      </size>
+     </property>
      <property name="autoFillBackground">
-      <bool>true</bool>
+      <bool>false</bool>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">/* 전체 위젯의 강제 너비 제한 해제 */
+QWidget#PointInputView, QWidget#PointResultView {
+    background-color: #FFFFFF;
+    min-width: 400px; /* 최소 너비만 보장 */
+    max-width: 1000px; /* 최대치는 넉넉하게 설정하여 잘림 방지 */
+}
+
+/* 레이아웃 내부 요소들이 삐져나가지 않도록 패딩 조정 */
+QVBoxLayout, QHBoxLayout {
+    padding-right: 10px; /* 오른쪽 끝에 여백을 살짝 주어 잘림 현상 시각적 방지 */
+}
+
+/* 버튼들이 가로로 너무 꽉 차지 않게 설정 */
+QPushButton {
+    margin-right: 5px;
+    margin-left: 5px;
+}</string>
      </property>
      <property name="frameShape">
       <enum>QFrame::Shape::StyledPanel</enum>
@@ -244,14 +351,14 @@
    <item>
     <layout class="QHBoxLayout" name="horizontalLayout_2">
      <property name="spacing">
-      <number>6</number>
+      <number>0</number>
      </property>
      <item>
       <widget class="QPushButton" name="pushButton_14">
        <property name="minimumSize">
         <size>
          <width>100</width>
-         <height>65</height>
+         <height>52</height>
         </size>
        </property>
        <property name="maximumSize">
@@ -270,9 +377,12 @@
        <property name="orientation">
         <enum>Qt::Orientation::Horizontal</enum>
        </property>
+       <property name="sizeType">
+        <enum>QSizePolicy::Policy::Preferred</enum>
+       </property>
        <property name="sizeHint" stdset="0">
         <size>
-         <width>40</width>
+         <width>10</width>
          <height>20</height>
         </size>
        </property>
@@ -283,7 +393,7 @@
        <property name="minimumSize">
         <size>
          <width>100</width>
-         <height>65</height>
+         <height>50</height>
         </size>
        </property>
        <property name="maximumSize">

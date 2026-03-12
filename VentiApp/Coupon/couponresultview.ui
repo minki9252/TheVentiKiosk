@@ -16,6 +16,77 @@
   <layout class="QHBoxLayout" name="horizontalLayout">
    <item>
     <widget class="QStackedWidget" name="stackedWidget">
+     <property name="styleSheet">
+      <string notr="true">/* 전반적인 위젯 배경 */
+QWidget {
+    background-color: #FFFFFF;
+    font-family: &quot;Malgun Gothic&quot;, sans-serif;
+}
+
+/* 제목 레이블 (예: 쿠폰 입력, 결제 수단 선택) */
+QLabel#label, QLabel#label_3, QLabel#label_title {
+    color: #5A2D81;
+    font-weight: bold;
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+/* 숫자 입력칸 (QLineEdit) */
+QLineEdit {
+    border: 2px solid #5A2D81;
+    border-radius: 10px;
+    padding: 10px;
+    font-size: 22px;
+    color: #333333;
+    background-color: #F9F9F9;
+}
+
+/* 일반 버튼 (숫자 패드 등) */
+QPushButton {
+    background-color: #F2F2F2;
+    border: 1px solid #DCDCDC;
+    border-radius: 8px;
+    font-size: 18px;
+    font-weight: bold;
+    color: #333333;
+    min-height: 50px;
+}
+
+QPushButton:pressed {
+    background-color: #E0E0E0;
+}
+
+/* 포인트 버튼 (확인, 결제하기, APP쿠폰 등) */
+QPushButton#pushButton_15, QPushButton#btnPay, QPushButton#coupon_app_btn, QPushButton#btn_insert_card {
+    background-color: #5A2D81;
+    color: #FFFFFF;
+    border: none;
+    border-radius: 10px;
+    font-size: 20px;
+}
+
+QPushButton:hover {
+    background-color: #723D9D;
+}
+
+/* 취소/이전 버튼 */
+QPushButton#pushButton_14, QPushButton#btnCancel, QPushButton#btn_cancel {
+    background-color: #A0A0A0;
+    color: #FFFFFF;
+    border-radius: 10px;
+}
+
+/* 결과창 레이블 (조회 성공/실패) */
+QLabel#label[text=&quot;조회 성공&quot;] {
+    color: #2D815A;
+    font-size: 20px;
+}
+
+QLabel#label_2[text=&quot;조회 실패&quot;] {
+    color: #D32F2F;
+    font-size: 20px;
+}</string>
+     </property>
      <widget class="QWidget" name="page">
       <layout class="QVBoxLayout" name="verticalLayout_2">
        <item>

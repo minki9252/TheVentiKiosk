@@ -39,7 +39,7 @@
     <item>
      <widget class="QStackedWidget" name="stackedWidget">
       <property name="currentIndex">
-       <number>1</number>
+       <number>2</number>
       </property>
       <widget class="QWidget" name="page">
        <property name="minimumSize">
@@ -79,6 +79,18 @@
         </item>
         <item>
          <widget class="QLabel" name="lblTouchNotice">
+          <property name="minimumSize">
+           <size>
+            <width>540</width>
+            <height>30</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>30</width>
+            <height>20</height>
+           </size>
+          </property>
           <property name="styleSheet">
            <string notr="true">/* [위치: introButton의 StyleSheet] */
 QPushButton#introButton {
@@ -110,6 +122,18 @@ QLabel#lblTouchNotice {
        </layout>
       </widget>
       <widget class="QWidget" name="page_2">
+       <property name="minimumSize">
+        <size>
+         <width>540</width>
+         <height>960</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>540</width>
+         <height>960</height>
+        </size>
+       </property>
        <layout class="QVBoxLayout" name="verticalLayout_3">
         <item>
          <widget class="QLabel" name="lblLogo">
@@ -222,7 +246,7 @@ QPushButton:pressed {
            <widget class="categorywidget" name="categoryWidget" native="true">
             <property name="minimumSize">
              <size>
-              <width>0</width>
+              <width>540</width>
               <height>150</height>
              </size>
             </property>
@@ -238,20 +262,33 @@ QPushButton:pressed {
            <widget class="beverage" name="widget_2" native="true">
             <property name="minimumSize">
              <size>
-              <width>0</width>
+              <width>500</width>
               <height>420</height>
              </size>
             </property>
             <property name="maximumSize">
              <size>
-              <width>16777215</width>
-              <height>420</height>
+              <width>500</width>
+              <height>750</height>
              </size>
             </property>
            </widget>
           </item>
           <item>
-           <widget class="cartwidget" name="Listcart" native="true"/>
+           <widget class="cartwidget" name="Listcart" native="true">
+            <property name="minimumSize">
+             <size>
+              <width>540</width>
+              <height>0</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>540</width>
+              <height>16777215</height>
+             </size>
+            </property>
+           </widget>
           </item>
          </layout>
         </item>
