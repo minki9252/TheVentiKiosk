@@ -58,7 +58,7 @@ private slots:
     void toggleTouchText(); // 텍스트 깜빡임용 슬롯
     void onReceiveCartData(QList<KioskData> list);
     void processCheckout();
-    void openPaymentModal(); //결제창 띄울 전용 슬롯
+    // void openPaymentModal(); //결제창 띄울 전용 슬롯
 
 
 

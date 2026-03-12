@@ -4,8 +4,6 @@
 #include "categorywidget.h"
 #include "beverage.h"  // 🌟 beverage 위젯 기능을 쓰기 위해 필수
 #include "KioskData.h" // 🌟 메뉴 상세 정보 구조체 사용
-#include "couponselectview.h"
-#include "couponmanagerwidget.h"
 #include "paymentmaindialog.h"
 #include <QSqlDatabase>
 #include <QSqlError>
@@ -70,12 +68,13 @@ void MainWindow::processCheckout()
     QList<KioskData> currentCart = ui->Listcart->getCartList();
     int currentTotal = ui->Listcart->getTotalAmount();
 
-    // 🌟 1. 중재자(CouponManagerWidget) 모달창 띄우기
-    CouponManagerWidget managerDialog(currentCart, currentTotal, this);
+    // 🌟 1. 결제 메인 중재자(PaymentMainDialog) 모달창 띄우기
+    // 장바구니 데이터와 총 결제 금액을 결제 메인 창으로 넘겨줍니다.
+    PaymentMainDialog payDialog(currentCart, currentTotal, this);
 
     // 2. 결제 진행 
-    if (managerDialog.exec() == QDialog::Accepted) {
-        qDebug() << "최종 결제/쿠폰 확인 완료! DB 저장 단계로 넘어갑니다.";
+    if (payDialog.exec() == QDialog::Accepted) {
+        qDebug() << "최종 결제가 완료되었습니다! DB 저장 단계로 넘어갑니다.";
 
         // (이후 DB 저장, 장바구니 비우기 로직 수행)
         ui->Listcart->clearCart(); 
@@ -122,17 +121,17 @@ void MainWindow::on_takeoutButton_clicked()
 }
 
 
-// 결제창 띄우기 함수 구현
-void MainWindow::openPaymentModal()
-{
-    PaymentMainDialog payDialog(this);
+// // 결제창 띄우기 함수 구현
+// void MainWindow::openPaymentModal()
+// {
+//     PaymentMainDialog payDialog(this);
 
-    // 모달 형태로 띄우기
-    if (payDialog.exec() == QDialog::Accepted) {
-        // 결제가 무사히 완료되고 창이 닫혔다면, 장바구니를 비워주기
-        ui->Listcart->clearCart();
-    }
-}
+//     // 모달 형태로 띄우기
+//     if (payDialog.exec() == QDialog::Accepted) {
+//         // 결제가 무사히 완료되고 창이 닫혔다면, 장바구니를 비워주기
+//         ui->Listcart->clearCart();
+//     }
+// }
 
 /////////////////////// 핸들 함수 시작 //////////////////////////////////////
 void MainWindow::handle(const KioskEvent &event)
