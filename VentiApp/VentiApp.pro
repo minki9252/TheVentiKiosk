@@ -10,26 +10,21 @@ TARGET = VentiApp
 
 TEMPLATE = app
 
-SOURCES += main.cpp \
+SOURCES += \
+           couponinputdialog.cpp \
+           discountdialog.cpp \
+           main.cpp \
            mainwindow.cpp \
-           categorywidget.cpp \
-           cartwidget.cpp \
-           main_page.cpp \
-           beverage.cpp \
            menuoptiondialog.cpp
 
 HEADERS += mainwindow.h \
-           categorywidget.h \
-           cartwidget.h \
-           beverage.h \
-           main_page.h \
+           couponinputdialog.h \
+           discountdialog.h \
            menuoptiondialog.h
 
 FORMS   += mainwindow.ui \
-           categorywidget.ui \
-           cartwidget.ui \
-           beverage.ui \
-           main_page.ui \
+           couponinputdialog.ui \
+           discountdialog.ui \
            menuoptiondialog.ui
 
 RESOURCES += venti_image.qrc

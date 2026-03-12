@@ -2,6 +2,8 @@
 #include "ui_mainwindow.h"
 #include "databasemanager.h"
 #include "menuoptiondialog.h"
+#include "discountdialog.h"
+#include "couponinputdialog.h"
 #include <QMessageBox>
 #include <QDebug>
 #include <QTimer>
@@ -223,28 +225,40 @@ void MainWindow::handleMenuItemClick(QListWidgetItem *item)
     }
 }
 
-// 결제 프로세스
 void MainWindow::processCheckout() {
-    orderNumber++;
-    int totalAmount = 0;
-    for(const auto& item : cartList) totalAmount += item.totalPrice;
+    // 1. 할인 선택 모달 창 생성
+    DiscountDialog discountDlg(this);
 
-    QMessageBox msgBox(this);
-    msgBox.setWindowTitle("결제 확인");
-    msgBox.setText(QString("주문번호 : %1\n총 결제 금액 : %2원\n\n결제하시겠습니까?")
-                       .arg(orderNumber).arg(totalAmount));
+    // 사용자가 App쿠폰이나 모바일쿠폰 버튼을 눌러 accept() 되었을 때만 다음 단계 진행
+    if (discountDlg.exec() == QDialog::Accepted) {
 
-    QPushButton *btnOk = msgBox.addButton("결제 완료", QMessageBox::AcceptRole);
-    msgBox.addButton("취소", QMessageBox::RejectRole);
+        // 2. 쿠폰 번호 입력 모달 창 생성
+        CouponInputDialog couponDlg(this);
 
-    msgBox.exec();
+        // 사용자가 번호 1234-5678-9012를 정확히 입력하여 accept() 되었을 때만 최종 결제 진행
+        if (couponDlg.exec() == QDialog::Accepted) {
 
-    if (msgBox.clickedButton() == btnOk) {
-        cartList.clear();
-        updateCartList();
-        ui->stackedWidget->setCurrentIndex(0); // 첫 화면으로
+            orderNumber++; // 주문번호 증가
+            int total = 0;
+            // 장바구니 리스트를 순회하며 총 금액 계산
+            for(const auto& item : cartList) {
+                total += item.totalPrice;
+            }
+
+            // 최종 결제 완료 알림창
+            QMessageBox::information(this, "결제 완료",
+                                     QString("주문번호: %1\n결제금액: %2원\n결제가 완료되었습니다.")
+                                         .arg(orderNumber).arg(total));
+
+            // 장바구니 비우기 및 UI 업데이트
+            cartList.clear();
+            updateCartList();
+
+            // 인트로 화면(첫 화면)으로 이동
+            ui->stackedWidget->setCurrentIndex(0);
+        }
     }
-}
+} // [중요] 함수의 끝을 알리는 닫는 중괄호
 
 // 기타 UI 보조 함수들
 void MainWindow::toggleTouchText() {
