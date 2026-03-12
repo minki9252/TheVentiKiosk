@@ -40,6 +40,9 @@ MainWindow::MainWindow(QWidget *parent)
     // 메뉴판 위젯 데이터 수신 연결
     connect(ui->widget_2, &beverage::sendToCart, this, &MainWindow::onReceiveCartData);
 
+    // 장바구니 위젯 데이터 수신 연결
+    connect(ui->Listcart, &cartwidget::checkoutRequested, this, &MainWindow::processCheckout);
+
     // KioskEvent를 던지는 이 딱 한 줄의 connect문이 모든 카테고리 버튼을 처리함
     connect(ui->categoryWidget, &categorywidget::categorySelected, this, [this](int actionCode)
             {
@@ -48,9 +51,7 @@ MainWindow::MainWindow(QWidget *parent)
         handle(event); });
 
     ui->stackedWidget->setCurrentIndex(0); // 시작은 홍보화면
-
 }
-
 
 MainWindow::~MainWindow() { delete ui; }
 
@@ -69,15 +70,19 @@ void MainWindow::processCheckout()
     // 장바구니 데이터와 총 결제 금액을 결제 메인 창으로 넘겨줍니다.
     PaymentMainDialog payDialog(currentCart, currentTotal, this);
 
-    // 2. 결제 진행 
-    if (payDialog.exec() == QDialog::Accepted) {
+    // 2. 결제 진행
+    if (payDialog.exec() == QDialog::Accepted)
+    {
         qDebug() << "최종 결제가 완료되었습니다! DB 저장 단계로 넘어갑니다.";
 
         // (이후 DB 저장, 장바구니 비우기 로직 수행)
-        ui->Listcart->clearCart(); 
-        currentOrderType = 0;      
-        // ui->stackedWidget->setCurrentIndex(0); 
-    } else {
+        ui->Listcart->clearCart();
+        currentOrderType = 0;
+        //처음화면으로 돌아가기
+        ui->stackedWidget->setCurrentIndex(0);
+    }
+    else
+    {
         qDebug() << "결제가 취소되었습니다.";
     }
 }
@@ -117,7 +122,6 @@ void MainWindow::on_takeoutButton_clicked()
     ui->widget_2->loadMenus("신메뉴");
 }
 
-
 // // 결제창 띄우기 함수 구현
 // void MainWindow::openPaymentModal()
 // {
@@ -129,7 +133,6 @@ void MainWindow::on_takeoutButton_clicked()
 //         ui->Listcart->clearCart();
 //     }
 // }
-
 
 /////////////////////// 핸들 함수 시작 //////////////////////////////////////
 void MainWindow::handle(const KioskEvent &event)
@@ -166,6 +169,10 @@ void MainWindow::handle(const KioskEvent &event)
     case CATEGORY_ADE:
         qDebug() << "에이드 카테고리 선택됨";
         ui->widget_2->loadMenus("에이드");
+        break;
+    case GO_HOME:
+        qDebug() << "처음 화면으로";
+        ui->stackedWidget->setCurrentIndex(0);
         break;
 
         /////////////////// 카테고리 설정 끝 //////////////////////////////

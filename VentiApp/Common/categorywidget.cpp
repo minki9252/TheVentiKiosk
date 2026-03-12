@@ -28,6 +28,12 @@ categorywidget::categorywidget(QWidget *parent)
 
     connect(ui->category_ade_button, &QPushButton::clicked, this, [this]()
             { emit categorySelected(CATEGORY_ADE); });
+
+    connect(ui->home_button, &QPushButton::clicked, this, [this]()
+            { emit categorySelected(GO_HOME); });
+
+
+
 }
 
 categorywidget::~categorywidget()

@@ -19,6 +19,7 @@ public:
 signals:
     void pointSaveCompleted();
     void cancelled();
+    void stepCompleted();
 
 private slots:
     void onDigitPressed(const QString &digit);
