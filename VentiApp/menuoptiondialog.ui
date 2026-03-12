@@ -206,14 +206,14 @@
    <item>
     <layout class="QHBoxLayout" name="horizontalLayout">
      <item>
-      <widget class="QPushButton" name="onCancelClicked">
+      <widget class="QPushButton" name="btnCancel">
        <property name="text">
         <string>취소</string>
        </property>
       </widget>
      </item>
      <item>
-      <widget class="QPushButton" name="onConfirmClicked">
+      <widget class="QPushButton" name="btnConfirm">
        <property name="text">
         <string>주문담기</string>
        </property>

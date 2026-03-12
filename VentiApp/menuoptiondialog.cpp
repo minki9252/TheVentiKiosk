@@ -12,12 +12,12 @@ MenuOptionDialog::MenuOptionDialog(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    connect(ui->onConfirmClicked, &QPushButton::clicked, this, &MenuOptionDialog::onConfirmClicked);
-    connect(ui->onCancelClicked, &QPushButton::clicked, this, &MenuOptionDialog::onCancelClicked);
-
     ui->listSelectedMenu->setIconSize(QSize(200, 200));
     ui->listSelectedMenu->setResizeMode(QListView::Adjust);
     ui->listSelectedMenu->setMovement(QListView::Static);
+
+    connect(ui->btnConfirm, &QPushButton::clicked, this, &MenuOptionDialog::onConfirmClicked);
+    connect(ui->btnCancel, &QPushButton::clicked, this, &MenuOptionDialog::onCancelClicked);
 }
 
 MenuOptionDialog::~MenuOptionDialog()
@@ -25,18 +25,16 @@ MenuOptionDialog::~MenuOptionDialog()
     delete ui;
 }
 
-// // 담기 버튼 클릭 시 실행되는 슬롯 함수
-// void MenuOptionDialog::onConfirmClicked()
-// {
-//     qDebug() << "옵션 선택 완료";
-//     this->accept();
-// }
+void MenuOptionDialog::onConfirmClicked()
+{
+    qDebug() << "담기 버튼 클릭됨 (수동 호출)";
+    accept();
+}
 
-// // 취소 버튼 클릭 시 실행되는 슬롯 함수
-// void MenuOptionDialog::onCancelClicked()
-// {
-//     this->reject();
-//}
+void MenuOptionDialog::onCancelClicked()
+{
+    reject();
+}
 
 void MenuOptionDialog::setMenuInfo(const QString &menuName)
 {

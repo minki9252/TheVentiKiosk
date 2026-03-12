@@ -33,8 +33,8 @@ public:
     OrderInfo getSelectedOrderInfo() const;
 
 private slots:
-    void onConfirmClicked(); // 확인 버튼 슬롯
-    void onCancelClicked();  // 취소 버튼 슬롯
+    void onConfirmClicked();
+    void onCancelClicked();
 
 private:
     Ui::MenuOptionDialog *ui;

@@ -25,13 +25,8 @@ private slots:
     void on_storeButton_clicked();
     void on_takeoutButton_clicked();
     void toggleTouchText(); // 텍스트 깜빡임용 슬롯
-    void loadCategoriesToUI();
-    void on_listMenu_itemClicked(QListWidgetItem *item);
+    void handleMenuItemClick(QListWidgetItem *item);
     void updateMenuDisplay(const QString &categoryName);
-    void updateTotalAmount(int amount);
-    void changeCartQuantity(const QString &menuName, int delta);
-
-    QWidget* createQuantityWidget(int row, int initialQty);
 
 private:
     Ui::MainWindow *ui;
@@ -45,8 +40,10 @@ private:
     int orderNumber = 100;  // 주문번호 (100번부터)
     int totalAmount = 0; // 전체 합계를 저장할 변수
 
-    void loadMenus(const QString &categoryName);    // 메뉴판을 채우는 함수
-    void updateCartTable();
+    QWidget* createCartRowWidget(int index, const OrderInfo &order);
+    QWidget* createQuantityWidget(int index, int initialQty);
+    void updateCartList();
+    void loadMenus(const QString &categoryName);
     void processCheckout();
 };
 
