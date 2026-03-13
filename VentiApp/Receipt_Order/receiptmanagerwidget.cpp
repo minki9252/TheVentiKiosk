@@ -11,6 +11,7 @@ static const int AUTO_CLOSE_MS = 3000; // 3초 자동 닫힘
 ReceiptManagerWidget::ReceiptManagerWidget(QWidget *parent)
     : QWidget(parent)
     , ui(new Ui::ReceiptManagerWidget)
+    , m_currentOrderNumber(100) // 100번부터 시작하도록 초기화
 {
     ui->setupUi(this);
 
@@ -65,9 +66,8 @@ void ReceiptManagerWidget::connectViews()
 QString ReceiptManagerWidget::generateOrderNumber()
 {
     // 가이드라인 3번: 데이터 계산은 Manager 책임
-    // 1~999 사이 랜덤 번호 생성 (향후 DB 연동으로 교체)
-    int num = QRandomGenerator::global()->bounded(1, 1000);
-    return QString::number(num);
+    // 기존 랜덤 로직을 제거하고 호출될 때마다 1씩 증가시킨 후 문자열로 반환
+    return QString::number(m_currentOrderNumber++);
 }
 
 // ── Slots ──────────────────────────────────────────────────────────────────

@@ -38,6 +38,8 @@ private:
     QTimer *m_autoCloseTimer;           // 3초 자동 닫힘 타이머
     QStackedWidget *m_stackedWidget;
 
+    int m_currentOrderNumber; // 현재 주문번호를 저장할 변수 추가
+
     void connectViews();
     QString generateOrderNumber();      // 주문번호 생성 (Manager 책임)
 };
