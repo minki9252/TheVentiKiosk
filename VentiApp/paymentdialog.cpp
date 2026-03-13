@@ -19,7 +19,7 @@ PaymentDialog::PaymentDialog(int total, int discount, QWidget *parent) :
     // 할인 금액이 있을 때만 강조 표시
     if(discount > 0) {
         ui->lblDiscountAmount->setText("할인 금액: -" + ko.toString(discount) + "원");
-        ui->lblDiscountAmount->setStyleSheet("color: #e44d26; font-weight: bold;"); // 강조색(빨간색 계열)
+        ui->lblDiscountAmount->setStyleSheet("color: #e44d26; font-weight: bold;"); // 강조색
     } else {
         ui->lblDiscountAmount->setText("할인 금액: 0원");
     }
@@ -46,15 +46,13 @@ void PaymentDialog::onPaymentMethodClicked() {
     QPushButton* btn = qobject_cast<QPushButton*>(sender());
     if(!btn) return;
 
-    // 1. 선택된 버튼 강조 (보라색 배경)
+    // 선택된 버튼 강조
     btn->setStyleSheet("background-color: #5d2d91; color: white; font-weight: bold; border-radius: 10px;");
 
-    // 2. 로딩 다이얼로그 생성 및 실행
-    // exec()는 이 창이 닫힐 때까지 다음 코드로 넘어가지 않고 대기시킵니다.
+    // 로딩 다이얼로그 생성 및 실행
     LoadingDialog loading(this);
     loading.exec();
 
-    // 3. 로딩창 안의 QTimer가 종료(accept)된 후에 아래 코드가 실행됩니다.
     // 결제 금액 정보를 업데이트
     QString payAmount = ui->lblToPayAmount->text().replace("최종 결제 금액: ", "");
     ui->lblTotalPaid->setText("결제한 금액: " + payAmount);
@@ -62,7 +60,6 @@ void PaymentDialog::onPaymentMethodClicked() {
 
     QMessageBox::information(this, "결제 성공", "결제가 정상적으로 완료되었습니다.");
 
-    // PaymentDialog를 닫고 MainWindow로 성공(Accepted) 신호를 보냄
     accept();
 }
 

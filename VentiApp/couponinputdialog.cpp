@@ -1,5 +1,5 @@
 #include "couponinputdialog.h"
-#include "ui_couponinputdialog.h" // [중요] 이 줄이 없으면 ui->... 모든 코드에서 에러가 납니다.
+#include "ui_couponinputdialog.h"
 #include <QMessageBox>
 #include <QPushButton>
 
@@ -10,7 +10,7 @@ CouponInputDialog::CouponInputDialog(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    // 1. 숫자 버튼들 연결 (btn0 ~ btn9)
+    // 숫자 버튼들 연결 (btn0 ~ btn9)
     QList<QPushButton*> buttons = {
         ui->btn0, ui->btn1, ui->btn2, ui->btn3, ui->btn4,
         ui->btn5, ui->btn6, ui->btn7, ui->btn8, ui->btn9
@@ -19,10 +19,10 @@ CouponInputDialog::CouponInputDialog(QWidget *parent) :
         connect(btn, &QPushButton::clicked, this, &CouponInputDialog::onKeyClicked);
     }
 
-    // 2. [추가] 지우기 버튼 연결 (UI에서 버튼 이름을 btnDelete로 설정하세요)
+    //지우기 버튼 연결 
     connect(ui->btnDelete, &QPushButton::clicked, this, &CouponInputDialog::on_btnDelete_clicked);
 
-    // 3. 취소 버튼 연결
+    // 취소 버튼 연결
     connect(ui->btnCancel, &QPushButton::clicked, this, &QDialog::reject);
 }
 
