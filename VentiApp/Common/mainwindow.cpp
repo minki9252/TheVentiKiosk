@@ -66,7 +66,6 @@ void MainWindow::processCheckout()
     QList<KioskData> currentCart = ui->Listcart->getCartList();
     int currentTotal = ui->Listcart->getTotalAmount();
 
-    // 🌟 1. 결제 메인 중재자(PaymentMainDialog) 모달창 띄우기
     // 장바구니 데이터와 총 결제 금액을 결제 메인 창으로 넘겨줍니다.
     PaymentMainDialog payDialog(currentCart, currentTotal, this);
 
@@ -122,22 +121,10 @@ void MainWindow::on_takeoutButton_clicked()
     ui->widget_2->loadMenus("신메뉴");
 }
 
-// // 결제창 띄우기 함수 구현
-// void MainWindow::openPaymentModal()
-// {
-//     PaymentMainDialog payDialog(this);
-
-//     // 모달 형태로 띄우기
-//     if (payDialog.exec() == QDialog::Accepted) {
-//         // 결제가 무사히 완료되고 창이 닫혔다면, 장바구니를 비워주기
-//         ui->Listcart->clearCart();
-//     }
-// }
 
 /////////////////////// 핸들 함수 시작 //////////////////////////////////////
 void MainWindow::handle(const KioskEvent &event)
 {
-
     switch (event.action)
     {
 
@@ -172,38 +159,12 @@ void MainWindow::handle(const KioskEvent &event)
         break;
     case GO_HOME:
         qDebug() << "처음 화면으로";
+        // 🌟 추가된 부분: 홈 화면으로 갈 때 장바구니와 주문 상태를 싹 비워줍니다.
+        ui->Listcart->clearCart();
+        currentOrderType = 0;
         ui->stackedWidget->setCurrentIndex(0);
         break;
 
-        /////////////////// 카테고리 설정 끝 //////////////////////////////
-
-        /////////////////// 메뉴 선택 설정 //////////////////////////////
-    case MENU_SELECT_ITEM:
-        qDebug() << "메뉴가 선택됨";
-        break;
-
-    case MENU_CANCEL_ITEM:
-        qDebug() << "메뉴 선택 취소됨";
-        break;
-        /////////////////// 메뉴 선택 끝 //////////////////////////////
-
-        /////////////////// 장바구니 설정 //////////////////////////////
-    case CART_ADD:
-        qDebug() << "장바구니에 담기";
-        break;
-
-    case CART_REMOVE:
-        qDebug() << "장바구니 항목 취소";
-        break;
-
-    case CART_CHECKOUT:
-        qDebug() << "결제 진행";
-        break;
-        /////////////////// 장바구니 설정 끝 //////////////////////////////
-
-    default:
-        qDebug() << "정의되지 않은 액션입니다.";
-        break;
     }
 }
 ////////////////////////////// 핸들 함수 끝 //////////////////////////////////////
