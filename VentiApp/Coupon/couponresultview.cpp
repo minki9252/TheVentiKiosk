@@ -26,7 +26,7 @@ void CouponResultView::setResult(const QString &couponCode)
     }
 
     // 2. 사용되지 않은 쿠폰이라면, 번호가 일치하는지 확인합니다.
-    if (couponCode == "123456789123") {
+    if (couponCode == "1234-5678-9123") {
         m_usedCoupons.insert(couponCode); // 🌟 핵심: 성공했으므로 '사용됨' 목록에 추가!
         m_discountAmount = 2000;          // 성공: 2000원
         ui->stackedWidget->setCurrentIndex(0); 

@@ -33,23 +33,68 @@ CouponInputView::~CouponInputView()
 // 🌟 숫자 및 010 버튼 클릭 공통 처리
 void CouponInputView::onNumberButtonClicked()
 {
-    // 방금 클릭된 버튼이 어떤 버튼인지 찾아냅니다 (sender 사용)
     QPushButton *button = qobject_cast<QPushButton*>(sender());
     
     if (button) {
-        // 기존 텍스트에 클릭된 버튼의 글자(예: "1", "010")를 이어 붙입니다.
-        QString currentText = ui->lineEdit->text();
-        ui->lineEdit->setText(currentText + button->text());
+        // 1. 현재 텍스트에서 하이픈(-)을 모두 제거하여 '순수 숫자'만 추출
+        QString rawCode = ui->lineEdit->text().remove("-");
+
+        // 2. 쿠폰은 최대 12자리까지만 입력받도록 제한
+        if (rawCode.length() >= 12) {
+            return; 
+        }
+
+        // 3. 클릭된 숫자 추가
+        rawCode += button->text();
+
+        // 4. 다시 0000-0000-0000 형태에 맞게 하이픈 조립
+        QString formattedCode;
+        int len = rawCode.length();
+
+        formattedCode += rawCode.left(4); // 첫 4자리
+        
+        if (len > 4) {
+            formattedCode += "-";
+            formattedCode += rawCode.mid(4, 4); // 중간 4자리
+        }
+        if (len > 8) {
+            formattedCode += "-";
+            formattedCode += rawCode.mid(8, 4); // 마지막 4자리
+        }
+
+        // 5. 화면에 적용
+        ui->lineEdit->setText(formattedCode);
     }
 }
 
 // 🌟 부분삭제 버튼 (맨 뒤 글자 하나만 지우기)
 void CouponInputView::on_pushButton_6_clicked()
 {
-    QString currentText = ui->lineEdit->text();
-    if (!currentText.isEmpty()) {
-        currentText.chop(1); // 문자열의 맨 끝 1글자를 잘라냅니다.
-        ui->lineEdit->setText(currentText);
+    // 1. 순수 숫자만 추출
+    QString rawCode = ui->lineEdit->text().remove("-");
+
+    if (!rawCode.isEmpty()) {
+        // 2. 맨 끝 숫자 1개 지우기
+        rawCode.chop(1);
+
+        // 3. 다시 형태에 맞게 조립
+        QString formattedCode;
+        int len = rawCode.length();
+
+        if (len > 0) {
+            formattedCode += rawCode.left(4);
+            if (len > 4) {
+                formattedCode += "-";
+                formattedCode += rawCode.mid(4, 4);
+            }
+            if (len > 8) {
+                formattedCode += "-";
+                formattedCode += rawCode.mid(8, 4);
+            }
+        }
+
+        // 4. 화면에 적용
+        ui->lineEdit->setText(formattedCode);
     }
 }
 
