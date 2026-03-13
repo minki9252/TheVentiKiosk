@@ -5,6 +5,8 @@
 #include "discountdialog.h"
 #include "couponinputdialog.h"
 #include "phonestampdialog.h"
+#include "paymentdialog.h"
+#include "receiptdialog.h"
 #include <QMessageBox>
 #include <QDebug>
 #include <QTimer>
@@ -227,33 +229,48 @@ void MainWindow::handleMenuItemClick(QListWidgetItem *item)
 }
 
 void MainWindow::processCheckout() {
-    // 할인 선택
+    // 1. 초기 금액 계산
+    int totalAmount = 0;
+    for(const auto& item : cartList) {
+        totalAmount += item.totalPrice;
+    }
+
+    int discountAmount = 0; // 초기 할인 금액은 0원
+
+    // 2. 할인 선택창 (App쿠폰/모바일쿠폰 등)
     DiscountDialog discountDlg(this);
     if (discountDlg.exec() == QDialog::Accepted) {
-        // 쿠폰 번호 입력
+
+        // 3. 쿠폰 번호 입력창
         CouponInputDialog couponDlg(this);
-        couponDlg.exec(); // 결과에 상관없이 창이 닫히면 다음 단계로
+        if(couponDlg.exec() == QDialog::Accepted) {
+            // [수정 포인트] 쿠폰 인증 성공 시 할인 금액을 2000원으로 설정
+            discountAmount = 2000;
+        }
     }
 
-    // 휴대폰 적립 창 띄우기
+    // 4. 휴대폰 번호 적립창 (적립 여부와 상관없이 진행)
     PhoneStampDialog stampDlg(this);
-    stampDlg.exec(); // 여기서 적립을 하거나 '건너뛰기'를 눌러도 결제는 계속 진행됨
+    stampDlg.exec();
 
-    // 최종 결제 프로세스 진행
-    orderNumber++;
-    int total = 0;
-    for(const auto& item : cartList) {
-        total += item.totalPrice;
+    // 5. 최종 결제 상세 창 띄우기 (계산된 total과 discount를 넘김)
+    PaymentDialog paymentDlg(totalAmount, discountAmount, this);
+
+    if (paymentDlg.exec() == QDialog::Accepted) {
+        ReceiptDialog receiptDlg(this);
+        if (receiptDlg.exec() == QDialog::Accepted) {
+            // '예'를 눌렀을 때의 로직 (예: 콘솔에 영수증 내용 출력)
+            qDebug() << "------- 영수증 출력 -------";
+            qDebug() << "주문번호:" << orderNumber;
+            qDebug() << "결제금액:" << (totalAmount - discountAmount) << "원";
+            qDebug() << "-------------------------";
+        }
+
+        orderNumber++;
+        cartList.clear();
+        updateCartList();
+        ui->stackedWidget->setCurrentIndex(0);
     }
-
-    QMessageBox::information(this, "결제 완료",
-                             QString("주문번호: %1\n결제금액: %2원\n결제가 완료되었습니다.")
-                                 .arg(orderNumber).arg(total));
-
-    cartList.clear();
-    updateCartList();
-
-    ui->stackedWidget->setCurrentIndex(0); // 인트로 화면 이동
 }
 
 // 기타 UI 보조 함수들

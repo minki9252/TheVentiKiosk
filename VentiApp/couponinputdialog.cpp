@@ -6,21 +6,24 @@
 // 생성자: UI 객체 할당 및 초기 설정
 CouponInputDialog::CouponInputDialog(QWidget *parent) :
     QDialog(parent),
-    ui(new Ui::CouponInputDialog) // 여기서 Ui:: 뒤의 이름은 .ui 파일의 objectName과 같아야 합니다.
+    ui(new Ui::CouponInputDialog)
 {
-    ui->setupUi(this); // 실제 위젯들을 생성하고 배치합니다.
+    ui->setupUi(this);
 
-    // 숫자 버튼들을 리스트로 묶어 이벤트를 연결합니다.
+    // 1. 숫자 버튼들 연결 (btn0 ~ btn9)
     QList<QPushButton*> buttons = {
         ui->btn0, ui->btn1, ui->btn2, ui->btn3, ui->btn4,
         ui->btn5, ui->btn6, ui->btn7, ui->btn8, ui->btn9
     };
-
     for(QPushButton* btn : buttons) {
         connect(btn, &QPushButton::clicked, this, &CouponInputDialog::onKeyClicked);
     }
 
-    connect(ui->btnDelete, &QPushButton::clicked, this, &CouponInputDialog::reject);
+    // 2. [추가] 지우기 버튼 연결 (UI에서 버튼 이름을 btnDelete로 설정하세요)
+    connect(ui->btnDelete, &QPushButton::clicked, this, &CouponInputDialog::on_btnDelete_clicked);
+
+    // 3. 취소 버튼 연결
+    connect(ui->btnCancel, &QPushButton::clicked, this, &QDialog::reject);
 }
 
 CouponInputDialog::~CouponInputDialog()
@@ -28,30 +31,41 @@ CouponInputDialog::~CouponInputDialog()
     delete ui; // 할당된 UI 메모리 해제
 }
 
-// 키패드 클릭 시 번호를 currentInput에 저장하고 화면(lblCouponDisplay)에 표시합니다.
-void CouponInputDialog::onKeyClicked()
-{
+void CouponInputDialog::on_btnDelete_clicked() {
+    if (!currentInput.isEmpty()) {
+        currentInput.chop(1); // 문자열의 마지막 한 글자를 제거합니다.
+        updateDisplay();      // 변경된 번호를 화면에 다시 그립니다.
+    }
+}
+
+// 숫자 키패드 클릭 시
+void CouponInputDialog::onKeyClicked() {
     QPushButton* btn = qobject_cast<QPushButton*>(sender());
     if (btn && currentInput.length() < 12) {
         currentInput += btn->text();
-
-        QString display = currentInput;
-        if(display.length() > 4) display.insert(4, "-");
-        if(display.length() > 9) display.insert(9, "-");
-
-        ui->lblCouponDisplay->setText(display); // 화면의 라벨 업데이트
+        updateDisplay(); // 여기서 호출!
     }
 }
 
 // 확인 버튼 클릭 시 번호 검증
-void CouponInputDialog::on_btnConfirm_clicked()
-{
+void CouponInputDialog::on_btnConfirm_clicked() {
+    // 예시 번호: 123456789012
     if (currentInput == "123456789012") {
-        QMessageBox::information(this, "성공", "쿠폰이 확인되었습니다.");
-        accept(); // 성공 신호를 보내며 창 닫기
+        QMessageBox::information(this, "쿠폰 적용", "2,000원 할인이 적용되었습니다.");
+        accept(); // 이 신호가 MainWindow로 전달되어 discountAmount가 2000이 됩니다.
     } else {
-        QMessageBox::warning(this, "실패", "잘못된 번호입니다.");
+        QMessageBox::warning(this, "인증 실패", "유효하지 않은 쿠폰 번호입니다.");
         currentInput.clear();
-        ui->lblCouponDisplay->clear();
+        updateDisplay();
     }
+}
+
+void CouponInputDialog::updateDisplay() {
+    QString display = currentInput;
+
+    // 4글자마다 하이픈(-) 추가 (예: 1234-5678-9012)
+    if(display.length() > 4) display.insert(4, "-");
+    if(display.length() > 9) display.insert(9, "-");
+
+    ui->label->setText(display);
 }

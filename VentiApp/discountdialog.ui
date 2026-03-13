@@ -6,65 +6,92 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>301</width>
+    <width>304</width>
     <height>200</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Dialog</string>
   </property>
-  <widget class="QLabel" name="label">
-   <property name="geometry">
-    <rect>
-     <x>0</x>
-     <y>0</y>
-     <width>150</width>
-     <height>20</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>할인 수단을 선택하세요.</string>
-   </property>
-  </widget>
-  <widget class="QPushButton" name="btnAppCoupon">
-   <property name="geometry">
-    <rect>
-     <x>0</x>
-     <y>30</y>
-     <width>150</width>
-     <height>100</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>App 쿠폰</string>
-   </property>
-  </widget>
-  <widget class="QPushButton" name="btnMobileCoupon">
-   <property name="geometry">
-    <rect>
-     <x>150</x>
-     <y>30</y>
-     <width>150</width>
-     <height>100</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>모바일 쿠폰</string>
-   </property>
-  </widget>
-  <widget class="QPushButton" name="btnCancel">
-   <property name="geometry">
-    <rect>
-     <x>200</x>
-     <y>140</y>
-     <width>100</width>
-     <height>50</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>취소</string>
-   </property>
-  </widget>
+  <property name="styleSheet">
+   <string notr="true">/* [위치: 상단 Grid Layout 내의 버튼들 또는 page_3 전체] */
+QPushButton {
+    background-color: #ffffff;
+    border: 2px solid #5d2d91; /* 더벤티 보라색 테두리 */
+    border-radius: 12px;
+    padding: 8px;
+    font-size: 13pt;
+    font-weight: bold;
+    color: #5d2d91;
+    min-height: 50px; /* 버튼 높이를 키워 터치하기 좋게 만듦 */
+}
+
+/* 버튼이 눌렸을 때 (피드백) */
+QPushButton:pressed {
+    background-color: #5d2d91;
+    color: white;
+}</string>
+  </property>
+  <layout class="QGridLayout" name="gridLayout">
+   <item row="3" column="1">
+    <widget class="QPushButton" name="btnCancel">
+     <property name="minimumSize">
+      <size>
+       <width>140</width>
+       <height>70</height>
+      </size>
+     </property>
+     <property name="text">
+      <string>취소</string>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="0">
+    <widget class="QPushButton" name="btnAppCoupon">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="minimumSize">
+      <size>
+       <width>140</width>
+       <height>70</height>
+      </size>
+     </property>
+     <property name="text">
+      <string>App 쿠폰</string>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="1">
+    <widget class="QPushButton" name="btnMobileCoupon">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="minimumSize">
+      <size>
+       <width>140</width>
+       <height>70</height>
+      </size>
+     </property>
+     <property name="text">
+      <string>모바일 쿠폰</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="0" colspan="2">
+    <widget class="QLabel" name="label">
+     <property name="text">
+      <string>할인 수단을 선택하세요.</string>
+     </property>
+    </widget>
+   </item>
+  </layout>
  </widget>
  <resources/>
  <connections/>

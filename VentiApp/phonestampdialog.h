@@ -15,6 +15,7 @@ private slots:
     void onKeyClicked();      // 숫자 키패드 클릭
     void on_btnSave_clicked(); // 적립 버튼
     void on_btnSkip_clicked(); // 건너뛰기 버튼
+    void updateDisplay();
 
 private:
     Ui::PhoneStampDialog *ui;

@@ -13,21 +13,28 @@ TEMPLATE = app
 SOURCES += \
            couponinputdialog.cpp \
            discountdialog.cpp \
+           loadingdialog.cpp \
            main.cpp \
            mainwindow.cpp \
            menuoptiondialog.cpp \
-           phonestampdialog.cpp
+           paymentdialog.cpp \
+           phonestampdialog.cpp \
+           receiptdialog.cpp
 
 HEADERS += mainwindow.h \
            couponinputdialog.h \
            discountdialog.h \
+           loadingdialog.h \
            menuoptiondialog.h \
-           phonestampdialog.h
+           paymentdialog.h \
+           phonestampdialog.h \
+           receiptdialog.h
 
 FORMS   += mainwindow.ui \
            couponinputdialog.ui \
            discountdialog.ui \
            menuoptiondialog.ui \
+           paymentdialog.ui \
            phonestampdialog.ui
 
 RESOURCES += venti_image.qrc

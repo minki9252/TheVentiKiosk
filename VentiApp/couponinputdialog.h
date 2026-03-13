@@ -15,10 +15,12 @@ public:
 private slots:
     void onKeyClicked();       // 숫자 키패드 클릭 시
     void on_btnConfirm_clicked(); // 확인 버튼
+    void on_btnDelete_clicked(); // 지우기
 
 private:
     Ui::CouponInputDialog *ui;
     QString currentInput;      // 입력된 숫자를 저장할 변수
+    void updateDisplay();
 };
 
 #endif
