@@ -15,17 +15,20 @@ SOURCES += \
            discountdialog.cpp \
            main.cpp \
            mainwindow.cpp \
-           menuoptiondialog.cpp
+           menuoptiondialog.cpp \
+           phonestampdialog.cpp
 
 HEADERS += mainwindow.h \
            couponinputdialog.h \
            discountdialog.h \
-           menuoptiondialog.h
+           menuoptiondialog.h \
+           phonestampdialog.h
 
 FORMS   += mainwindow.ui \
            couponinputdialog.ui \
            discountdialog.ui \
-           menuoptiondialog.ui
+           menuoptiondialog.ui \
+           phonestampdialog.ui
 
 RESOURCES += venti_image.qrc
 

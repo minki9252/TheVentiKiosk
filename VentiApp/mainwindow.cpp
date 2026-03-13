@@ -4,6 +4,7 @@
 #include "menuoptiondialog.h"
 #include "discountdialog.h"
 #include "couponinputdialog.h"
+#include "phonestampdialog.h"
 #include <QMessageBox>
 #include <QDebug>
 #include <QTimer>
@@ -226,39 +227,34 @@ void MainWindow::handleMenuItemClick(QListWidgetItem *item)
 }
 
 void MainWindow::processCheckout() {
-    // 1. 할인 선택 모달 창 생성
+    // 할인 선택
     DiscountDialog discountDlg(this);
-
-    // 사용자가 App쿠폰이나 모바일쿠폰 버튼을 눌러 accept() 되었을 때만 다음 단계 진행
     if (discountDlg.exec() == QDialog::Accepted) {
-
-        // 2. 쿠폰 번호 입력 모달 창 생성
+        // 쿠폰 번호 입력
         CouponInputDialog couponDlg(this);
-
-        // 사용자가 번호 1234-5678-9012를 정확히 입력하여 accept() 되었을 때만 최종 결제 진행
-        if (couponDlg.exec() == QDialog::Accepted) {
-
-            orderNumber++; // 주문번호 증가
-            int total = 0;
-            // 장바구니 리스트를 순회하며 총 금액 계산
-            for(const auto& item : cartList) {
-                total += item.totalPrice;
-            }
-
-            // 최종 결제 완료 알림창
-            QMessageBox::information(this, "결제 완료",
-                                     QString("주문번호: %1\n결제금액: %2원\n결제가 완료되었습니다.")
-                                         .arg(orderNumber).arg(total));
-
-            // 장바구니 비우기 및 UI 업데이트
-            cartList.clear();
-            updateCartList();
-
-            // 인트로 화면(첫 화면)으로 이동
-            ui->stackedWidget->setCurrentIndex(0);
-        }
+        couponDlg.exec(); // 결과에 상관없이 창이 닫히면 다음 단계로
     }
-} // [중요] 함수의 끝을 알리는 닫는 중괄호
+
+    // 휴대폰 적립 창 띄우기
+    PhoneStampDialog stampDlg(this);
+    stampDlg.exec(); // 여기서 적립을 하거나 '건너뛰기'를 눌러도 결제는 계속 진행됨
+
+    // 최종 결제 프로세스 진행
+    orderNumber++;
+    int total = 0;
+    for(const auto& item : cartList) {
+        total += item.totalPrice;
+    }
+
+    QMessageBox::information(this, "결제 완료",
+                             QString("주문번호: %1\n결제금액: %2원\n결제가 완료되었습니다.")
+                                 .arg(orderNumber).arg(total));
+
+    cartList.clear();
+    updateCartList();
+
+    ui->stackedWidget->setCurrentIndex(0); // 인트로 화면 이동
+}
 
 // 기타 UI 보조 함수들
 void MainWindow::toggleTouchText() {

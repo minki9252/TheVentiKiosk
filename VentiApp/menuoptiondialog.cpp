@@ -5,12 +5,36 @@
 #include <QDebug>
 #include <QIcon>
 #include <QFileInfo>
+#include <QButtonGroup>
 
 MenuOptionDialog::MenuOptionDialog(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::MenuOptionDialog)
 {
     ui->setupUi(this);
+
+    // --- 1. 사이즈 선택 그룹 (Large, Jumbo) ---
+    // 이 그룹은 radioButton, radioButton_2를 관리합니다.
+    QButtonGroup *sizeGroup = new QButtonGroup(this);
+    sizeGroup->addButton(ui->radioButton_4);   // Large
+    sizeGroup->addButton(ui->radioButton_5); // Jumbo
+    sizeGroup->setExclusive(true);           // 그룹 내 딱 하나만 선택됨
+
+    // --- 2. 원두 선택 그룹 (시그니처, 다크, 디카페인) ---
+    // 이 그룹은 radioButton_3, 4, 5를 관리합니다.
+    QButtonGroup *beanGroup = new QButtonGroup(this);
+    beanGroup->addButton(ui->radioButton); // 시그니처
+    beanGroup->addButton(ui->radioButton_2); // 다크
+    beanGroup->addButton(ui->radioButton_3); // 디카페인(+800원)
+    beanGroup->setExclusive(true);
+
+    // --- 3. 샷 선택 그룹 (기본, 연하게, 시그니처샷추가) ---
+    // 이 그룹은 radioButton_6, 7, 8을 관리합니다.
+    QButtonGroup *shotGroup = new QButtonGroup(this);
+    shotGroup->addButton(ui->radioButton_6); // 기본
+    shotGroup->addButton(ui->radioButton_7); // 연하게
+    shotGroup->addButton(ui->radioButton_8); // 시그니처샷추가(2샷 +500원)
+    shotGroup->setExclusive(true);
 
     ui->listSelectedMenu->setIconSize(QSize(200, 200));
     ui->listSelectedMenu->setResizeMode(QListView::Adjust);

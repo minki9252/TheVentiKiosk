@@ -19,6 +19,8 @@ CouponInputDialog::CouponInputDialog(QWidget *parent) :
     for(QPushButton* btn : buttons) {
         connect(btn, &QPushButton::clicked, this, &CouponInputDialog::onKeyClicked);
     }
+
+    connect(ui->btnDelete, &QPushButton::clicked, this, &CouponInputDialog::reject);
 }
 
 CouponInputDialog::~CouponInputDialog()

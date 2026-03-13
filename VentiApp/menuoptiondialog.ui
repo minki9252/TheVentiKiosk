@@ -37,6 +37,95 @@
      <property name="verticalSpacing">
       <number>20</number>
      </property>
+     <item row="7" column="1">
+      <widget class="QCheckBox" name="checkBox_2">
+       <property name="text">
+        <string>바닐라시럽 추가(+500원)</string>
+       </property>
+      </widget>
+     </item>
+     <item row="3" column="1">
+      <widget class="QRadioButton" name="radioButton_2">
+       <property name="text">
+        <string>다크</string>
+       </property>
+       <property name="autoExclusive">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+     <item row="4" column="0">
+      <widget class="QLabel" name="label_3">
+       <property name="text">
+        <string>샷 선택</string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="0">
+      <widget class="QLabel" name="label">
+       <property name="text">
+        <string>사이즈 선택</string>
+       </property>
+      </widget>
+     </item>
+     <item row="5" column="1">
+      <widget class="QRadioButton" name="radioButton_7">
+       <property name="text">
+        <string>연하게</string>
+       </property>
+       <property name="autoExclusive">
+        <bool>false</bool>
+       </property>
+      </widget>
+     </item>
+     <item row="6" column="0">
+      <widget class="QLabel" name="label_4">
+       <property name="text">
+        <string>당도 선택</string>
+       </property>
+      </widget>
+     </item>
+     <item row="7" column="0">
+      <widget class="QCheckBox" name="checkBox">
+       <property name="text">
+        <string>달게</string>
+       </property>
+      </widget>
+     </item>
+     <item row="5" column="0">
+      <widget class="QRadioButton" name="radioButton_6">
+       <property name="text">
+        <string>기본</string>
+       </property>
+       <property name="autoExclusive">
+        <bool>false</bool>
+       </property>
+      </widget>
+     </item>
+     <item row="8" column="0">
+      <widget class="QLabel" name="label_5">
+       <property name="text">
+        <string>토핑 선택</string>
+       </property>
+      </widget>
+     </item>
+     <item row="9" column="2">
+      <widget class="QCheckBox" name="checkBox_7">
+       <property name="text">
+        <string>화이트펄 추가(+900원)</string>
+       </property>
+      </widget>
+     </item>
+     <item row="5" column="2">
+      <widget class="QRadioButton" name="radioButton_8">
+       <property name="text">
+        <string>시그니처 샷추가(2샷 +500원)</string>
+       </property>
+       <property name="autoExclusive">
+        <bool>false</bool>
+       </property>
+      </widget>
+     </item>
      <item row="1" column="1">
       <widget class="QRadioButton" name="radioButton_5">
        <property name="text">
@@ -44,6 +133,16 @@
        </property>
        <property name="autoRepeat">
         <bool>false</bool>
+       </property>
+       <property name="autoExclusive">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+     <item row="3" column="2">
+      <widget class="QRadioButton" name="radioButton_3">
+       <property name="text">
+        <string>디카페인(+800원)</string>
        </property>
        <property name="autoExclusive">
         <bool>true</bool>
@@ -73,102 +172,10 @@
        </property>
       </widget>
      </item>
-     <item row="6" column="0">
-      <widget class="QLabel" name="label_4">
-       <property name="text">
-        <string>당도 선택</string>
-       </property>
-      </widget>
-     </item>
-     <item row="8" column="0">
-      <widget class="QLabel" name="label_5">
-       <property name="text">
-        <string>토핑 선택</string>
-       </property>
-      </widget>
-     </item>
-     <item row="5" column="0">
-      <widget class="QRadioButton" name="radioButton_6">
-       <property name="text">
-        <string>기본</string>
-       </property>
-       <property name="autoExclusive">
-        <bool>false</bool>
-       </property>
-      </widget>
-     </item>
-     <item row="4" column="0">
-      <widget class="QLabel" name="label_3">
-       <property name="text">
-        <string>샷 선택</string>
-       </property>
-      </widget>
-     </item>
-     <item row="7" column="2">
-      <widget class="QCheckBox" name="checkBox_3">
-       <property name="text">
-        <string>헤이즐넛시럽 추가(+500원</string>
-       </property>
-      </widget>
-     </item>
-     <item row="3" column="2">
-      <widget class="QRadioButton" name="radioButton_3">
-       <property name="text">
-        <string>디카페인(+800원)</string>
-       </property>
-       <property name="autoExclusive">
-        <bool>true</bool>
-       </property>
-      </widget>
-     </item>
-     <item row="5" column="1">
-      <widget class="QRadioButton" name="radioButton_7">
-       <property name="text">
-        <string>연하게</string>
-       </property>
-       <property name="autoExclusive">
-        <bool>false</bool>
-       </property>
-      </widget>
-     </item>
-     <item row="0" column="0">
-      <widget class="QLabel" name="label">
-       <property name="text">
-        <string>사이즈 선택</string>
-       </property>
-      </widget>
-     </item>
-     <item row="7" column="1">
-      <widget class="QCheckBox" name="checkBox_2">
-       <property name="text">
-        <string>바닐라시럽 추가(+500원)</string>
-       </property>
-      </widget>
-     </item>
      <item row="2" column="0">
       <widget class="QLabel" name="label_2">
        <property name="text">
         <string>원두 선택</string>
-       </property>
-      </widget>
-     </item>
-     <item row="5" column="2">
-      <widget class="QRadioButton" name="radioButton_8">
-       <property name="text">
-        <string>시그니처 샷추가(2샷 +500원)</string>
-       </property>
-       <property name="autoExclusive">
-        <bool>false</bool>
-       </property>
-      </widget>
-     </item>
-     <item row="3" column="1">
-      <widget class="QRadioButton" name="radioButton_2">
-       <property name="text">
-        <string>다크</string>
-       </property>
-       <property name="autoExclusive">
-        <bool>true</bool>
        </property>
       </widget>
      </item>
@@ -179,17 +186,17 @@
        </property>
       </widget>
      </item>
-     <item row="7" column="0">
-      <widget class="QCheckBox" name="checkBox">
+     <item row="9" column="0">
+      <widget class="QCheckBox" name="checkBox_5">
        <property name="text">
-        <string>달게</string>
+        <string>아이스크림 추가(+500원)</string>
        </property>
       </widget>
      </item>
-     <item row="9" column="2">
-      <widget class="QCheckBox" name="checkBox_7">
+     <item row="7" column="2">
+      <widget class="QCheckBox" name="checkBox_3">
        <property name="text">
-        <string>화이트펄 추가(+900원)</string>
+        <string>헤이즐넛시럽 추가(+500원</string>
        </property>
       </widget>
      </item>
@@ -197,13 +204,6 @@
       <widget class="QCheckBox" name="checkBox_6">
        <property name="text">
         <string>버블 추가(+900원)</string>
-       </property>
-      </widget>
-     </item>
-     <item row="9" column="0">
-      <widget class="QCheckBox" name="checkBox_5">
-       <property name="text">
-        <string>아이스크림 추가(+500원)</string>
        </property>
       </widget>
      </item>
