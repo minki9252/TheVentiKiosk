@@ -1,12 +1,12 @@
 {
   "categories": [
     "신메뉴",
-    "커피(핫)",
-    "커피(아이스)",
+    "커피",
     "버블티&티",
     "블렌디드",
     "베버리지",
-    "에이드"
+    "에이드",
+    "디저트"
   ],
   "menus": [
     {
@@ -28,88 +28,166 @@
       "image": ":/New_menu/Image/New_menu/omija.png"
     },
     {
-      "category": "커피(핫)",
+      "category": "신메뉴",
+      "name": "더쌍화차라떼",
+      "price": 3500,
+      "image": ":/New_menu/Image/New_menu/더쌍화차라떼.jpg"
+    },
+    {
+      "category": "신메뉴",
+      "name": "두바이초콜릿쉐이크",
+      "price": 3500,
+      "image": ":/New_menu/Image/New_menu/두바이초콜릿쉐이크.jpg"
+    },
+    {
+      "category": "신메뉴",
+      "name": "두바이콜드브루아인슈페너",
+      "price": 3500,
+      "image": ":/New_menu/Image/New_menu/두바이콜드브루아인슈페너.jpg"
+    },
+    {
+      "category": "신메뉴",
+      "name": "딸기말랑피치스무디",
+      "price": 3500,
+      "image": ":/New_menu/Image/New_menu/딸기말랑피치스무디.jpg"
+    },
+    {
+      "category": "신메뉴",
+      "name": "딸기말차폼라떼",
+      "price": 3500,
+      "image": ":/New_menu/Image/New_menu/딸기말차폼라떼.jpg"
+    },
+    {
+      "category": "신메뉴",
+      "name": "딸기슈크림라떼",
+      "price": 3500,
+      "image": ":/New_menu/Image/New_menu/딸기슈크림라떼.jpg"
+    },
+    {
+      "category": "신메뉴",
+      "name": "딸기초코쿠키스무디",
+      "price": 3500,
+      "image": ":/New_menu/Image/New_menu/딸기초코쿠키스무디.jpg"
+    },
+    {
+      "category": "신메뉴",
+      "name": "딸기펄피치라떼",
+      "price": 3500,
+      "image": ":/New_menu/Image/New_menu/딸기펄피치라떼.jpg"
+    },
+    {
+      "category": "신메뉴",
+      "name": "리얼딸기주스",
+      "price": 3500,
+      "image": ":/New_menu/Image/New_menu/리얼딸기주스.jpg"
+    },
+    {
+      "category": "신메뉴",
+      "name": "오트초코카페라떼",
+      "price": 3500,
+      "image": ":/New_menu/Image/New_menu/오트초코카페라떼.jpg"
+    },
+    {
+      "category": "신메뉴",
+      "name": "오트펄초코라떼",
+      "price": 3500,
+      "image": ":/New_menu/Image/New_menu/오트펄초코라떼.jpg"
+    },
+    {
+      "category": "커피",
       "name": "아메리카노",
       "price": 2000,
       "image": ":/Coffe/Image/Coffe/americano.png"
     },
     {
-      "category": "커피(핫)",
+      "category": "커피",
       "name": "믹스커피",
       "price": 2500,
       "image": ":/Coffe/Image/Coffe/mix.png"
     },
     {
-      "category": "커피(핫)",
+      "category": "커피",
       "name": "아인슈페너",
       "price": 3500,
       "image": ":/Coffe/Image/Coffe/einspanner.png"
     },
     {
-      "category": "커피(핫)",
+      "category": "커피",
       "name": "카라멜마끼아또",
       "price": 3500,
       "image": ":/Coffe/Image/Coffe/caramel.png"
     },
     {
-      "category": "커피(핫)",
+      "category": "커피",
       "name": "카페라떼",
       "price": 3000,
       "image": ":/Coffe/Image/Coffe/latte.png"
     },
     {
-      "category": "커피(핫)",
+      "category": "커피",
       "name": "카페모카",
       "price": 3500,
       "image": ":/Coffe/Image/Coffe/mocha.png"
     },
     {
-      "category": "커피(핫)",
+      "category": "커피",
       "name": "토피넛라떼",
       "price": 3700,
       "image": ":/Coffe/Image/Coffe/toffeenut.png"
     },
     {
-      "category": "커피(아이스)",
-      "name": "아메리카노",
+      "category": "커피",
+      "name": "바닐라딥라떼",
       "price": 2000,
-      "image": ":/Coffe/Image/Coffe/americano.png"
+      "image": ":/Coffe/Image/Coffe/바닐라딥라떼.jpg"
     },
     {
-      "category": "커피(아이스)",
-      "name": "믹스커피",
+      "category": "커피",
+      "name": "바닐라크림콜드브루",
       "price": 2500,
-      "image": ":/Coffe/Image/Coffe/mix.png"
+      "image": ":/Coffe/Image/Coffe/바닐라크림콜드브루.jpg"
     },
     {
-      "category": "커피(아이스)",
-      "name": "아인슈페너",
+      "category": "커피",
+      "name": "아이스크림라떼",
       "price": 3500,
-      "image": ":/Coffe/Image/Coffe/einspanner.png"
+      "image": ":/Coffe/Image/Coffe/아이스크림라떼.jpg"
     },
     {
-      "category": "커피(아이스)",
-      "name": "카라멜마끼아또",
+      "category": "커피",
+      "name": "연유라떼",
       "price": 3500,
-      "image": ":/Coffe/Image/Coffe/caramel.png"
+      "image": ":/Coffe/Image/Coffe/연유라떼.jpg"
     },
     {
-      "category": "커피(아이스)",
-      "name": "카페라떼",
+      "category": "커피",
+      "name": "오트카페라떼",
       "price": 3000,
-      "image": ":/Coffe/Image/Coffe/latte.png"
+      "image": ":/Coffe/Image/Coffe/오트카페라떼.jpg"
     },
     {
-      "category": "커피(아이스)",
-      "name": "카페모카",
+      "category": "커피",
+      "name": "코코넛라떼",
       "price": 3500,
-      "image": ":/Coffe/Image/Coffe/mocha.png"
+      "image": ":/Coffe/Image/Coffe/코코넛라떼.jpg"
     },
     {
-      "category": "커피(아이스)",
-      "name": "토피넛라떼",
+      "category": "커피",
+      "name": "콜드브루라떼",
       "price": 3700,
-      "image": ":/Coffe/Image/Coffe/toffeenut.png"
+      "image": ":/Coffe/Image/Coffe/콜드브루라떼.jpg"
+    },
+    {
+      "category": "커피",
+      "name": "헤이즐넛딥라떼",
+      "price": 3700,
+      "image": ":/Coffe/Image/Coffe/헤이즐넛딥라떼.jpg"
+    },
+    {
+      "category": "커피",
+      "name": "헤이즐넛크림콜드브루",
+      "price": 3700,
+      "image": ":/Coffe/Image/Coffe/헤이즐넛크림콜드브루.jpg"
     },
     {
       "category": "버블티&티",
@@ -202,6 +280,54 @@
       "image": ":/Blended/Image/Blended/plain_yogurt.png"
     },
     {
+      "category": "블렌디드",
+      "name": "말차프라페",
+      "price": 3900,
+      "image": ":/Blended/Image/Blended/말차프라페.jpg"
+    },
+    {
+      "category": "블렌디드",
+      "name": "망고패션크러쉬",
+      "price": 3900,
+      "image": ":/Blended/Image/Blended/망고패션크러쉬.jpg"
+    },
+    {
+      "category": "블렌디드",
+      "name": "에스프레소쉐이크",
+      "price": 3900,
+      "image": ":/Blended/Image/Blended/에스프레소쉐이크.jpg"
+    },
+    {
+      "category": "블렌디드",
+      "name": "율무프라페",
+      "price": 3900,
+      "image": ":/Blended/Image/Blended/율무프라페.jpg"
+    },
+    {
+      "category": "블렌디드",
+      "name": "자두피치크러쉬",
+      "price": 3900,
+      "image": ":/Blended/Image/Blended/자두피치크러쉬.jpg"
+    },
+    {
+      "category": "블렌디드",
+      "name": "코코넛커피프라페",
+      "price": 3900,
+      "image": ":/Blended/Image/Blended/코코넛커피프라페.jpg"
+    },
+    {
+      "category": "블렌디드",
+      "name": "코코넛밀크프라페",
+      "price": 3900,
+      "image": ":/Blended/Image/Blended/코코밀크프라페.jpg"
+    },
+    {
+      "category": "블렌디드",
+      "name": "코코넛초코프라페",
+      "price": 3900,
+      "image": ":/Blended/Image/Blended/코코초코프라페.jpg"
+    },
+    {
       "category": "베버리지",
       "name": "군고구마라떼",
       "price": 3500,
@@ -233,6 +359,42 @@
     },
     {
       "category": "베버리지",
+      "name": "딸기연유라떼",
+      "price": 3500,
+      "image": ":/Beverage/Image/Beverage/딸기연유라떼.jpg"
+    },
+    {
+      "category": "베버리지",
+      "name": "멜팅초코",
+      "price": 3500,
+      "image": ":/Beverage/Image/Beverage/멜팅초코.jpg"
+    },
+    {
+      "category": "베버리지",
+      "name": "율무오트라떼",
+      "price": 3500,
+      "image": ":/Beverage/Image/Beverage/율무오트라떼.jpg"
+    },
+    {
+      "category": "베버리지",
+      "name": "이천쌀라떼",
+      "price": 3500,
+      "image": ":/Beverage/Image/Beverage/이천쌀라떼.jpg"
+    },
+    {
+      "category": "베버리지",
+      "name": "이천쌀흑임자폼라떼",
+      "price": 3500,
+      "image": ":/Beverage/Image/Beverage/이천쌀흑임자폼라떼.jpg"
+    },
+    {
+      "category": "베버리지",
+      "name": "초코라떼",
+      "price": 3500,
+      "image": ":/Beverage/Image/Beverage/초코라떼.jpg"
+    },
+    {
+      "category": "베버리지",
       "name": "미숫가루",
       "price": 3500,
       "image": ":/Beverage/Image/Beverage/misugaru.png"
@@ -254,6 +416,42 @@
       "name": "자몽에이드",
       "price": 3900,
       "image": ":/Ade/Image/Ade/grapefruit_ade.png"
+    },
+    {
+      "category": "에이드",
+      "name": "메론소다",
+      "price": 3900,
+      "image": ":/Ade/Image/Ade/메론소다.jpg"
+    },
+    {
+      "category": "에이드",
+      "name": "체리콕",
+      "price": 3900,
+      "image": ":/Ade/Image/Ade/체리콕.jpg"
+    },
+    {
+      "category": "에이드",
+      "name": "크림소다",
+      "price": 3900,
+      "image": ":/Ade/Image/Ade/크림소다.jpg"
+    },
+    {
+      "category": "디저트",
+      "name": "두바이쫀득쿠키",
+      "price": 3900,
+      "image": ":/Desert/Image/desert/두바이쫀득쿠키.jpg"
+    },
+    {
+      "category": "디저트",
+      "name": "두바이초콜릿소금빵",
+      "price": 3900,
+      "image": ":/Desert/Image/desert/두바이초콜릿소금빵.jpg"
+    },
+    {
+      "category": "디저트",
+      "name": "딸기모찌크림샌드",
+      "price": 3900,
+      "image": ":/Desert/Image/desert/딸기모찌크림샌드.jpg"
     }
   ]
 }

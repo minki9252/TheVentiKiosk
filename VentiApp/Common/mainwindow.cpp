@@ -146,13 +146,13 @@ void MainWindow::handle(const KioskEvent &event)
         qDebug() << "신메뉴 카테고리 선택됨";
         ui->widget_2->loadMenus("신메뉴");
         break;
-    case CATEGORY_ICED_COFFEE:
-        qDebug() << "아이스커피 카테고리 선택됨";
-        ui->widget_2->loadMenus("커피(아이스)");
+    case CATEGORY_COFFEE:
+        qDebug() << "커피 카테고리 선택됨";
+        ui->widget_2->loadMenus("커피");
         break;
-    case CATEGORY_HOT_COFFEE:
-        qDebug() << "핫커피 카테고리 선택됨";
-        ui->widget_2->loadMenus("커피(핫)");
+    case CATEGORY_DESERT:
+        qDebug() << "디저트 카테고리 선택됨";
+        ui->widget_2->loadMenus("디저트");
         break;
     case CATEGORY_TEA:
         qDebug() << "티 카테고리 선택됨";

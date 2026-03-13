@@ -7,6 +7,15 @@
         <file>Image/Coffe/mix.png</file>
         <file>Image/Coffe/mocha.png</file>
         <file>Image/Coffe/toffeenut.png</file>
+        <file>Image/Coffe/헤이즐넛크림콜드브루.jpg</file>
+        <file>Image/Coffe/헤이즐넛딥라떼.jpg</file>
+        <file>Image/Coffe/콜드브루라떼.jpg</file>
+        <file>Image/Coffe/코코넛라떼.jpg</file>
+        <file>Image/Coffe/오트카페라떼.jpg</file>
+        <file>Image/Coffe/연유라떼.jpg</file>
+        <file>Image/Coffe/아이스크림라떼.jpg</file>
+        <file>Image/Coffe/바닐라크림콜드브루.jpg</file>
+        <file>Image/Coffe/바닐라딥라떼.jpg</file>
     </qresource>
     <qresource prefix="/Beverage">
         <file>Image/Beverage/matcha_einspanner.png</file>
@@ -15,11 +24,28 @@
         <file>Image/Beverage/royal_milk_tea.png</file>
         <file>Image/Beverage/strawberry_latte.png</file>
         <file>Image/Beverage/sweet_potato.png</file>
+        <file>Image/Beverage/초코라떼.jpg</file>
+        <file>Image/Beverage/이천쌀흑임자폼라떼.jpg</file>
+        <file>Image/Beverage/이천쌀라떼.jpg</file>
+        <file>Image/Beverage/율무오트라떼.jpg</file>
+        <file>Image/Beverage/멜팅초코.jpg</file>
+        <file>Image/Beverage/딸기연유라떼.jpg</file>
     </qresource>
     <qresource prefix="/New_menu">
         <file>Image/New_menu/honey_pear.png</file>
         <file>Image/New_menu/omija.png</file>
         <file>Image/New_menu/ssanghwa.png</file>
+        <file>Image/New_menu/오트펄초코라떼.jpg</file>
+        <file>Image/New_menu/오트초코카페라떼.jpg</file>
+        <file>Image/New_menu/리얼딸기주스.jpg</file>
+        <file>Image/New_menu/딸기펄피치라떼.jpg</file>
+        <file>Image/New_menu/딸기초코쿠키스무디.jpg</file>
+        <file>Image/New_menu/딸기슈크림라떼.jpg</file>
+        <file>Image/New_menu/딸기말차폼라떼.jpg</file>
+        <file>Image/New_menu/딸기말랑피치스무디.jpg</file>
+        <file>Image/New_menu/두바이콜드브루아인슈페너.jpg</file>
+        <file>Image/New_menu/두바이초콜릿쉐이크.jpg</file>
+        <file>Image/New_menu/더쌍화차라떼.jpg</file>
     </qresource>
     <qresource prefix="/Blended">
         <file>Image/Blended/blueberry_yogurt.png</file>
@@ -32,11 +58,22 @@
         <file>Image/Blended/milk_shake.png</file>
         <file>Image/Blended/plain_yogurt.png</file>
         <file>Image/Blended/strawberry_yogurt.png</file>
+        <file>Image/Blended/코코초코프라페.jpg</file>
+        <file>Image/Blended/코코밀크프라페.jpg</file>
+        <file>Image/Blended/코코넛커피프라페.jpg</file>
+        <file>Image/Blended/자두피치크러쉬.jpg</file>
+        <file>Image/Blended/율무프라페.jpg</file>
+        <file>Image/Blended/에스프레소쉐이크.jpg</file>
+        <file>Image/Blended/망고패션크러쉬.jpg</file>
+        <file>Image/Blended/말차프라페.jpg</file>
     </qresource>
     <qresource prefix="/Ade">
         <file>Image/Ade/apple_mango.png</file>
         <file>Image/Ade/grapefruit_ade.png</file>
         <file>Image/Ade/lemon_ade.png</file>
+        <file>Image/Ade/크림소다.jpg</file>
+        <file>Image/Ade/체리콕.jpg</file>
+        <file>Image/Ade/메론소다.jpg</file>
     </qresource>
     <qresource prefix="/Bubble_tea">
         <file>Image/Bubble_tea&amp;tea/black_sugar_bubble.png</file>
@@ -53,5 +90,10 @@
     </qresource>
     <qresource prefix="/data">
         <file>menus.json</file>
+    </qresource>
+    <qresource prefix="/Desert">
+        <file>Image/desert/딸기모찌크림샌드.jpg</file>
+        <file>Image/desert/두바이초콜릿소금빵.jpg</file>
+        <file>Image/desert/두바이쫀득쿠키.jpg</file>
     </qresource>
 </RCC>

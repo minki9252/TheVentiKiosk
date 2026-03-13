@@ -245,7 +245,7 @@ bool DatabaseManager::insertInitialData()
         }
     }
 
-    // 3. 메뉴 DB 삽입
+    // 메뉴 DB 삽입
     for (int i = 0; i < menuArray.size(); ++i)
     {
         QJsonObject obj = menuArray[i].toObject();

@@ -12,10 +12,7 @@ categorywidget::categorywidget(QWidget *parent)
             { emit categorySelected(CATEGORY_NEW_MENU); });
 
     connect(ui->category_icedcoffee_button, &QPushButton::clicked, this, [this]()
-            { emit categorySelected(CATEGORY_ICED_COFFEE); });
-
-    connect(ui->category_hotcoffee_button, &QPushButton::clicked, this, [this]()
-            { emit categorySelected(CATEGORY_HOT_COFFEE); });
+            { emit categorySelected(CATEGORY_COFFEE); });
 
     connect(ui->category_tea_button, &QPushButton::clicked, this, [this]()
             { emit categorySelected(CATEGORY_TEA); });
@@ -29,11 +26,11 @@ categorywidget::categorywidget(QWidget *parent)
     connect(ui->category_ade_button, &QPushButton::clicked, this, [this]()
             { emit categorySelected(CATEGORY_ADE); });
 
+    connect(ui->category_hotcoffee_button, &QPushButton::clicked, this, [this]()
+            { emit categorySelected(CATEGORY_DESERT); });
+
     connect(ui->home_button, &QPushButton::clicked, this, [this]()
             { emit categorySelected(GO_HOME); });
-
-
-
 }
 
 categorywidget::~categorywidget()

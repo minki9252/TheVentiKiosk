@@ -18,7 +18,7 @@ beverage::beverage(QWidget *parent)
     // UI 파일(Qt Designer)에서 설정한 값들이 여기서 적용됩니다.
     ui->listMenu->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     ui->listMenu->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-    ui->listMenu->setGridSize(QSize(125, 190));
+    ui->listMenu->setGridSize(QSize(120, 190));
 
     // 리스트의 메뉴를 클릭했을 때 option_modal 띄우기
     connect(ui->listMenu, &QListWidget::itemClicked, this, [=](QListWidgetItem *item)
