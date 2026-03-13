@@ -11,9 +11,9 @@ cartwidget::cartwidget(QWidget *parent)
     : QWidget(parent), ui(new Ui::cartwidget)
 {
     ui->setupUi(this);
+    // 리스트 위젯의 가로 스크롤바를 항상 숨김 처리합니다.
+    ui->ListCart->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 
-    // 만약 전체삭제 버튼 이름이 btnClearAll 이 아니라면 UI 파일에 맞춰 이름을 변경하세요.
-    // connect(ui->전체삭제버튼이름, &QPushButton::clicked, this, &cartwidget::on_btnClearAll_clicked);
 }
 
 cartwidget::~cartwidget()
@@ -48,20 +48,36 @@ void cartwidget::refreshCartUI()
 
     for (int i = 0; i < m_cartList.size(); ++i)
     {
-        // 1. 리스트에 들어갈 빈 아이템 생성
         QListWidgetItem *item = new QListWidgetItem(ui->ListCart);
 
-        // 2. 아이템 안에 들어갈 커스텀 위젯과 레이아웃 생성
         QWidget *rowWidget = new QWidget();
         QHBoxLayout *layout = new QHBoxLayout(rowWidget);
         layout->setContentsMargins(5, 5, 5, 5); // 여백 설정
 
-        // 3. UI 요소들 생성 (X버튼, 메뉴정보, -, 수량, +, 가격)
         QPushButton *btnDel = new QPushButton("X");
         btnDel->setFixedSize(30, 30);
 
-        QLabel *lblInfo = new QLabel(QString("%1 | %2").arg(m_cartList[i].menuName).arg(m_cartList[i].summaryText));
-        lblInfo->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred); // 텍스트 영역 확장
+        // 🌟 수정된 부분: 텍스트 말줄임표(...) 처리 로직
+        QString fullText = QString("%1 | %2").arg(m_cartList[i].menuName).arg(m_cartList[i].summaryText);
+        
+        QLabel *lblInfo = new QLabel();
+        lblInfo->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
+        
+        // 폰트 메트릭스 생성
+        QFontMetrics metrics(lblInfo->font());
+        
+        // 텍스트가 표시될 최대 너비 계산
+        // 전체 리스트 너비에서 X버튼(30), -버튼(30), 수량(30), +버튼(30), 가격(70) 및 여백을 고려해 대략 250px 정도를 뺍니다.
+        // 키오스크 화면 레이아웃에 맞춰 이 수치(250)를 조절해 보세요.
+        int maxWidth = ui->ListCart->width() - 250; 
+        if(maxWidth <= 0) maxWidth = 300; // 초기화 전 너비가 0일 때를 대비한 기본값
+        
+        // 너비를 초과하면 '...'으로 자르기
+        QString elidedText = metrics.elidedText(fullText, Qt::ElideRight, maxWidth);
+        lblInfo->setText(elidedText);
+        
+        // 🌟 보너스: 글자가 잘렸을 경우 마우스를 올리면 전체 텍스트가 툴팁으로 보이게 합니다.
+        lblInfo->setToolTip(fullText);
 
         QPushButton *btnMinus = new QPushButton("-");
         btnMinus->setFixedSize(30, 30);
@@ -87,7 +103,7 @@ void cartwidget::refreshCartUI()
         layout->addWidget(lblPrice);
 
         // 5. 생성한 위젯을 리스트 아이템에 세팅
-        item->setSizeHint(rowWidget->sizeHint()); // 위젯 크기에 맞게 아이템 높이 조절
+        item->setSizeHint(rowWidget->sizeHint()); 
         ui->ListCart->setItemWidget(item, rowWidget);
 
         // 6. 버튼 클릭 이벤트 연결 (람다 함수 사용)
