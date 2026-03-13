@@ -20,6 +20,8 @@ signals:
     void stepCompleted();    // 다음 단계로 넘어가라!
     void paymentCanceled();  // 결제창 전체를 닫아라!
     void readyToNext();  // ✅ 추가
+    //메인 다이얼로그(최상위 부모)에게 총액에서 이만큼 빼라고 알려주는 시그널
+    void discountApplied(int amount);
 
 private slots:
     void onTypeSelected(int type);

@@ -54,6 +54,11 @@ PaymentMainDialog::PaymentMainDialog(const QList<KioskData> &cartList, int total
     // 🌟 4. CouponManagerWidget에서 보내는 신호를 처리하여 화면 전환 또는 종료 수행
     connect(step1_Coupon, &CouponManagerWidget::stepCompleted, this, &PaymentMainDialog::onCouponStepCompleted);
     connect(step1_Coupon, &CouponManagerWidget::paymentCanceled, this, &PaymentMainDialog::cancelPayment);
+
+    // 🌟 5. 핵심: 쿠폰 매니저에서 'discountApplied(할인금액)' 신호가 오면 내 'applyDiscount' 함수 실행!
+    connect(step1_Coupon, &CouponManagerWidget::discountApplied, this, &PaymentMainDialog::applyDiscount);
+
+
 }
 
 PaymentMainDialog::~PaymentMainDialog()
@@ -72,4 +77,25 @@ void PaymentMainDialog::cancelPayment()
 {
     qDebug() << "결제 취소 신호 수신. 결제창을 닫습니다.";
     this->reject(); // QDialog 닫기 (취소)
+}
+
+
+// 🌟 6. 실제로 금액을 차감하고 화면에 갱신하는 함수 구현
+void PaymentMainDialog::applyDiscount(int discountAmount)
+{
+    if (discountAmount <= 0) return;
+
+    // 총 금액에서 할인 금액 빼기
+    m_totalAmount -= discountAmount;
+    
+    // 혹시 할인 금액이 총액보다 커서 마이너스가 되면 0원으로 맞춤
+    if (m_totalAmount < 0) {
+        m_totalAmount = 0; 
+    }
+
+    qDebug() << "쿠폰 할인 적용됨! 남은 최종 결제 금액:" << m_totalAmount;
+
+    // 🌟 중요: UI의 '총 결제 금액' 텍스트를 업데이트해 주세요! 
+    // (ui 파일에 만들어둔 총액 표시 라벨 이름이 label_totalPrice라고 가정한 코드입니다. 실제 이름으로 바꿔주세요)
+    // ui->label_totalPrice->setText(QString("%1원").arg(m_totalAmount));
 }

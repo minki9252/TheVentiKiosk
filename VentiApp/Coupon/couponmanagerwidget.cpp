@@ -39,12 +39,22 @@ CouponManagerWidget::CouponManagerWidget(const QList<KioskData>& cartList, int t
 
     connect(inputView, &CouponInputView::inputConfirmed, this, [this, resultView](QString code){
         qDebug() << "입력된 쿠폰 번호:" << code;
-        resultView->setResult(true);
+        resultView->setResult(code); // 코드 비교 로직 실행
         ui->stackedWidget->setCurrentIndex(2); 
     });
 
     // 5. 결과창 신호 연결
-    connect(resultView, &CouponResultView::resultConfirmed, this, [this](){
+    connect(resultView, &CouponResultView::resultConfirmed, this, [this, selectView](int discountAmount){
+        
+        if (discountAmount > 0) {
+            // 메인 결제창으로 할인 금액 넘기기
+            emit discountApplied(discountAmount); 
+            
+            // 🌟 이 줄이 있어야 방금 작성한 리스트 추가 코드가 실행됩니다!
+            selectView->applyDiscount(discountAmount); 
+        }
+        
+        // 다시 주문 내역 확인 화면(첫 화면)으로 돌아가기
         ui->stackedWidget->setCurrentIndex(0);
     });
 }

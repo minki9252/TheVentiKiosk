@@ -15,6 +15,7 @@ public:
     explicit CouponSelectView(const QList<KioskData>& cartList, int totalAmount, QWidget *parent = nullptr);
     ~CouponSelectView();
 
+    void applyDiscount(int discountAmount);
 signals: // 🌟 중재자에게 보낼 신호들
     void cancelRequested(); // 취소 눌림
     void payRequested();    // 결제 눌림
