@@ -28,10 +28,10 @@ void PointInputView::connectButtons()
     connect(ui->pushButton_7,  &QPushButton::clicked, this, [this](){ emit digitPressed("7"); });
     connect(ui->pushButton_8,  &QPushButton::clicked, this, [this](){ emit digitPressed("8"); });
     connect(ui->pushButton_9,  &QPushButton::clicked, this, [this](){ emit digitPressed("9"); });
-    connect(ui->pushButton_10,  &QPushButton::clicked, this, [this](){ emit digitPressed("0"); });
-    connect(ui->pushButton_11, &QPushButton::clicked, this, [this](){ emit digitPressed("010"); });
-    connect(ui->pushButton_14,  &QPushButton::clicked, this, [this](){ emit deletePressed(); });
-    connect(ui->pushButton_15,  &QPushButton::clicked, this, [this](){ emit clearPressed(); });
+    connect(ui->pushButton_11,  &QPushButton::clicked, this, [this](){ emit digitPressed("0"); });
+    connect(ui->pushButton_10, &QPushButton::clicked, this, [this](){ emit digitPressed("010"); });
+    connect(ui->pushButton_12,  &QPushButton::clicked, this, [this](){ emit deletePressed(); });
+    // connect(ui->pushButton_15,  &QPushButton::clicked, this, [this](){ emit clearPressed(); });
     connect(ui->pushButton_15, &QPushButton::clicked, this, [this](){ emit confirmPressed(); });
     connect(ui->pushButton_14, &QPushButton::clicked, this, &PointInputView::cancelled);
 }
