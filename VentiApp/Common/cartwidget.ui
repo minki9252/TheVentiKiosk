@@ -26,7 +26,41 @@
    <string>Form</string>
   </property>
   <property name="styleSheet">
-   <string notr="true"/>
+   <string notr="true">/* 카테고리 위젯 전체 배경 */
+QWidget#categorywidget {
+    background-color: #FFFFFF;
+}
+
+/* 카테고리 버튼 기본 스타일 */
+QPushButton {
+    background-color: #F8F9FA;
+    border: 1px solid #E0E0E0;
+    border-radius: 5px; /* 약간 각진 느낌으로 세련되게 */
+    color: #333333;
+    font-family: &quot;Malgun Gothic&quot;;
+    font-size: 14px; /* 글자 크기를 살짝 줄여서 깨짐 방지 */
+    font-weight: bold;
+    padding: 5px; /* 내부 여백 최적화 */
+}
+
+/* 마우스 올렸을 때 */
+QPushButton:hover {
+    background-color: #F0EAF6;
+}
+
+/* 선택된 카테고리 (더벤티 보라색 강조) */
+/* 체크 상태를 활용하려면 버튼 속성에서 checkable을 true로 하셔야 합니다 */
+QPushButton:checked, QPushButton:pressed {
+    background-color: #5D2D91;
+    color: #FFFFFF;
+    border: 1px solid #5D2D91;
+}
+
+/* 특정 버튼 텍스트가 긴 경우를 위한 예외 처리 */
+QPushButton#category_icedcoffee_button, 
+QPushButton#category_tea_button {
+    font-size: 13px; /* 긴 텍스트는 1pt 더 작게 */
+}</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
