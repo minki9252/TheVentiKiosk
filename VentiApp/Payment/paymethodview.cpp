@@ -27,5 +27,8 @@ void PayMethodView::connectButtons()
     connect(ui->btn_hana,     &QPushButton::clicked, this, [this](){ emit cardSelected("하나카드"); });
 
     // 취소 버튼
-    connect(ui->btn_cancel,   &QPushButton::clicked, this, &PayMethodView::cancelled);
+    connect(ui->btn_cancel, &QPushButton::clicked, this, [this](){
+        // this->hide(); // 필요한 경우 즉시 시각적으로 숨김 처리 가능
+        emit cancelled();
+    });
 }

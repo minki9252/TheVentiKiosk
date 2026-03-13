@@ -7,7 +7,7 @@
 
 static const int COUNTDOWN_SEC = 30;  // 카운트다운 초
 static const int LOADING_MS    = 1500; // 카드 인식 중 표시 시간
-static const int ABORT_MS      = 2500; // 실패/취소 후 닫기까지 대기 시간
+static const int ABORT_MS      = 0; // 실패/취소 후 닫기까지 대기 시간
 
 PayManagerWidget::PayManagerWidget(QWidget *parent)
     : QWidget(parent)
