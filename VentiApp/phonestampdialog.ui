@@ -89,7 +89,7 @@ QPushButton:pressed {
    <item>
     <layout class="QGridLayout" name="gridLayout">
      <property name="spacing">
-      <number>0</number>
+      <number>6</number>
      </property>
      <item row="2" column="2">
       <widget class="QPushButton" name="btn9">
@@ -630,7 +630,7 @@ QPushButton:pressed {
        <property name="minimumSize">
         <size>
          <width>100</width>
-         <height>70</height>
+         <height>50</height>
         </size>
        </property>
        <property name="maximumSize">
@@ -649,7 +649,7 @@ QPushButton {
     font-size: 13pt;
     font-weight: bold;
     color: #5d2d91;
-    min-height: 50px; /* 버튼 높이를 키워 터치하기 좋게 만듦 */
+    min-height: 30px; /* 버튼 높이를 키워 터치하기 좋게 만듦 */
 }
 
 /* 버튼이 눌렸을 때 (피드백) */
@@ -674,7 +674,7 @@ QPushButton:pressed {
        <property name="minimumSize">
         <size>
          <width>100</width>
-         <height>70</height>
+         <height>50</height>
         </size>
        </property>
        <property name="maximumSize">
@@ -693,7 +693,7 @@ QPushButton {
     font-size: 13pt;
     font-weight: bold;
     color: #5d2d91;
-    min-height: 50px; /* 버튼 높이를 키워 터치하기 좋게 만듦 */
+    min-height: 30px; /* 버튼 높이를 키워 터치하기 좋게 만듦 */
 }
 
 /* 버튼이 눌렸을 때 (피드백) */

@@ -13,6 +13,7 @@ TEMPLATE = app
 SOURCES += \
            couponinputdialog.cpp \
            discountdialog.cpp \
+           goodbyedialog.cpp \
            loadingdialog.cpp \
            main.cpp \
            mainwindow.cpp \
@@ -24,6 +25,7 @@ SOURCES += \
 HEADERS += mainwindow.h \
            couponinputdialog.h \
            discountdialog.h \
+           goodbyedialog.h \
            loadingdialog.h \
            menuoptiondialog.h \
            paymentdialog.h \

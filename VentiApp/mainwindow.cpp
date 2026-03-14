@@ -7,6 +7,7 @@
 #include "phonestampdialog.h"
 #include "paymentdialog.h"
 #include "receiptdialog.h"
+#include "goodbyedialog.h"
 #include <QMessageBox>
 #include <QDebug>
 #include <QTimer>
@@ -229,47 +230,72 @@ void MainWindow::handleMenuItemClick(QListWidgetItem *item)
 }
 
 void MainWindow::processCheckout() {
-    // 1. 초기 금액 계산
+    // 1. 초기 합계 금액 계산
     int totalAmount = 0;
     for(const auto& item : cartList) {
         totalAmount += item.totalPrice;
     }
 
-    int discountAmount = 0; // 초기 할인 금액은 0원
+    int discountAmount = 0; // 할인 초기값
 
-    // 2. 할인 선택창 (App쿠폰/모바일쿠폰 등)
+    // 2. 할인 선택창 실행
     DiscountDialog discountDlg(this);
     if (discountDlg.exec() == QDialog::Accepted) {
-
-        // 3. 쿠폰 번호 입력창
+        // 3. 쿠폰 번호 입력창 실행
         CouponInputDialog couponDlg(this);
         if(couponDlg.exec() == QDialog::Accepted) {
-            // [수정 포인트] 쿠폰 인증 성공 시 할인 금액을 2000원으로 설정
-            discountAmount = 2000;
+            discountAmount = 2000; // 쿠폰 적용 시 2,000원 할인
         }
     }
 
-    // 4. 휴대폰 번호 적립창 (적립 여부와 상관없이 진행)
+    // 4. 휴대폰 번호 적립창 실행
     PhoneStampDialog stampDlg(this);
     stampDlg.exec();
 
-    // 5. 최종 결제 상세 창 띄우기 (계산된 total과 discount를 넘김)
+    // 5. 최종 결제 수단 선택 및 결제 진행 (로딩창 포함)
     PaymentDialog paymentDlg(totalAmount, discountAmount, this);
-
     if (paymentDlg.exec() == QDialog::Accepted) {
-        ReceiptDialog receiptDlg(this);
-        if (receiptDlg.exec() == QDialog::Accepted) {
-            // '예'를 눌렀을 때의 로직 (예: 콘솔에 영수증 내용 출력)
-            qDebug() << "------- 영수증 출력 -------";
-            qDebug() << "주문번호:" << orderNumber;
-            qDebug() << "결제금액:" << (totalAmount - discountAmount) << "원";
-            qDebug() << "-------------------------";
+
+        // 6. 영수증에 표시할 메뉴 상세 내역 문자열 조립
+        QString menuDetails = "  메뉴명            수량    금액\n";
+        menuDetails += "----------------------------------\n";
+
+        for(const auto& item : cartList) {
+            QString name = item.menuName.leftJustified(12, ' ');
+
+            // 수량 변수명이 quantity인지 꼭 확인하세요!
+            QString countStr = QString::number(item.quantity).rightJustified(2, ' ');
+
+            QString price = QString::number(item.totalPrice).rightJustified(6, ' ');
+
+            menuDetails += QString("%1   %2   %3원\n").arg(name).arg(countStr).arg(price);
         }
 
+        menuDetails += "----------------------------------\n";
+        int finalPrice = totalAmount - discountAmount;
+        if(finalPrice < 0) finalPrice = 0;
+        menuDetails += QString("최종 합계:           %1원").arg(finalPrice);
+
+        // 7. 영수증 확인창 호출 (주문번호와 메뉴 상세 내역을 함께 전달)
+        ReceiptDialog receiptDlg(orderNumber, menuDetails, this);
+
+        if (receiptDlg.exec() == QDialog::Accepted) {
+            // '예'를 눌렀을 때 콘솔에 출력 시뮬레이션
+            qDebug() << "******** 영수증 출력 중 ********";
+            qDebug() << "주문번호: " << orderNumber;
+            qDebug() << menuDetails;
+            qDebug() << "******************************";
+        }
+
+        // 2. [추가] 인사 창 띄우기
+        GoodbyeDialog goodbye(this);
+        goodbye.exec(); // 2초 동안 노출된 후 자동으로 닫힙니다.
+
+        // 8. 주문 완료 후 데이터 초기화 및 인트로 화면 이동
         orderNumber++;
         cartList.clear();
         updateCartList();
-        ui->stackedWidget->setCurrentIndex(0);
+        ui->stackedWidget->setCurrentIndex(0); // 첫 화면으로 복귀
     }
 }
 

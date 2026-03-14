@@ -36,14 +36,14 @@ QPushButton:pressed {
 }</string>
      </property>
      <property name="text">
-      <string>TextLabel</string>
+      <string>쿠폰 번호를 입력해 주세요.</string>
      </property>
     </widget>
    </item>
    <item>
     <layout class="QGridLayout" name="gridLayout">
      <property name="spacing">
-      <number>0</number>
+      <number>6</number>
      </property>
      <item row="0" column="1">
       <widget class="QPushButton" name="btn2">
@@ -232,7 +232,13 @@ QPushButton:pressed {
        <property name="minimumSize">
         <size>
          <width>100</width>
-         <height>70</height>
+         <height>40</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>100</width>
+         <height>40</height>
         </size>
        </property>
        <property name="styleSheet">
@@ -245,7 +251,7 @@ QPushButton {
     font-size: 13pt;
     font-weight: bold;
     color: #5d2d91;
-    min-height: 50px; /* 버튼 높이를 키워 터치하기 좋게 만듦 */
+    min-height: 20px; /* 버튼 높이를 키워 터치하기 좋게 만듦 */
 }
 
 /* 버튼이 눌렸을 때 (피드백) */
@@ -446,7 +452,13 @@ QPushButton:pressed {
        <property name="minimumSize">
         <size>
          <width>100</width>
-         <height>70</height>
+         <height>40</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>100</width>
+         <height>40</height>
         </size>
        </property>
        <property name="styleSheet">
@@ -459,7 +471,7 @@ QPushButton {
     font-size: 13pt;
     font-weight: bold;
     color: #5d2d91;
-    min-height: 50px; /* 버튼 높이를 키워 터치하기 좋게 만듦 */
+    min-height: 20px; /* 버튼 높이를 키워 터치하기 좋게 만듦 */
 }
 
 /* 버튼이 눌렸을 때 (피드백) */
