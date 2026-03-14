@@ -2,12 +2,17 @@
 #include "ui_couponselectview.h"
 
 CouponSelectView::CouponSelectView(const QList<KioskData>& cartList, int totalAmount, QWidget *parent) :
-    QWidget(parent), // 🌟 QWidget으로 변경
+    QWidget(parent),
     ui(new Ui::CouponSelectView),
     m_cartList(cartList),
-    m_totalAmount(totalAmount)
+    m_totalAmount(totalAmount) // 🌟 여기서 인자로 받은 값이 멤버 변수로 복사됩니다.
 {
     ui->setupUi(this);
+
+    // 디버깅을 위해 생성 시점의 금액을 로그로 찍어보세요.
+    // 만약 여기서도 이상한 숫자가 뜬다면 부모(Manager)에서 잘못 보낸 것입니다.
+    qDebug() << "CouponSelectView 생성 - 초기 금액:" << m_totalAmount;
+
     populateList();
 }
 
@@ -31,24 +36,22 @@ void CouponSelectView::applyDiscount(int discountAmount)
 {
     if (discountAmount <= 0) return;
 
-    // 1. 내부 금액 차감
+    // 1. 계산 수행
     m_totalAmount -= discountAmount;
-    if (m_totalAmount < 0) {
-        m_totalAmount = 0;
-    }
+    if (m_totalAmount < 0) m_totalAmount = 0;
 
-    // 2. 주문 내역 리스트(listOrderDetails) 맨 밑에 할인 항목을 한 줄 텍스트로 추가합니다!
-    QString discountText = QString("====================\n[쿠폰 할인 적용]\n할인 금액: -%1원\n최종 결제 금액: %2원")
-                                .arg(discountAmount)
-                                .arg(m_totalAmount);
-    
+    // 2. ✅ 정상적인 로그 출력 (이 줄만 남게 됩니다)
+    qDebug() << "쿠폰 할인 적용 완료! 최종 결제 금액:" << m_totalAmount << "원";
+
+    // 3. UI 리스트 업데이트
+    ui->listOrderDetails->addItem("------------------------------------");
+    QString discountText = QString("[쿠폰 할인] -%1원\n결제 예정 금액: %2원")
+                               .arg(discountAmount)
+                               .arg(m_totalAmount);
+
     ui->listOrderDetails->addItem(discountText);
-
-    // 3. (선택) 리스트 항목이 많을 경우 새로 추가된 할인 내역이 보이도록 스크롤을 맨 아래로 내립니다.
     ui->listOrderDetails->scrollToBottom();
 }
-
-
 
 // 🌟 버튼 클릭 시 중재자에게 신호(emit)만 던집니다. (창을 직접 닫지 않음)
 void CouponSelectView::on_btnCancel_clicked() { emit cancelRequested(); }

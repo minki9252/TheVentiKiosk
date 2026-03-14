@@ -2,8 +2,13 @@
 #define POINTMANAGERWIDGET_H
 
 #include <QWidget>
+#include <QList>
+#include "KioskData.h"
 
-namespace Ui { class PointManagerWidget; }
+namespace Ui
+{
+class PointManagerWidget;
+}
 
 class PointInputView;
 class PointResultView;
@@ -13,7 +18,7 @@ class PointManagerWidget : public QWidget
     Q_OBJECT
 
 public:
-    explicit PointManagerWidget(QWidget *parent = nullptr);
+    explicit PointManagerWidget(const QList<KioskData> &cartList, QWidget *parent = nullptr);
     ~PointManagerWidget();
 
 signals:
@@ -29,9 +34,10 @@ private slots:
 
 private:
     Ui::PointManagerWidget *ui;
-    PointInputView  *m_inputView;
+    PointInputView *m_inputView;
     PointResultView *m_resultView;
     QString m_phoneNum;
+    QList<KioskData> m_cartList; // 장바구니 데이터 저장할 변수
     void connectViews();
     void updateInputDisplay();
 };

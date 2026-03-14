@@ -3,7 +3,10 @@
 
 #include <QWidget>
 
-namespace Ui { class PointResultView; }
+namespace Ui
+{
+class PointResultView;
+}
 
 class PointResultView : public QWidget
 {
@@ -12,7 +15,7 @@ class PointResultView : public QWidget
 public:
     explicit PointResultView(QWidget *parent = nullptr);
     ~PointResultView();
-    void setResult(const QString &phoneNum, int earnedPoints); // ← 추가
+    void setResult(const QString &phoneNum, int earnedStamps); // ← 추가
 
 signals:
     void confirmed(); // ← 추가

@@ -2,9 +2,10 @@
 #include "ui_pointmanagerwidget.h"
 #include "pointinputview.h"
 #include "pointresultview.h"
+#include "KioskData.h"
 
-PointManagerWidget::PointManagerWidget(QWidget *parent)
-    : QWidget(parent), ui(new Ui::PointManagerWidget), m_phoneNum("")
+PointManagerWidget::PointManagerWidget(const QList<KioskData> &cartList, QWidget *parent)
+    : QWidget(parent), ui(new Ui::PointManagerWidget), m_phoneNum(""), m_cartList(cartList)
 {
     ui->setupUi(this);
 
@@ -38,14 +39,11 @@ void PointManagerWidget::connectViews()
 //     m_inputView->setDisplay(m_phoneNum); // 입력된 번호 그대로 화면에 출력
 // }
 
-
-
 // void PointManagerWidget::onDigitPressed(const QString &digit)
 // {
 //     m_phoneNum += digit;
 //     updateInputDisplay();
 // }
-
 
 void PointManagerWidget::updateInputDisplay()
 {
@@ -53,7 +51,8 @@ void PointManagerWidget::updateInputDisplay()
     int len = m_phoneNum.length();
 
     // 1. 입력된 번호가 없으면 빈 화면 처리
-    if (len == 0) {
+    if (len == 0)
+    {
         m_inputView->setDisplay("");
         return;
     }
@@ -62,15 +61,17 @@ void PointManagerWidget::updateInputDisplay()
     displayStr += m_phoneNum.left(3);
 
     // 3. 중간 4자리 마스킹 처리 (입력 길이가 3을 초과했을 때부터)
-    if (len > 3) {
-        displayStr += "-"; // 첫 번째 하이픈 추가
+    if (len > 3)
+    {
+        displayStr += "-";                // 첫 번째 하이픈 추가
         int middleLen = qMin(len - 3, 4); // 중간 자리는 최대 4자리까지만
         displayStr += QString("*").repeated(middleLen);
     }
 
     // 4. 마지막 4자리 그대로 표시 (입력 길이가 7을 초과했을 때부터)
-    if (len > 7) {
-        displayStr += "-"; // 두 번째 하이픈 추가
+    if (len > 7)
+    {
+        displayStr += "-";               // 두 번째 하이픈 추가
         displayStr += m_phoneNum.mid(7); // 8번째 숫자(인덱스 7)부터 끝까지 그대로 붙임
     }
 
@@ -81,7 +82,8 @@ void PointManagerWidget::updateInputDisplay()
 void PointManagerWidget::onDigitPressed(const QString &digit)
 {
     // 입력된 번호가 이미 11자리라면 더 이상 추가하지 않고 함수 종료
-    if (m_phoneNum.length() >= 11) {
+    if (m_phoneNum.length() >= 11)
+    {
         return;
     }
 
@@ -107,9 +109,14 @@ void PointManagerWidget::onConfirmPressed()
     if (m_phoneNum.isEmpty())
         return;
 
-    int earnedPoints = 0; // 향후 DB 조회로 교체
+    // 장바구니를 순회하며 수량(스탬프 개수)을 합산
+    int earnedStamps = 0;
+    for (const KioskData &item : m_cartList)
+    {
+        earnedStamps += item.quantity;
+    }
 
-    m_resultView->setResult(m_phoneNum, earnedPoints);
+    m_resultView->setResult(m_phoneNum, earnedStamps);
 
     ui->stackedWidget->setCurrentWidget(m_resultView);
 }

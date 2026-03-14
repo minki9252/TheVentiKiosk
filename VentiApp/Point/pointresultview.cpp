@@ -3,8 +3,7 @@
 #include <QPushButton>
 
 PointResultView::PointResultView(QWidget *parent)
-    : QWidget(parent)
-    , ui(new Ui::PointResultView)
+    : QWidget(parent), ui(new Ui::PointResultView)
 {
     ui->setupUi(this);
 
@@ -19,8 +18,8 @@ PointResultView::~PointResultView()
 }
 
 // Manager가 데이터를 넘겨주면 표시만 함, 계산 없음
-void PointResultView::setResult(const QString &phoneNum, int earnedPoints)
+void PointResultView::setResult(const QString &phoneNum, int earnedStamps)
 {
     ui->label_phone->setText(phoneNum);
-    ui->label_points->setText(QString("%1 P").arg(earnedPoints));
+    ui->label_points->setText(QString("%1 개").arg(earnedStamps));
 }

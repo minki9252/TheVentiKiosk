@@ -45,16 +45,17 @@ CouponManagerWidget::CouponManagerWidget(const QList<KioskData>& cartList, int t
 
     // 5. 결과창 신호 연결
     connect(resultView, &CouponResultView::resultConfirmed, this, [this, selectView](int discountAmount){
-        
+
         if (discountAmount > 0) {
-            // 메인 결제창으로 할인 금액 넘기기
-            emit discountApplied(discountAmount); 
-            
-            // 🌟 이 줄이 있어야 방금 작성한 리스트 추가 코드가 실행됩니다!
-            selectView->applyDiscount(discountAmount); 
+            // ❌ [삭제 대상]: 아래의 qDebug 문장을 찾아서 반드시 삭제하세요!
+            // qDebug() << "쿠폰 할인 적용됨! 남은 최종 결제 금액: " << ... ;
+
+            // ✅ 이 신호들이 실제 계산과 UI 업데이트를 처리합니다.
+            emit discountApplied(discountAmount);
+            selectView->applyDiscount(discountAmount);
         }
-        
-        // 다시 주문 내역 확인 화면(첫 화면)으로 돌아가기
+
+        // 다시 첫 화면(선택창)으로 이동
         ui->stackedWidget->setCurrentIndex(0);
     });
 }

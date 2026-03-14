@@ -135,7 +135,7 @@ QLabel#label_2[text=&quot;조회 실패&quot;] {
         </size>
        </property>
        <property name="text">
-        <string>KB국민카드</string>
+        <string>삼성페이</string>
        </property>
       </widget>
      </item>
@@ -148,7 +148,7 @@ QLabel#label_2[text=&quot;조회 실패&quot;] {
         </size>
        </property>
        <property name="text">
-        <string>현대카드</string>
+        <string>애플페이</string>
        </property>
       </widget>
      </item>
@@ -161,7 +161,7 @@ QLabel#label_2[text=&quot;조회 실패&quot;] {
         </size>
        </property>
        <property name="text">
-        <string>삼성카드</string>
+        <string>카카오페이</string>
        </property>
       </widget>
      </item>
@@ -174,7 +174,7 @@ QLabel#label_2[text=&quot;조회 실패&quot;] {
         </size>
        </property>
        <property name="text">
-        <string>롯데카드</string>
+        <string>모바일상품권</string>
        </property>
       </widget>
      </item>
@@ -187,7 +187,7 @@ QLabel#label_2[text=&quot;조회 실패&quot;] {
         </size>
        </property>
        <property name="text">
-        <string>하나카드</string>
+        <string>지역화폐</string>
        </property>
       </widget>
      </item>

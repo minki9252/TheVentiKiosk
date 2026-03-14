@@ -19,12 +19,12 @@ PayMethodView::~PayMethodView()
 void PayMethodView::connectButtons()
 {
     // 카드사 버튼 6개 → 어떤 카드가 선택됐는지만 통보
-    connect(ui->btn_shinhan,  &QPushButton::clicked, this, [this](){ emit cardSelected("신한카드"); });
-    connect(ui->btn_kb,       &QPushButton::clicked, this, [this](){ emit cardSelected("KB국민카드"); });
-    connect(ui->btn_hyundai,  &QPushButton::clicked, this, [this](){ emit cardSelected("현대카드"); });
-    connect(ui->btn_samsung,  &QPushButton::clicked, this, [this](){ emit cardSelected("삼성카드"); });
-    connect(ui->btn_lotte,    &QPushButton::clicked, this, [this](){ emit cardSelected("롯데카드"); });
-    connect(ui->btn_hana,     &QPushButton::clicked, this, [this](){ emit cardSelected("하나카드"); });
+    connect(ui->btn_shinhan,  &QPushButton::clicked, this, [this](){ emit cardSelected("신용카드"); });
+    connect(ui->btn_kb,       &QPushButton::clicked, this, [this](){ emit cardSelected("삼성페이"); });
+    connect(ui->btn_hyundai,  &QPushButton::clicked, this, [this](){ emit cardSelected("애플페이"); });
+    connect(ui->btn_samsung,  &QPushButton::clicked, this, [this](){ emit cardSelected("카카오페이"); });
+    connect(ui->btn_lotte,    &QPushButton::clicked, this, [this](){ emit cardSelected("모바일상품권"); });
+    connect(ui->btn_hana,     &QPushButton::clicked, this, [this](){ emit cardSelected("지역화폐"); });
 
     // 취소 버튼
     connect(ui->btn_cancel, &QPushButton::clicked, this, [this](){
