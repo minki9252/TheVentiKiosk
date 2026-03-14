@@ -154,9 +154,9 @@ QLabel#label_2[text=&quot;조회 실패&quot;] {
       <number>0</number>
      </property>
      <item>
-      <layout class="QGridLayout" name="gridLayout">
+      <layout class="QGridLayout" name="gridLayout" columnminimumwidth="0,0,0">
        <property name="spacing">
-        <number>0</number>
+        <number>6</number>
        </property>
        <item row="2" column="2">
         <widget class="QPushButton" name="pushButton_9">

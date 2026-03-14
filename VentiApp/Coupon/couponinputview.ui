@@ -205,31 +205,24 @@ QLabel#label_2[text=&quot;조회 실패&quot;] {
         </property>
        </widget>
       </item>
-      <item row="4" column="2">
-       <widget class="QPushButton" name="pushButton_6">
+      <item row="3" column="1">
+       <widget class="QPushButton" name="pushButton_5">
         <property name="text">
-         <string>부분삭제</string>
+         <string>0</string>
         </property>
        </widget>
       </item>
-      <item row="4" column="0">
+      <item row="3" column="0">
        <widget class="QPushButton" name="pushButton_8">
         <property name="text">
          <string>전체삭제</string>
         </property>
        </widget>
       </item>
-      <item row="3" column="0">
-       <widget class="QPushButton" name="pushButton_13">
+      <item row="3" column="2">
+       <widget class="QPushButton" name="pushButton_6">
         <property name="text">
-         <string>010</string>
-        </property>
-       </widget>
-      </item>
-      <item row="3" column="1">
-       <widget class="QPushButton" name="pushButton_5">
-        <property name="text">
-         <string>0</string>
+         <string>부분삭제</string>
         </property>
        </widget>
       </item>

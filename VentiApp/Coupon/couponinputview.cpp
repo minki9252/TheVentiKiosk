@@ -22,7 +22,6 @@ CouponInputView::CouponInputView(QWidget *parent) :
     connect(ui->pushButton_9,  &QPushButton::clicked, this, &CouponInputView::onNumberButtonClicked); // 8
     connect(ui->pushButton_2,  &QPushButton::clicked, this, &CouponInputView::onNumberButtonClicked); // 9
     connect(ui->pushButton_5,  &QPushButton::clicked, this, &CouponInputView::onNumberButtonClicked); // 0
-    connect(ui->pushButton_13, &QPushButton::clicked, this, &CouponInputView::onNumberButtonClicked); // 010
 }
 
 CouponInputView::~CouponInputView()

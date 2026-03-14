@@ -8,10 +8,11 @@
 
 static const int AUTO_CLOSE_MS = 3000; // 3초 자동 닫힘
 
+int ReceiptManagerWidget::m_currentOrderNumber = 100;
+
 ReceiptManagerWidget::ReceiptManagerWidget(QWidget *parent)
     : QWidget(parent)
     , ui(new Ui::ReceiptManagerWidget)
-    , m_currentOrderNumber(100) // 100번부터 시작하도록 초기화
 {
     ui->setupUi(this);
 
@@ -47,6 +48,7 @@ ReceiptManagerWidget::~ReceiptManagerWidget()
 {
     delete ui;
 }
+
 
 // ── Private ────────────────────────────────────────────────────────────────
 
